@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sweet_snippets" inherit_id="website.snippets">
+        <xpath expr="//snippets[@id='snippet_structure']" position="inside">
+            <t t-snippet="sweet_cafe_ecommerce.s_sweet_hero" t-thumbnail="/sweet_cafe_ecommerce/static/description/icon.svg" group="intro"/>
+            <t t-snippet="sweet_cafe_ecommerce.s_sweet_flavors" t-thumbnail="/sweet_cafe_ecommerce/static/description/icon.svg" group="columns"/>
+            <t t-snippet="sweet_cafe_ecommerce.s_sweet_about_us" t-thumbnail="/sweet_cafe_ecommerce/static/description/icon.svg" group="content"/>
+            <t t-snippet="sweet_cafe_ecommerce.s_sweet_branches" t-thumbnail="/sweet_cafe_ecommerce/static/description/icon.svg" group="contact_and_forms"/>
+            <t t-snippet="sweet_cafe_ecommerce.s_sweet_custom_order" t-thumbnail="/sweet_cafe_ecommerce/static/description/icon.svg" group="contact_and_forms"/>
+            <t t-snippet="sweet_cafe_ecommerce.s_sweet_product_carousel" t-thumbnail="/sweet_cafe_ecommerce/static/description/icon.svg" group="catalog"/>
+        </xpath>
+    </template>
+</odoo>

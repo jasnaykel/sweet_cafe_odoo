@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_sweet_product_carousel" name="Sweet Product Carousel">
+        <section class="s_sweet_product_carousel py-5" style="background-color: #fff;">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="display-5 text-chocolate">Nuestras Especialidades</h2>
+                    <p class="text-muted">Directo del horno a tu carrito.</p>
+                </div>
+
+                <div id="sweetProductCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <t t-set="products" t-value="request.env['product.template'].sudo().search([('is_pastry', '=', True), ('website_published', '=', True)], limit=12)"/>
+                        <t t-set="chunks" t-value="[products[i:i + 4] for i in range(0, len(products), 4)]"/>
+                        
+                        <t t-foreach="chunks" t-as="chunk">
+                            <div t-attf-class="carousel-item #{'active' if chunk_index == 0 else ''}">
+                                <div class="row">
+                                    <t t-foreach="chunk" t-as="product">
+                                        <div class="col-md-3 mb-4">
+                                            <div class="card h-100 border-0 shadow-sm transition-base hover-elevate">
+                                                <div class="position-relative overflow-hidden" style="height: 200px;">
+                                                    <img t-attf-src="/web/image/product.template/#{product.id}/image_512" class="card-img-top h-100 w-100 object-fit-cover" t-att-alt="product.name"/>
+                                                    <t t-if="product.is_pastry">
+                                                        <span class="badge position-absolute top-0 end-0 m-2" style="background-color: #FFB7C5; color: #8B4513;">Pastelería</span>
+                                                    </t>
+                                                </div>
+                                                <div class="card-body d-flex flex-column p-4">
+                                                    <h5 class="card-title text-truncate" t-field="product.name"/>
+                                                    <div class="mt-auto">
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <span class="h5 mb-0 text-chocolate fw-bold" t-field="product.list_price" t-options="{'widget': 'monetary', 'display_currency': product.currency_id}"/>
+                                                        </div>
+                                                        
+                                                        <!-- Add to Cart Form -->
+                                                        <form action="/shop/cart/update" method="POST" class="js_add_cart_variants">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="product_id" t-att-value="product.product_variant_id.id"/>
+                                                            
+                                                            <div class="input-group mb-2">
+                                                                <button class="btn btn-outline-secondary btn-sm" type="button" onclick="this.parentNode.querySelector('input.quantity').stepDown()">-</button>
+                                                                <input type="number" class="form-control form-control-sm text-center quantity" name="add_qty" value="1" min="1"/>
+                                                                <button class="btn btn-outline-secondary btn-sm" type="button" onclick="this.parentNode.querySelector('input.quantity').stepUp()">+</button>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-chocolate btn-sm w-100 rounded-pill js_add_cart">
+                                                                <i class="fa fa-shopping-cart me-1"/> Añadir
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="not products">
+                            <div class="carousel-item active">
+                                <div class="text-center py-5">
+                                    <p class="text-muted italic">Próximamente más delicias...</p>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                    
+                    <button class="carousel-control-prev" type="button" data-bs-target="#sweetProductCarousel" data-bs-slide="prev" style="width: 5%;">
+                        <span class="carousel-control-prev-icon bg-chocolate rounded-circle p-3" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#sweetProductCarousel" data-bs-slide="next" style="width: 5%;">
+                        <span class="carousel-control-next-icon bg-chocolate rounded-circle p-3" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

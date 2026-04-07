@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         hr.employee — Cuba Tab (inherited form view)
+    ═══════════════════════════════════════════════ -->
+
+    <record id="view_hr_employee_cuba_form" model="ir.ui.view">
+        <field name="name">hr.employee.cuba.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Cuba tab to the employee form notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Cuba / RRHH" name="sweet_cuba"
+                      groups="hr.group_hr_user">
+                    <group>
+                        <group string="Datos Personales (Cuba)">
+                            <field name="carnet_identidad"/>
+                            <field name="estado_civil"/>
+                            <field name="escolaridad"/>
+                            <field name="num_hijos"/>
+                            <field name="municipio"/>
+                            <field name="provincia"/>
+                        </group>
+                        <group string="Datos Laborales">
+                            <field name="categoria_ocupacional"/>
+                            <field name="salary_scale_id"/>
+                            <field name="basic_salary_cup"
+                                   invisible="not salary_scale_id"/>
+                            <field name="forma_pago"/>
+                            <field name="horario_trabajo"/>
+                            <field name="branch_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+            <!-- Add branch to the main employee header (optional, if "Work Information" tab exists) -->
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="branch_id"
+                       groups="hr.group_hr_user"
+                       widget="many2one_avatar"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit list view to show escala -->
+    <record id="view_hr_employee_cuba_list" model="ir.ui.view">
+        <field name="name">hr.employee.cuba.list</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <field name="job_id" position="after">
+                <field name="salary_scale_id" optional="hide" groups="hr.group_hr_user"/>
+                <field name="branch_id" optional="show" groups="hr.group_hr_user"/>
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Homepage Custom Templates -->
+    <template id="header_sc_contact" inherit_id="website.layout" priority="10">
+        <xpath expr="//header" position="before">
+            <div class="sc-top-bar py-1 d-none d-lg-block text-white" style="background-color: #8B4513;">
+                <div class="container d-flex justify-content-between small">
+                    <span><i class="fa fa-phone me-1"/> +(53) 7 830-XXXX</span>
+                    <span><i class="fa fa-map-marker me-1"/> Encuentra tu sucursal más cercana</span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    
+    <template id="homepage" inherit_id="website.homepage" name="Sweet Café Homepage">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <div class="oe_structure">
+                <!-- Pre-populated snippets for a ready-to-use look -->
+                <t t-call="sweet_cafe_ecommerce.s_sweet_hero"/>
+                <t t-call="sweet_cafe_ecommerce.s_sweet_flavors"/>
+                <t t-call="sweet_cafe_ecommerce.s_sweet_product_carousel"/>
+                <t t-call="sweet_cafe_ecommerce.s_sweet_about_us"/>
+                <t t-call="sweet_cafe_ecommerce.s_sweet_branches"/>
+                <t t-call="sweet_cafe_ecommerce.s_sweet_custom_order"/>
+            </div>
+            
+            <!-- Additional structure for user customization -->
+            <div class="oe_structure"/>
+        </xpath>
+    </template>
+</odoo>

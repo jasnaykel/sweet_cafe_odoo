@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         pos.config — Branch Field (inherited)
+    ═══════════════════════════════════════════════ -->
+
+    <record id="view_pos_config_sweet_form" model="ir.ui.view">
+        <field name="name">pos.config.sweet.form</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add branch field to the basic POS settings -->
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="branch_id" widget="many2one_avatar"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

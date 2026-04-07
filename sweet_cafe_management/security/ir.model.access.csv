@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sweet_branch_admin,sweet.branch.admin,model_sweet_branch,sweet_group_admin,1,1,1,1
+access_sweet_branch_gerente,sweet.branch.gerente,model_sweet_branch,sweet_group_gerente,1,1,0,0
+access_sweet_branch_user,sweet.branch.user,model_sweet_branch,base.group_user,1,0,0,0
+access_sweet_scrap_reason_admin,sweet.scrap.reason.admin,model_sweet_scrap_reason,sweet_group_admin,1,1,1,1
+access_sweet_scrap_reason_almacen,sweet.scrap.reason.almacen,model_sweet_scrap_reason,sweet_group_almacen,1,1,1,0
+access_sweet_scrap_reason_user,sweet.scrap.reason.user,model_sweet_scrap_reason,base.group_user,1,0,0,0
+access_sweet_scrap_admin,sweet.scrap.admin,model_sweet_scrap,sweet_group_admin,1,1,1,1
+access_sweet_scrap_gerente,sweet.scrap.gerente,model_sweet_scrap,sweet_group_gerente,1,1,1,0
+access_sweet_scrap_almacen,sweet.scrap.almacen,model_sweet_scrap,sweet_group_almacen,1,1,1,0
+access_sweet_scrap_cajero,sweet.scrap.cajero,model_sweet_scrap,sweet_group_cajero,1,1,1,0
+access_hr_salary_scale_admin,hr.salary.scale.admin,model_hr_salary_scale,sweet_group_admin,1,1,1,1
+access_hr_salary_scale_rrhh,hr.salary.scale.rrhh,model_hr_salary_scale,sweet_group_rrhh,1,1,0,0
+access_hr_salary_scale_gerente,hr.salary.scale.gerente,model_hr_salary_scale,sweet_group_gerente,1,0,0,0
+access_hr_salary_scale_user,hr.salary.scale.user,model_hr_salary_scale,base.group_user,1,0,0,0
+access_sweet_scrap_approve_wizard_user,sweet.scrap.approve.wizard.user,model_sweet_scrap_approve_wizard,base.group_user,1,1,1,1

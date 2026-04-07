@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_sweet_hero" name="Sweet Hero Section">
+        <section class="s_sweet_hero oe_img_bg oe_custom_bg" style="background-image: url('/sweet_cafe_ecommerce/static/src/img/bakery_bg.jpg'); background-position: 50% 50%;">
+            <div class="container text-center py-5">
+                <div class="row content align-items-center">
+                    <div class="col-lg-8 offset-lg-2 bg-white-75 p-5 rounded shadow-lg">
+                        <h1 class="display-3 fw-bold text-chocolate">Momentos Dulces</h1>
+                        <p class="lead mb-4">Los mejores pasteles y dulces artesanales directo a tu mesa.</p>
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            <a href="/shop" class="btn btn-primary btn-lg px-4">Comprar Ahora</a>
+                            <a href="/contactus" class="btn btn-outline-primary btn-lg px-4">Ver Sucursales</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

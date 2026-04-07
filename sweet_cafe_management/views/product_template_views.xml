@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         product.template — Pastelería Tab (inherited)
+    ═══════════════════════════════════════════════ -->
+
+    <record id="view_product_template_sweet_form" model="ir.ui.view">
+        <field name="name">product.template.sweet.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Add Pastelería tab after the "General Information" tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Pastelería" name="sweet_pastry"
+                      invisible="sweet_product_type == 'otro' and not is_pastry">
+                    <group>
+                        <group string="Clasificación Sweet Café">
+                            <field name="is_pastry"/>
+                            <field name="sweet_product_type"/>
+                            <field name="custom_order"/>
+                            <field name="min_advance_days"
+                                   invisible="not custom_order"/>
+                        </group>
+                        <group string="Proceso de Elaboración">
+                            <field name="baking_time"/>
+                            <field name="baking_temp"/>
+                            <field name="shelf_life_days"/>
+                        </group>
+                    </group>
+                    <group string="Almacenamiento">
+                        <field name="requires_refrigeration"/>
+                        <field name="requires_freezing"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit product list view to show sweet_product_type -->
+    <record id="view_product_template_sweet_list" model="ir.ui.view">
+        <field name="name">product.template.sweet.list</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+
+            <field name="categ_id" position="after">
+                <field name="sweet_product_type" optional="hide"/>
+            </field>
+        </field>
+    </record>
+</odoo>

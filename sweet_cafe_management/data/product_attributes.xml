@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═════════════════════════════════════════════════════════
+         Product Attributes — Sweet Café Flavors (Sabores)
+    ═════════════════════════════════════════════════════════ -->
+
+    <!-- Sabor Cake Antillano -->
+    <record id="attr_sabor_cake" model="product.attribute">
+        <field name="name">Sabor Cake</field>
+        <field name="display_type">radio</field>
+        <field name="create_variant">always</field>
+    </record>
+
+    <record id="attr_val_cake_chocolate" model="product.attribute.value">
+        <field name="name">Chocolate</field>
+        <field name="attribute_id" ref="attr_sabor_cake"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="attr_val_cake_leche" model="product.attribute.value">
+        <field name="name">Leche Condensada</field>
+        <field name="attribute_id" ref="attr_sabor_cake"/>
+        <field name="sequence">2</field>
+    </record>
+    <record id="attr_val_cake_ron" model="product.attribute.value">
+        <field name="name">Ron</field>
+        <field name="attribute_id" ref="attr_sabor_cake"/>
+        <field name="sequence">3</field>
+    </record>
+    <record id="attr_val_cake_coco" model="product.attribute.value">
+        <field name="name">Coco</field>
+        <field name="attribute_id" ref="attr_sabor_cake"/>
+        <field name="sequence">4</field>
+    </record>
+
+    <!-- Sabor Tartaleta -->
+    <record id="attr_sabor_tartaleta" model="product.attribute">
+        <field name="name">Sabor Tartaleta</field>
+        <field name="display_type">radio</field>
+        <field name="create_variant">always</field>
+    </record>
+
+    <record id="attr_val_tart_coco" model="product.attribute.value">
+        <field name="name">Coco</field>
+        <field name="attribute_id" ref="attr_sabor_tartaleta"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="attr_val_tart_guayaba" model="product.attribute.value">
+        <field name="name">Guayaba</field>
+        <field name="attribute_id" ref="attr_sabor_tartaleta"/>
+        <field name="sequence">2</field>
+    </record>
+    <record id="attr_val_tart_limon" model="product.attribute.value">
+        <field name="name">Limón</field>
+        <field name="attribute_id" ref="attr_sabor_tartaleta"/>
+        <field name="sequence">3</field>
+    </record>
+    <record id="attr_val_tart_queso" model="product.attribute.value">
+        <field name="name">Queso</field>
+        <field name="attribute_id" ref="attr_sabor_tartaleta"/>
+        <field name="sequence">4</field>
+    </record>
+
+    <!-- Sabor Mini Cake -->
+    <record id="attr_sabor_mini_cake" model="product.attribute">
+        <field name="name">Sabor Mini Cake</field>
+        <field name="display_type">radio</field>
+        <field name="create_variant">always</field>
+    </record>
+
+    <record id="attr_val_mini_chocolate" model="product.attribute.value">
+        <field name="name">Chocolate</field>
+        <field name="attribute_id" ref="attr_sabor_mini_cake"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="attr_val_mini_vainilla" model="product.attribute.value">
+        <field name="name">Vainilla</field>
+        <field name="attribute_id" ref="attr_sabor_mini_cake"/>
+        <field name="sequence">2</field>
+    </record>
+
+    <!-- Tamaño (para cakes en pedidos especiales) -->
+    <record id="attr_tamano_cake" model="product.attribute">
+        <field name="name">Tamaño</field>
+        <field name="display_type">select</field>
+        <field name="create_variant">always</field>
+    </record>
+    <record id="attr_val_tamano_pequeno" model="product.attribute.value">
+        <field name="name">Pequeño (15cm)</field>
+        <field name="attribute_id" ref="attr_tamano_cake"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="attr_val_tamano_mediano" model="product.attribute.value">
+        <field name="name">Mediano (20cm)</field>
+        <field name="attribute_id" ref="attr_tamano_cake"/>
+        <field name="sequence">2</field>
+    </record>
+    <record id="attr_val_tamano_grande" model="product.attribute.value">
+        <field name="name">Grande (25cm)</field>
+        <field name="attribute_id" ref="attr_tamano_cake"/>
+        <field name="sequence">3</field>
+    </record>
+</odoo>

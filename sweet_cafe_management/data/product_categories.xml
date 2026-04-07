@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         Product Categories — Sweet Café
+    ═══════════════════════════════════════════════ -->
+    <record id="product_category_cakes" model="product.category">
+        <field name="name">Cakes Antillanos</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+
+    <record id="product_category_tartaletas" model="product.category">
+        <field name="name">Tartaletas</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+
+    <record id="product_category_dulces" model="product.category">
+        <field name="name">Dulces Tradicionales</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+
+    <record id="product_category_galletas" model="product.category">
+        <field name="name">Galletas y Macarons</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+
+    <record id="product_category_bebidas" model="product.category">
+        <field name="name">Bebidas</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+
+    <record id="product_category_regalos" model="product.category">
+        <field name="name">Cestas y Regalos</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+
+    <record id="product_category_insumos" model="product.category">
+        <field name="name">Insumos y Materias Primas</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+
+    <record id="product_category_chocolates" model="product.category">
+        <field name="name">Chocolates</field>
+        <field name="parent_id" ref="product.product_category_all"/>
+    </record>
+</odoo>

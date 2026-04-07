@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         DEMO DATA — Sweet Café Products
+         Only loaded in demo/testing environments
+    ═══════════════════════════════════════════════ -->
+
+    <!-- Cake Antillano de Chocolate -->
+    <record id="product_cake_chocolate" model="product.template">
+        <field name="name">Cake Antillano de Chocolate</field>
+        <field name="type">product</field>
+        <field name="categ_id" ref="product_category_cakes"/>
+        <field name="is_pastry" eval="True"/>
+        <field name="sweet_product_type">cake</field>
+        <field name="baking_time">1.5</field>
+        <field name="baking_temp">180</field>
+        <field name="requires_refrigeration" eval="True"/>
+        <field name="shelf_life_days">3</field>
+        <field name="custom_order" eval="True"/>
+        <field name="min_advance_days">2</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">lot</field>
+        <field name="description_sale">Exquisito cake de chocolate con relleno de crema antillana. Elaborado artesanalmente.</field>
+    </record>
+
+    <!-- Tartaleta de Coco -->
+    <record id="product_tartaleta_coco" model="product.template">
+        <field name="name">Tartaleta de Coco</field>
+        <field name="type">product</field>
+        <field name="categ_id" ref="product_category_tartaletas"/>
+        <field name="is_pastry" eval="True"/>
+        <field name="sweet_product_type">tartaleta</field>
+        <field name="baking_time">0.75</field>
+        <field name="baking_temp">165</field>
+        <field name="requires_refrigeration" eval="True"/>
+        <field name="shelf_life_days">2</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">none</field>
+        <field name="description_sale">Tartaleta de masa hojaldrada rellena de crema de coco rallado fresco.</field>
+    </record>
+
+    <!-- Tartaleta de Guayaba -->
+    <record id="product_tartaleta_guayaba" model="product.template">
+        <field name="name">Tartaleta de Guayaba</field>
+        <field name="type">product</field>
+        <field name="categ_id" ref="product_category_tartaletas"/>
+        <field name="is_pastry" eval="True"/>
+        <field name="sweet_product_type">tartaleta</field>
+        <field name="baking_time">0.75</field>
+        <field name="baking_temp">165</field>
+        <field name="requires_refrigeration" eval="True"/>
+        <field name="shelf_life_days">2</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">none</field>
+        <field name="description_sale">Tartaleta artesanal de guayaba con mermelada casera cubana.</field>
+    </record>
+
+    <!-- Mini Cake Vainilla -->
+    <record id="product_mini_cake_vainilla" model="product.template">
+        <field name="name">Mini Cake de Vainilla</field>
+        <field name="type">product</field>
+        <field name="categ_id" ref="product_category_cakes"/>
+        <field name="is_pastry" eval="True"/>
+        <field name="sweet_product_type">cake</field>
+        <field name="baking_time">1.0</field>
+        <field name="baking_temp">175</field>
+        <field name="requires_refrigeration" eval="True"/>
+        <field name="shelf_life_days">2</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">none</field>
+        <field name="description_sale">Mini cake individual de esponja de vainilla con betún de mantequilla.</field>
+    </record>
+
+    <!-- Galleta Miel -->
+    <record id="product_galleta_miel" model="product.template">
+        <field name="name">Galleta de Miel y Canela</field>
+        <field name="type">product</field>
+        <field name="categ_id" ref="product_category_galletas"/>
+        <field name="is_pastry" eval="True"/>
+        <field name="sweet_product_type">galleta</field>
+        <field name="baking_time">0.5</field>
+        <field name="baking_temp">170</field>
+        <field name="requires_refrigeration" eval="False"/>
+        <field name="shelf_life_days">7</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="tracking">none</field>
+        <field name="description_sale">Galletas crujientes artesanales con miel de caña y canela molida.</field>
+    </record>
+
+    <!-- Insumo: Harina -->
+    <record id="product_harina" model="product.template">
+        <field name="name">Harina de Trigo</field>
+        <field name="type">product</field>
+        <field name="categ_id" ref="product_category_insumos"/>
+        <field name="is_pastry" eval="False"/>
+        <field name="sweet_product_type">insumo</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">none</field>
+    </record>
+
+    <!-- Insumo: Azúcar -->
+    <record id="product_azucar" model="product.template">
+        <field name="name">Azúcar Blanca</field>
+        <field name="type">product</field>
+        <field name="categ_id" ref="product_category_insumos"/>
+        <field name="is_pastry" eval="False"/>
+        <field name="sweet_product_type">insumo</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="True"/>
+        <field name="tracking">none</field>
+    </record>
+</odoo>

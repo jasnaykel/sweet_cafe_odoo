@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_sweet_branches" name="Sweet Branch List">
+        <section class="s_sweet_branches py-5 bg-white">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="display-4 text-chocolate">Nuestras Sucursales</h2>
+                    <p class="lead text-muted">Encuéntranos en los puntos más dulces de la ciudad.</p>
+                </div>
+                <div class="row justify-content-center">
+                    <t t-set="branches" t-value="request.env['sweet.branch'].sudo().search([])"/>
+                    <t t-foreach="branches" t-as="branch">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 border-0 shadow-sm hover-elevate transition-base" style="border-radius: 15px; overflow: hidden;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="rounded-circle bg-cream p-3 me-3" style="background-color: #FDF5E6;">
+                                            <i class="fa fa-map-marker fa-2x" style="color: #8B4513;"></i>
+                                        </div>
+                                        <h4 class="card-title mb-0" t-field="branch.name"/>
+                                    </div>
+                                    <p class="card-text text-muted">
+                                        <i class="fa fa-phone me-2"/> +(53) 7 830-XXXX<br/>
+                                        <i class="fa fa-clock-o me-2"/> 8:00 AM - 8:00 PM
+                                    </p>
+                                    <hr class="my-3" style="border-top: 1px dashed #D2691E;"/>
+                                    <div class="d-grid">
+                                        <a t-attf-href="/contactus?branch=#{branch.id}" class="btn btn-outline-chocolate btn-sm rounded-pill">Ver en Mapa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="not branches">
+                        <div class="col-12 text-center py-5">
+                            <p class="text-muted italic">Cargando ubicaciones mágicas...</p>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

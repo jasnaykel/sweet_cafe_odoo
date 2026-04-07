@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Product Page Enhancement -->
+    <template id="product_pastry_info" inherit_id="website_sale.product" name="Product Pastry Specs">
+        <xpath expr="//div[@id='product_details']" position="inside">
+            <t t-if="product.is_pastry">
+                <div class="sc-technical-specs mt-4 p-3 rounded" style="background: #FDF5E6; border-left: 5px solid #D2691E;">
+                    <h5 class="text-uppercase mb-3" style="font-size: 0.9rem; letter-spacing: 1px; color: #8B4513;">
+                        <i class="fa fa-info-circle me-2"/>Detalles del Maestro Pastelero
+                    </h5>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <span class="small text-muted d-block">Horneado</span>
+                            <strong t-field="product.baking_time"/> h | <strong t-field="product.baking_temp"/>°C
+                        </div>
+                        <div class="col-6">
+                            <span class="small text-muted d-block">Vida Útil</span>
+                            <strong t-field="product.shelf_life_days"/> días
+                        </div>
+                        <div class="col-12 mt-2">
+                            <t t-if="product.requires_refrigeration">
+                                <span class="badge text-bg-info">
+                                    <i class="fa fa-snowflake-o me-1"/> Requiere Refrigeración
+                                </span>
+                            </t>
+                            <t t-if="product.custom_order">
+                                <span class="badge text-bg-warning ms-1">
+                                    <i class="fa fa-star me-1"/> Pedido Personalizado
+                                </span>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Pastry Badge in Shop Grid -->
+    <template id="products_item_pastry_badge" inherit_id="website_sale.products_item" active="True" name="Pastry Badge on Grid">
+        <xpath expr="//form" position="inside">
+            <t t-if="product.is_pastry">
+                <div class="position-absolute top-0 end-0 m-2">
+                    <span class="badge rounded-pill shadow-sm" style="background-color: #FFB7C5; color: #8B4513; border: 1px solid #8B4513;">
+                        Pastelería
+                    </span>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Custom Bakery Footer -->
+    <template id="sc_footer" inherit_id="website.footer_custom" name="Sweet Café Footer">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <footer class="bg-chocolate text-white pt-5 pb-3" style="background-color: #3d1e0a;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 mb-4">
+                            <h4 class="mb-4" style="color: #F5F5DC;">Sweet Café</h4>
+                            <p class="text-white-75">La excelencia en repostería tradicional y moderna. Visitamos y descubre el verdadero sabor artesanal.</p>
+                            <div class="d-flex gap-3 fs-4 mt-3">
+                                <a href="#" class="text-white-50 hover-white"><i class="fa fa-facebook-official"/></a>
+                                <a href="#" class="text-white-50 hover-white"><i class="fa fa-instagram"/></a>
+                                <a href="#" class="text-white-50 hover-white"><i class="fa fa-whatsapp"/></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 mb-4">
+                            <h5 class="mb-4">Enlaces</h5>
+                            <ul class="list-unstyled text-white-50">
+                                <li><a href="/shop" class="text-reset">Catálogo</a></li>
+                                <li><a href="/contactus" class="text-reset">Sucursales</a></li>
+                                <li><a href="#" class="text-reset">Pasteles a Medida</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <h5 class="mb-4">Contacto</h5>
+                            <p class="text-white-50 small">
+                                <i class="fa fa-envelope me-2"/> pedidos@sweetcafe.cu<br/>
+                                <i class="fa fa-phone me-2"/> +(53) 7 830-XXXX
+                            </p>
+                        </div>
+                        <div class="col-lg-3 mb-4">
+                            <h5 class="mb-4">Suscríbete</h5>
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-transparent border-white-25 text-white" placeholder="Tu Email"/>
+                                <button class="btn btn-primary" type="button"><i class="fa fa-paper-plane"/></button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="border-white-10 my-4"/>
+                    <div class="text-center small text-white-50">
+                        <p>© 2024 Sweet Café Cuba. Todos los derechos reservados.</p>
+                    </div>
+                </div>
+            </footer>
+        </xpath>
+    </template>
+</odoo>

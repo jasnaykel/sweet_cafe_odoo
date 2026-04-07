@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         QWeb Report — Recibo de Nómina Cubano
+    ═══════════════════════════════════════════════ -->
+
+    <!-- Report action -->
+    <record id="action_report_nomina_cuba" model="ir.actions.report">
+        <field name="name">Recibo de Nómina (CUP)</field>
+        <field name="model">hr.version</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sweet_cafe_management.report_nomina_cuba_template</field>
+        <field name="report_file">sweet_cafe_management.report_nomina_cuba_template</field>
+        <field name="binding_model_id" ref="hr.model_hr_version"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- QWeb report template -->
+    <template id="report_nomina_cuba_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="v">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            .nomina-header { background-color: #2e4057; color: white; padding: 8px 12px; }
+                            .nomina-table td, .nomina-table th { padding: 4px 8px; }
+                            .nomina-total { font-weight: bold; font-size: 1.1em; }
+                            .nomina-section { margin-top: 12px; }
+                        </style>
+
+                        <div class="nomina-header text-center mb-3">
+                            <h3>RECIBO DE NÓMINA — SWEET CAFÉ</h3>
+                            <p class="mb-0">República de Cuba</p>
+                        </div>
+
+                        <!-- Employee data -->
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <table class="table table-sm nomina-table">
+                                    <tr><td><b>Trabajador:</b></td>
+                                        <td><t t-esc="v.employee_id.name"/></td></tr>
+                                    <tr><td><b>C.I.:</b></td>
+                                        <td><t t-esc="v.employee_id.carnet_identidad or '—'"/></td></tr>
+                                    <tr><td><b>Cargo:</b></td>
+                                        <td><t t-esc="v.employee_id.job_id.name or '—'"/></td></tr>
+                                    <tr><td><b>Sucursal:</b></td>
+                                        <td><t t-esc="v.employee_id.branch_id.name or '—'"/></td></tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm nomina-table">
+                                    <tr><td><b>Escala Salarial:</b></td>
+                                        <td><t t-esc="v.employee_id.salary_scale_id.name or '—'"/></td></tr>
+                                    <tr><td><b>Categoría:</b></td>
+                                        <td><t t-esc="v.employee_id.categoria_ocupacional or '—'"/></td></tr>
+                                    <tr><td><b>Antigüedad:</b></td>
+                                        <td><t t-esc="v.antiguedad_years"/> años
+                                            (<t t-esc="'%.1f' % v.plus_antiguedad_pct"/>%)</td></tr>
+                                    <tr><td><b>Hijos (menores):</b></td>
+                                        <td><t t-esc="v.employee_id.num_hijos or 0"/></td></tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Earnings and deductions -->
+                        <h5 class="nomina-section">Percepciones</h5>
+                        <table class="table table-bordered nomina-table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th class="text-right">Importe (CUP)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Salario Básico (Escala)</td>
+                                    <td class="text-right">
+                                        <t t-esc="'%.2f' % v.contract_wage"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="v.plus_antiguedad">
+                                    <td>Plus por Antigüedad
+                                        (<t t-esc="'%.1f' % v.plus_antiguedad_pct"/>%)</td>
+                                    <td class="text-right">
+                                        <t t-esc="'%.2f' % v.plus_antiguedad"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="v.plus_hijos">
+                                    <td>Plus por Hijos
+                                        (<t t-esc="v.employee_id.num_hijos"/> × 40 CUP)</td>
+                                    <td class="text-right">
+                                        <t t-esc="'%.2f' % v.plus_hijos"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="v.plus_peligrosidad">
+                                    <td>Plus por Peligrosidad</td>
+                                    <td class="text-right">
+                                        <t t-esc="'%.2f' % v.plus_peligrosidad"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="v.plus_nocturno">
+                                    <td>Plus Turno Nocturno</td>
+                                    <td class="text-right">
+                                        <t t-esc="'%.2f' % v.plus_nocturno"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="nomina-section">Deducciones</h5>
+                        <table class="table table-bordered nomina-table">
+                            <tbody>
+                                <tr>
+                                    <td>Seguridad Social (5%)</td>
+                                    <td class="text-right">
+                                        <t t-esc="'%.2f' % v.deduccion_seguridad_social"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Net salary total -->
+                        <div class="text-right mt-3">
+                            <span class="nomina-total">
+                                Salario Neto Estimado: 
+                                <t t-esc="'%.2f' % v.salario_neto_estimado"/> CUP
+                            </span>
+                        </div>
+
+                        <!-- Signatures -->
+                        <div class="row mt-5">
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; margin-top: 50px;">
+                                    <p>Elaborado por RRHH</p>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; margin-top: 50px;">
+                                    <p>Recibido conforme</p>
+                                    <p><t t-esc="v.employee_id.name"/></p>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; margin-top: 50px;">
+                                    <p>Revisado por</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-muted mt-3" style="font-size: 0.75em;">
+                            Este recibo es un cálculo estimado basado en escalas salariales cubanas vigentes.
+                            Los montos definitivos serán confirmados por el departamento de RRHH.
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

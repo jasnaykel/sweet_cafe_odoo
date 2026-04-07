@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         hr.salary.scale — Salary Scale Views
+    ═══════════════════════════════════════════════ -->
+
+    <!-- List view -->
+    <record id="view_hr_salary_scale_list" model="ir.ui.view">
+        <field name="name">hr.salary.scale.list</field>
+        <field name="model">hr.salary.scale</field>
+        <field name="arch" type="xml">
+            <list string="Escalas Salariales" editable="bottom">
+                <field name="scale_number"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="complexity_level"/>
+                <field name="basic_salary"/>
+                <field name="currency_id" optional="hide"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_hr_salary_scale_form" model="ir.ui.view">
+        <field name="name">hr.salary.scale.form</field>
+        <field name="model">hr.salary.scale</field>
+        <field name="arch" type="xml">
+            <form string="Escala Salarial">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="scale_number" string="Escala #"/>
+                        <h1>
+                            <field name="scale_number"/>
+                            <span> — </span>
+                            <field name="name" placeholder="Denominación"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Clasificación">
+                            <field name="category"/>
+                            <field name="complexity_level"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Salario">
+                            <field name="basic_salary"/>
+                            <field name="currency_id"/>
+                        </group>
+                    </group>
+                    <group string="Descripción / Funciones">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view -->
+    <record id="view_hr_salary_scale_search" model="ir.ui.view">
+        <field name="name">hr.salary.scale.search</field>
+        <field name="model">hr.salary.scale</field>
+        <field name="arch" type="xml">
+            <search string="Escalas Salariales">
+                <field name="name"/>
+                <field name="scale_number"/>
+                <filter string="Operarios" name="operarios" domain="[('category','=','operario')]"/>
+                <filter string="Técnicos" name="tecnicos" domain="[('category','=','tecnico')]"/>
+                <filter string="Administrativos" name="administrativos" domain="[('category','=','administrativo')]"/>
+                <filter string="Cuadros" name="cuadros" domain="[('category','=','cuadro')]"/>
+                <separator/>
+                <filter string="Archivadas" name="archived" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_salary_scale" model="ir.actions.act_window">
+        <field name="name">Escalas Salariales Cubanas</field>
+        <field name="res_model">hr.salary.scale</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_hr_salary_scale_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure las escalas salariales
+            </p>
+            <p>Defina los 18 niveles de escala salarial según la normativa cubana vigente.</p>
+        </field>
+    </record>
+
+    <!-- Action for scrap reason -->
+    <record id="action_sweet_scrap_reason" model="ir.actions.act_window">
+        <field name="name">Motivos de Merma</field>
+        <field name="res_model">sweet.scrap.reason</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

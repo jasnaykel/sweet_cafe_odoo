@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         QWeb Report — Reporte de Merma
+    ═══════════════════════════════════════════════ -->
+
+    <!-- Paper format -->
+    <record id="paperformat_merma" model="report.paperformat">
+        <field name="name">Reporte Merma Sweet Café</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- Report action -->
+    <record id="action_report_merma" model="ir.actions.report">
+        <field name="name">Reporte de Merma</field>
+        <field name="model">sweet.scrap</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sweet_cafe_management.report_merma_template</field>
+        <field name="report_file">sweet_cafe_management.report_merma_template</field>
+        <field name="paperformat_id" ref="paperformat_merma"/>
+        <field name="binding_model_id" ref="model_sweet_scrap"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- QWeb report template -->
+    <template id="report_merma_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            .sweet_report_header { background-color: #8B4513; color: white; padding: 10px; }
+                            .sweet_state_approved { color: green; font-weight: bold; }
+                            .sweet_state_rejected { color: red; font-weight: bold; }
+                            .sweet_state_pending  { color: orange; font-weight: bold; }
+                        </style>
+
+                        <!-- Header -->
+                        <div class="sweet_report_header text-center mb-3">
+                            <h2>CONTROL DE MERMA</h2>
+                            <h4>Sweet Café — Sistema de Gestión</h4>
+                        </div>
+
+                        <!-- Reference and state -->
+                        <div class="row">
+                            <div class="col-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Referencia:</strong></td>
+                                        <td><t t-esc="o.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Fecha:</strong></td>
+                                        <td><t t-esc="o.date" t-options='{"widget": "datetime"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sucursal:</strong></td>
+                                        <td><t t-esc="o.branch_id.name or '—'"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Estado:</strong></td>
+                                        <td>
+                                            <t t-if="o.state == 'approved'">
+                                                <span class="sweet_state_approved">APROBADO</span>
+                                            </t>
+                                            <t t-elif="o.state == 'rejected'">
+                                                <span class="sweet_state_rejected">RECHAZADO</span>
+                                            </t>
+                                            <t t-elif="o.state == 'pending'">
+                                                <span class="sweet_state_pending">PENDIENTE</span>
+                                            </t>
+                                            <t t-else="">BORRADOR</t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tipo:</strong></td>
+                                        <td><t t-esc="dict(o._fields['production_loss_type'].selection).get(o.production_loss_type, '')"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Motivo:</strong></td>
+                                        <td><t t-esc="o.reason_id.name or '—'"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Product details -->
+                        <h5>Detalle del Producto</h5>
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Lote</th>
+                                    <th>Cantidad</th>
+                                    <th>UM</th>
+                                    <th>Ubicación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><t t-esc="o.product_id.display_name"/></td>
+                                    <td><t t-esc="o.lot_id.name or '—'"/></td>
+                                    <td><t t-esc="o.qty"/></td>
+                                    <td><t t-esc="o.product_uom_id.name"/></td>
+                                    <td><t t-esc="o.location_id.complete_name"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Responsible parties -->
+                        <h5>Responsables</h5>
+                        <div class="row">
+                            <div class="col-6">
+                                <p><strong>Responsable:</strong> <t t-esc="o.responsible_id.name or '—'"/></p>
+                            </div>
+                            <div class="col-6">
+                                <p><strong>Supervisor:</strong> <t t-esc="o.supervisor_id.name or '—'"/></p>
+                            </div>
+                        </div>
+
+                        <!-- Notes -->
+                        <t t-if="o.note">
+                            <h5>Observaciones</h5>
+                            <p><t t-esc="o.note"/></p>
+                        </t>
+
+                        <!-- Rejection reason -->
+                        <t t-if="o.state == 'rejected' and o.rejection_reason">
+                            <h5>Motivo de Rechazo</h5>
+                            <p class="sweet_state_rejected"><t t-esc="o.rejection_reason"/></p>
+                        </t>
+
+                        <!-- Signatures -->
+                        <div class="row mt-5">
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; margin-top: 50px;">
+                                    <p>Responsable: <t t-esc="o.responsible_id.name or '______________'"/></p>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; margin-top: 50px;">
+                                    <p>Supervisor: <t t-esc="o.supervisor_id.name or '______________'"/></p>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; margin-top: 50px;">
+                                    <p>Gerente / Revisado por</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

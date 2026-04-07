@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ══════════════════════════════════════════════════
+         Sequence for sweet.scrap (merma numbering)
+    ══════════════════════════════════════════════════ -->
+    <data noupdate="1">
+        <record id="seq_sweet_scrap" model="ir.sequence">
+            <field name="name">Sweet Café — Merma</field>
+            <field name="code">sweet.scrap</field>
+            <field name="prefix">MRM/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+
+    <!-- ══════════════════════════════════════════════════
+         Scrap / Merma Reasons (Motivos)
+    ══════════════════════════════════════════════════ -->
+    <record id="scrap_reason_caducidad" model="sweet.scrap.reason">
+        <field name="name">Producto Caducado / Vencido</field>
+        <field name="loss_type">caducidad</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="scrap_reason_quemado" model="sweet.scrap.reason">
+        <field name="name">Quemado en Proceso de Horneado</field>
+        <field name="loss_type">tecnica</field>
+        <field name="sequence">2</field>
+    </record>
+    <record id="scrap_reason_merma_proceso" model="sweet.scrap.reason">
+        <field name="name">Merma Normal de Proceso (evaporación, cocción)</field>
+        <field name="loss_type">tecnica</field>
+        <field name="sequence">3</field>
+    </record>
+    <record id="scrap_reason_rotura" model="sweet.scrap.reason">
+        <field name="name">Rotura / Daño por Manipulación</field>
+        <field name="loss_type">rotura</field>
+        <field name="sequence">4</field>
+    </record>
+    <record id="scrap_reason_negligencia" model="sweet.scrap.reason">
+        <field name="name">Error Humano / Negligencia</field>
+        <field name="loss_type">negligencia</field>
+        <field name="sequence">5</field>
+    </record>
+    <record id="scrap_reason_robo" model="sweet.scrap.reason">
+        <field name="name">Robo / Pérdida No Justificada</field>
+        <field name="loss_type">robo</field>
+        <field name="sequence">6</field>
+    </record>
+    <record id="scrap_reason_otro" model="sweet.scrap.reason">
+        <field name="name">Otro Motivo</field>
+        <field name="loss_type">otro</field>
+        <field name="sequence">99</field>
+    </record>
+
+</odoo>

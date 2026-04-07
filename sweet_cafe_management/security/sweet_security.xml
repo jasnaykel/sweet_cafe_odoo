@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ════════════════════════════════════════════════
+         Sweet Café Security Groups
+    ════════════════════════════════════════════════ -->
+
+    <!-- Privilege category -->
+    <record id="sweet_privilege" model="res.groups.privilege">
+        <field name="name">Sweet Café</field>
+        <field name="sequence">80</field>
+        <field name="category_id" ref="base.module_category_industry"/>
+    </record>
+
+    <!-- Cajero: can use POS and read customers -->
+    <record id="sweet_group_cajero" model="res.groups">
+        <field name="name">Cajero / Vendedor</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="sweet_privilege"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Acceso al POS. Solo lectura de clientes e inventario de mostrador.</field>
+    </record>
+
+    <!-- Repostero: sees production orders only -->
+    <record id="sweet_group_repostero" model="res.groups">
+        <field name="name">Repostero / Producción</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="sweet_privilege"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Acceso a órdenes de producción e insumos. No ve información comercial ni RRHH.</field>
+    </record>
+
+    <!-- Almacenista: manages inventory -->
+    <record id="sweet_group_almacen" model="res.groups">
+        <field name="name">Almacenista / Inventario</field>
+        <field name="sequence">30</field>
+        <field name="privilege_id" ref="sweet_privilege"/>
+        <field name="implied_ids" eval="[(4, ref('sweet_group_cajero'))]"/>
+        <field name="comment">Control de inventario, traspasos, ajustes, mermas y compras.</field>
+    </record>
+
+    <!-- RRHH: manages employees and payroll -->
+    <record id="sweet_group_rrhh" model="res.groups">
+        <field name="name">Recursos Humanos</field>
+        <field name="sequence">40</field>
+        <field name="privilege_id" ref="sweet_privilege"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Gestión de empleados, asistencia, nómina y reclutamiento.</field>
+    </record>
+
+    <!-- Gerente: sales, inventory, reports -->
+    <record id="sweet_group_gerente" model="res.groups">
+        <field name="name">Gerente</field>
+        <field name="sequence">50</field>
+        <field name="privilege_id" ref="sweet_privilege"/>
+        <field name="implied_ids" eval="[(4, ref('sweet_group_almacen')), (4, ref('sweet_group_rrhh'))]"/>
+        <field name="comment">Acceso a ventas, inventario, RRHH y reportes. Sin configuración del sistema.</field>
+    </record>
+
+    <!-- Administrador: full access -->
+    <record id="sweet_group_admin" model="res.groups">
+        <field name="name">Administrador Sweet Café</field>
+        <field name="sequence">60</field>
+        <field name="privilege_id" ref="sweet_privilege"/>
+        <field name="implied_ids" eval="[(4, ref('sweet_group_gerente'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="comment">Acceso total al módulo Sweet Café. Incluye configuración de sucursales, escalas y parámetros del sistema.</field>
+    </record>
+
+    <!-- ════════════════════════════════════════════════
+         Record rules (multi-company)
+    ════════════════════════════════════════════════ -->
+    <data noupdate="1">
+        <record id="sweet_branch_company_rule" model="ir.rule">
+            <field name="name">Sucursal: Regla Multi-Compañía</field>
+            <field name="model_id" ref="model_sweet_branch"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="sweet_scrap_company_rule" model="ir.rule">
+            <field name="name">Merma: Regla Multi-Compañía</field>
+            <field name="model_id" ref="model_sweet_scrap"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!-- Scrap: only admin/gerente/almacen can approve -->
+        <record id="sweet_scrap_approve_rule" model="ir.rule">
+            <field name="name">Merma: Solo Gerente/Almacén puede aprobar</field>
+            <field name="model_id" ref="model_sweet_scrap"/>
+            <field name="groups" eval="[(4, ref('sweet_group_cajero'))]"/>
+            <field name="domain_force">[('responsible_id.user_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+
+</odoo>

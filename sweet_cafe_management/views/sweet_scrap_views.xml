@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         sweet.scrap — Control de Mermas Views
+    ═══════════════════════════════════════════════ -->
+
+    <!-- List view -->
+    <record id="view_sweet_scrap_list" model="ir.ui.view">
+        <field name="name">sweet.scrap.list</field>
+        <field name="model">sweet.scrap</field>
+        <field name="arch" type="xml">
+            <list string="Mermas" decoration-danger="state == 'rejected'"
+                  decoration-success="state == 'approved'"
+                  decoration-warning="state == 'pending'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="qty"/>
+                <field name="product_uom_id"/>
+                <field name="production_loss_type"/>
+                <field name="reason_id"/>
+                <field name="responsible_id"/>
+                <field name="branch_id"/>
+                <field name="state" widget="badge"
+                       decoration-danger="state == 'rejected'"
+                       decoration-success="state == 'approved'"
+                       decoration-warning="state == 'pending'"
+                       decoration-muted="state == 'draft'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Kanban view -->
+    <record id="view_sweet_scrap_kanban" model="ir.ui.view">
+        <field name="name">sweet.scrap.kanban</field>
+        <field name="model">sweet.scrap</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="state">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="qty"/>
+                <field name="state"/>
+                <field name="responsible_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <strong><field name="name"/></strong>
+                                <div><field name="product_id"/></div>
+                                <div>Cant: <field name="qty"/> <field name="product_uom_id"/></div>
+                                <div><field name="responsible_id"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_sweet_scrap_form" model="ir.ui.view">
+        <field name="name">sweet.scrap.form</field>
+        <field name="model">sweet.scrap</field>
+        <field name="arch" type="xml">
+            <form string="Control de Merma">
+                <header>
+                    <button name="action_submit"
+                            string="Enviar para Aprobación"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve"
+                            string="Aprobar"
+                            type="object"
+                            class="btn-success"
+                            invisible="state != 'pending'"
+                            groups="sweet_cafe_management.sweet_group_gerente"/>
+                    <button name="action_reject"
+                            string="Rechazar"
+                            type="object"
+                            class="btn-danger"
+                            invisible="state != 'pending'"
+                            groups="sweet_cafe_management.sweet_group_gerente"/>
+                    <button name="action_reset_draft"
+                            string="Reiniciar a Borrador"
+                            type="object"
+                            invisible="state != 'rejected'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pending,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_stock_scrap"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-link"
+                                invisible="not odoo_scrap_id">
+                            <field name="odoo_scrap_id" widget="statinfo" string="Ajuste Stock"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Producto">
+                            <field name="product_id"/>
+                            <field name="qty"/>
+                            <field name="product_uom_id"/>
+                            <field name="lot_id"
+                                   invisible="not product_id"/>
+                        </group>
+                        <group string="Detalles">
+                            <field name="date"/>
+                            <field name="production_loss_type"/>
+                            <field name="reason_id"/>
+                            <field name="branch_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Ubicaciones">
+                            <field name="location_id"/>
+                            <field name="scrap_location_id"/>
+                        </group>
+                        <group string="Responsables">
+                            <field name="responsible_id"/>
+                            <field name="supervisor_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Evidencia / Foto">
+                        <field name="image" widget="image" nolabel="1"
+                               options="{'size': [200, 200]}"/>
+                    </group>
+                    <group string="Observaciones">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                    <group string="Motivo de Rechazo"
+                           invisible="state != 'rejected'">
+                        <field name="rejection_reason" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view -->
+    <record id="view_sweet_scrap_search" model="ir.ui.view">
+        <field name="name">sweet.scrap.search</field>
+        <field name="model">sweet.scrap</field>
+        <field name="arch" type="xml">
+            <search string="Mermas">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="responsible_id"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sweet_scrap" model="ir.actions.act_window">
+        <field name="name">Control de Mermas</field>
+        <field name="res_model">sweet.scrap</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_sweet_scrap_search"/>
+        <field name="context">{'search_default_pending': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registre una merma
+            </p>
+            <p>Controle todas las pérdidas de producto: mermas técnicas, caducidad, roturas, negligencias.</p>
+        </field>
+    </record>
+</odoo>

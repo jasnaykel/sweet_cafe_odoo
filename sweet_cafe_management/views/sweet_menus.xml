@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         Sweet Café — Main Menu Structure
+    ═══════════════════════════════════════════════ -->
+
+    <!-- Top-level app menu -->
+    <menuitem
+        id="sweet_menu_root"
+        name="Sweet Café"
+        sequence="80"
+        web_icon="sweet_cafe_management,static/description/icon.png"
+        groups="sweet_cafe_management.sweet_group_cajero"
+    />
+
+    <!-- Ventas / POS sub-menu -->
+    <menuitem
+        id="sweet_menu_ventas"
+        name="Ventas"
+        parent="sweet_menu_root"
+        sequence="10"
+        groups="sweet_cafe_management.sweet_group_cajero"
+    />
+
+    <record id="action_sweet_products" model="ir.actions.act_window">
+        <field name="name">Productos de Pastelería</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'default_is_pastry': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Crea tu primer producto de pastelería</p>
+        </field>
+    </record>
+
+    <menuitem
+        id="sweet_menu_products"
+        name="Productos"
+        parent="sweet_menu_ventas"
+        sequence="10"
+        action="action_sweet_products"
+        groups="sweet_cafe_management.sweet_group_cajero"
+    />
+
+    <!-- Inventario -->
+    <menuitem
+        id="sweet_menu_inventario"
+        name="Inventario"
+        parent="sweet_menu_root"
+        sequence="20"
+        groups="sweet_cafe_management.sweet_group_almacen"
+    />
+
+    <!-- Mermas -->
+    <menuitem
+        id="sweet_menu_mermas"
+        name="Mermas"
+        parent="sweet_menu_inventario"
+        sequence="20"
+        action="action_sweet_scrap"
+        groups="sweet_cafe_management.sweet_group_almacen"
+    />
+
+    <!-- Producción -->
+    <menuitem
+        id="sweet_menu_produccion"
+        name="Producción"
+        parent="sweet_menu_root"
+        sequence="30"
+        groups="sweet_cafe_management.sweet_group_repostero"
+    />
+
+    <!-- RRHH -->
+    <menuitem
+        id="sweet_menu_rrhh"
+        name="Recursos Humanos"
+        parent="sweet_menu_root"
+        sequence="40"
+        groups="sweet_cafe_management.sweet_group_rrhh"
+    />
+
+    <!-- Recurso Humanos Sub-menus -->
+    <record id="action_sweet_employees" model="ir.actions.act_window">
+        <field name="name">Empleados (Sweet Café)</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Registra a tu equipo de Sweet Café</p>
+        </field>
+    </record>
+
+    <menuitem
+        id="sweet_menu_employees"
+        name="Empleados"
+        parent="sweet_menu_rrhh"
+        sequence="10"
+        action="action_sweet_employees"
+        groups="sweet_cafe_management.sweet_group_rrhh"
+    />
+
+    <menuitem
+        id="sweet_menu_contracts"
+        name="Contratos"
+        parent="sweet_menu_rrhh"
+        sequence="20"
+        action="hr.action_hr_version"
+        groups="sweet_cafe_management.sweet_group_rrhh"
+    />
+
+    <!-- Escala Salarial bajo RRHH -->
+    <menuitem
+        id="sweet_menu_escalas"
+        name="Escalas Salariales"
+        parent="sweet_menu_rrhh"
+        sequence="30"
+        action="action_hr_salary_scale"
+        groups="sweet_cafe_management.sweet_group_rrhh"
+    />
+
+    <!-- Configuración -->
+    <menuitem
+        id="sweet_menu_config"
+        name="Configuración"
+        parent="sweet_menu_root"
+        sequence="90"
+        groups="sweet_cafe_management.sweet_group_admin"
+    />
+
+    <!-- Sucursales bajo Configuración -->
+    <menuitem
+        id="sweet_menu_branches"
+        name="Sucursales"
+        parent="sweet_menu_config"
+        sequence="10"
+        action="action_sweet_branch"
+        groups="sweet_cafe_management.sweet_group_admin"
+    />
+
+    <!-- Motivos de Merma bajo Configuración -->
+    <menuitem
+        id="sweet_menu_scrap_reasons"
+        name="Motivos de Merma"
+        parent="sweet_menu_config"
+        sequence="20"
+        action="action_sweet_scrap_reason"
+        groups="sweet_cafe_management.sweet_group_admin"
+    />
+</odoo>

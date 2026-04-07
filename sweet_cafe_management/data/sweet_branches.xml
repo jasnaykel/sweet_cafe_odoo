@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ══════════════════════════════════════════════════
+         Sweet Café Branches (Sucursales) — Config Data
+    ══════════════════════════════════════════════════ -->
+    <record id="branch_matriz" model="sweet.branch">
+        <field name="name">Sucursal Matriz</field>
+        <field name="code">MAT</field>
+        <field name="branch_type">main</field>
+        <field name="sequence">1</field>
+        <field name="address">Centro Histórico</field>
+        <field name="invoice_series">A-</field>
+        <field name="pos_series">POS01-</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="branch_norte" model="sweet.branch">
+        <field name="name">Sucursal Norte</field>
+        <field name="code">NOR</field>
+        <field name="branch_type">secondary</field>
+        <field name="sequence">2</field>
+        <field name="address">Zona Residencial Norte</field>
+        <field name="invoice_series">B-</field>
+        <field name="pos_series">POS02-</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="branch_sur" model="sweet.branch">
+        <field name="name">Sucursal Sur</field>
+        <field name="code">SUR</field>
+        <field name="branch_type">secondary</field>
+        <field name="sequence">3</field>
+        <field name="address">Centro Comercial Sur</field>
+        <field name="invoice_series">C-</field>
+        <field name="pos_series">POS03-</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="branch_online" model="sweet.branch">
+        <field name="name">Canal Online</field>
+        <field name="code">WEB</field>
+        <field name="branch_type">online</field>
+        <field name="sequence">4</field>
+        <field name="address">N/A — Canal Virtual</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

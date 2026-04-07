@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         DEMO DATA — Sweet Café Employees (RRHH Cuba)
+         Only loaded in demo/testing environments
+    ═══════════════════════════════════════════════ -->
+
+    <!-- Gerente / Administrador -->
+    <record id="employee_gerente" model="hr.employee">
+        <field name="name">Ana García Martínez</field>
+        <field name="job_title">Gerente General</field>
+        <field name="gender">female</field>
+        <field name="carnet_identidad">85122345678</field>
+        <field name="escolaridad">universitario</field>
+        <field name="estado_civil">casado</field>
+        <field name="num_hijos">2</field>
+        <field name="municipio">Plaza de la Revolución</field>
+        <field name="provincia">La Habana</field>
+        <field name="categoria_ocupacional">cuadro</field>
+        <field name="salary_scale_id" ref="salary_scale_14"/>
+        <field name="forma_pago">escala</field>
+        <field name="horario_trabajo">continuo</field>
+        <field name="branch_id" ref="branch_matriz"/>
+    </record>
+
+    <!-- Repostera Principal -->
+    <record id="employee_repostera" model="hr.employee">
+        <field name="name">María Torres Pérez</field>
+        <field name="job_title">Repostera Principal</field>
+        <field name="gender">female</field>
+        <field name="carnet_identidad">90034512345</field>
+        <field name="escolaridad">tecnico</field>
+        <field name="estado_civil">soltero</field>
+        <field name="num_hijos">1</field>
+        <field name="municipio">Cerro</field>
+        <field name="provincia">La Habana</field>
+        <field name="categoria_ocupacional">tecnico</field>
+        <field name="salary_scale_id" ref="salary_scale_9"/>
+        <field name="forma_pago">mixto</field>
+        <field name="horario_trabajo">turno</field>
+        <field name="branch_id" ref="branch_matriz"/>
+    </record>
+
+    <!-- Cajero Sucursal Norte -->
+    <record id="employee_cajero_norte" model="hr.employee">
+        <field name="name">Carlos Rodríguez López</field>
+        <field name="job_title">Cajero</field>
+        <field name="gender">male</field>
+        <field name="carnet_identidad">95071289012</field>
+        <field name="escolaridad">12mo</field>
+        <field name="estado_civil">soltero</field>
+        <field name="num_hijos">0</field>
+        <field name="municipio">Centro Habana</field>
+        <field name="provincia">La Habana</field>
+        <field name="categoria_ocupacional">operario</field>
+        <field name="salary_scale_id" ref="salary_scale_4"/>
+        <field name="forma_pago">escala</field>
+        <field name="horario_trabajo">turno</field>
+        <field name="branch_id" ref="branch_norte"/>
+    </record>
+
+    <!-- Almacenista -->
+    <record id="employee_almacenista" model="hr.employee">
+        <field name="name">Roberto Díaz Suárez</field>
+        <field name="job_title">Almacenista</field>
+        <field name="gender">male</field>
+        <field name="carnet_identidad">78091567890</field>
+        <field name="escolaridad">9no</field>
+        <field name="estado_civil">casado</field>
+        <field name="num_hijos">3</field>
+        <field name="municipio">Guanabacoa</field>
+        <field name="provincia">La Habana</field>
+        <field name="categoria_ocupacional">operario</field>
+        <field name="salary_scale_id" ref="salary_scale_5"/>
+        <field name="forma_pago">escala</field>
+        <field name="horario_trabajo">continuo</field>
+        <field name="branch_id" ref="branch_matriz"/>
+    </record>
+
+    <!-- RRHH Especialista -->
+    <record id="employee_rrhh" model="hr.employee">
+        <field name="name">Luisa Fernández Castro</field>
+        <field name="job_title">Especialista en RRHH</field>
+        <field name="gender">female</field>
+        <field name="carnet_identidad">87050623456</field>
+        <field name="escolaridad">universitario</field>
+        <field name="estado_civil">casado</field>
+        <field name="num_hijos">2</field>
+        <field name="municipio">Vedado</field>
+        <field name="provincia">La Habana</field>
+        <field name="categoria_ocupacional">tecnico</field>
+        <field name="salary_scale_id" ref="salary_scale_11"/>
+        <field name="forma_pago">escala</field>
+        <field name="horario_trabajo">continuo</field>
+        <field name="branch_id" ref="branch_matriz"/>
+    </record>
+</odoo>

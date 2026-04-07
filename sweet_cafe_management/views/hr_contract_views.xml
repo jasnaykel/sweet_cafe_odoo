@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════
+         hr.version — Cuban Payroll Tab (inherited)
+    ═══════════════════════════════════════════════ -->
+
+    <record id="view_hr_version_cuba_form" model="ir.ui.view">
+        <field name="name">hr.employee.cuba.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Cuban payroll notebook page -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Nómina Cuba (CUP)" name="sweet_payroll_cuba"
+                      groups="hr.group_hr_user">
+                    <group>
+                        <group string="Percepciones">
+                            <field name="plus_antiguedad" readonly="1"/>
+                            <field name="antiguedad_years" readonly="1"/>
+                            <field name="plus_antiguedad_pct" readonly="1"
+                                   string="% Antigüedad (calculado)"/>
+                            <field name="plus_hijos" readonly="1"/>
+                            <field name="plus_peligrosidad"/>
+                            <field name="plus_nocturno"/>
+                        </group>
+                        <group string="Deducciones y Neto">
+                            <field name="deduccion_seguridad_social" readonly="1"/>
+                            <field name="salario_neto_estimado" readonly="1"
+                                   class="oe_inline" style="font-weight: bold;"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        <strong>Nota:</strong> El plus por antigüedad es 1% del salario básico por año de servicio,
+                        hasta un máximo del 20%. El plus por hijos es de 40 CUP por cada hijo menor de 18 años.
+                        La deducción de Seguridad Social es el 5% del salario básico (aporte del trabajador).
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════════════════
+         Cuban Salary Scales (Escalas Salariales Cubanas 1–18)
+         Salaries in CUP (Cuban Pesos) — approximate reference values.
+         The administrator can update amounts as per official regulations.
+    ═══════════════════════════════════════════════════════════ -->
+
+    <record id="salary_scale_1" model="hr.salary.scale">
+        <field name="scale_number">1</field>
+        <field name="name">Escala 1 — Operario Elemental</field>
+        <field name="basic_salary">2100.00</field>
+        <field name="category">operario</field>
+        <field name="complexity_level">low</field>
+    </record>
+    <record id="salary_scale_2" model="hr.salary.scale">
+        <field name="scale_number">2</field>
+        <field name="name">Escala 2 — Operario Categoría B</field>
+        <field name="basic_salary">2400.00</field>
+        <field name="category">operario</field>
+        <field name="complexity_level">low</field>
+    </record>
+    <record id="salary_scale_3" model="hr.salary.scale">
+        <field name="scale_number">3</field>
+        <field name="name">Escala 3 — Operario Categoría A</field>
+        <field name="basic_salary">2700.00</field>
+        <field name="category">operario</field>
+        <field name="complexity_level">low</field>
+    </record>
+    <record id="salary_scale_4" model="hr.salary.scale">
+        <field name="scale_number">4</field>
+        <field name="name">Escala 4 — Operario Especializado</field>
+        <field name="basic_salary">3100.00</field>
+        <field name="category">operario</field>
+        <field name="complexity_level">medium</field>
+    </record>
+    <record id="salary_scale_5" model="hr.salary.scale">
+        <field name="scale_number">5</field>
+        <field name="name">Escala 5 — Servicios Calificados I</field>
+        <field name="basic_salary">3400.00</field>
+        <field name="category">servicio</field>
+        <field name="complexity_level">medium</field>
+    </record>
+    <record id="salary_scale_6" model="hr.salary.scale">
+        <field name="scale_number">6</field>
+        <field name="name">Escala 6 — Servicios Calificados II</field>
+        <field name="basic_salary">3700.00</field>
+        <field name="category">servicio</field>
+        <field name="complexity_level">medium</field>
+    </record>
+    <record id="salary_scale_7" model="hr.salary.scale">
+        <field name="scale_number">7</field>
+        <field name="name">Escala 7 — Administrativo I</field>
+        <field name="basic_salary">4000.00</field>
+        <field name="category">administrativo</field>
+        <field name="complexity_level">medium</field>
+    </record>
+    <record id="salary_scale_8" model="hr.salary.scale">
+        <field name="scale_number">8</field>
+        <field name="name">Escala 8 — Técnico Medio I</field>
+        <field name="basic_salary">4400.00</field>
+        <field name="category">tecnico</field>
+        <field name="complexity_level">medium</field>
+    </record>
+    <record id="salary_scale_9" model="hr.salary.scale">
+        <field name="scale_number">9</field>
+        <field name="name">Escala 9 — Técnico Medio II</field>
+        <field name="basic_salary">4800.00</field>
+        <field name="category">tecnico</field>
+        <field name="complexity_level">medium</field>
+    </record>
+    <record id="salary_scale_10" model="hr.salary.scale">
+        <field name="scale_number">10</field>
+        <field name="name">Escala 10 — Administrativo II / Técnico Medio III</field>
+        <field name="basic_salary">5300.00</field>
+        <field name="category">tecnico</field>
+        <field name="complexity_level">medium</field>
+    </record>
+    <record id="salary_scale_11" model="hr.salary.scale">
+        <field name="scale_number">11</field>
+        <field name="name">Escala 11 — Técnico Superior I</field>
+        <field name="basic_salary">5800.00</field>
+        <field name="category">tecnico</field>
+        <field name="complexity_level">high</field>
+    </record>
+    <record id="salary_scale_12" model="hr.salary.scale">
+        <field name="scale_number">12</field>
+        <field name="name">Escala 12 — Técnico Superior II</field>
+        <field name="basic_salary">6500.00</field>
+        <field name="category">tecnico</field>
+        <field name="complexity_level">high</field>
+    </record>
+    <record id="salary_scale_13" model="hr.salary.scale">
+        <field name="scale_number">13</field>
+        <field name="name">Escala 13 — Directivo I / Especialista</field>
+        <field name="basic_salary">7200.00</field>
+        <field name="category">cuadro</field>
+        <field name="complexity_level">high</field>
+    </record>
+    <record id="salary_scale_14" model="hr.salary.scale">
+        <field name="scale_number">14</field>
+        <field name="name">Escala 14 — Directivo II</field>
+        <field name="basic_salary">8000.00</field>
+        <field name="category">cuadro</field>
+        <field name="complexity_level">high</field>
+    </record>
+    <record id="salary_scale_15" model="hr.salary.scale">
+        <field name="scale_number">15</field>
+        <field name="name">Escala 15 — Directivo III / Especialista Principal</field>
+        <field name="basic_salary">8900.00</field>
+        <field name="category">cuadro</field>
+        <field name="complexity_level">high</field>
+    </record>
+    <record id="salary_scale_16" model="hr.salary.scale">
+        <field name="scale_number">16</field>
+        <field name="name">Escala 16 — Cuadro Superior I</field>
+        <field name="basic_salary">9800.00</field>
+        <field name="category">cuadro</field>
+        <field name="complexity_level">high</field>
+    </record>
+    <record id="salary_scale_17" model="hr.salary.scale">
+        <field name="scale_number">17</field>
+        <field name="name">Escala 17 — Cuadro Superior II</field>
+        <field name="basic_salary">11000.00</field>
+        <field name="category">cuadro</field>
+        <field name="complexity_level">high</field>
+    </record>
+    <record id="salary_scale_18" model="hr.salary.scale">
+        <field name="scale_number">18</field>
+        <field name="name">Escala 18 — Dirección General</field>
+        <field name="basic_salary">12500.00</field>
+        <field name="category">cuadro</field>
+        <field name="complexity_level">high</field>
+    </record>
+</odoo>
