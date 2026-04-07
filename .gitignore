@@ -1,0 +1,24 @@
+# Ignorar todo por defecto
+*
+
+# No ignorar los directorios de los módulos de Sweet Café
+!sweet_cafe_management/
+!sweet_cafe_ecommerce/
+
+# No ignorar el propio .gitignore
+!.gitignore
+
+# Opcional: No ignorar el docker-compose si quieres versionarlo
+#!docker-compose.yml
+
+# Ignorar archivos locales dentro de los módulos si existen
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.DS_Store
+**/Thumbs.db
+**/*.swp
+**/*.swo
+**/*~
+**.bak
