@@ -18,6 +18,9 @@
 # Y el propio .gitignore
 !/.gitignore
 
+# README del proyecto
+!/README.md
+
 # Ignorar archivos temporales y basura dentro de los módulos
 **/__pycache__/
 **/*.pyc
