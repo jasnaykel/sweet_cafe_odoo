@@ -132,7 +132,7 @@ sweet_cafe_odoo/
 
 ## Autor
 
-**Sweet Café** — https://sweetcafe.cu
+**Sweet Café** — Jasnaykel@gmail.com
 
 ## Licencia
 
