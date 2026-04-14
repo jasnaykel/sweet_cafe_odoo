@@ -9,4 +9,6 @@ from . import (
     product_template,
     pos_config,
     res_company,
+    sweet_reservation,
+    sweet_onat_report,
 )

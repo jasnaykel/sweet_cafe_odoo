@@ -19,13 +19,118 @@
                 <t t-call="sweet_cafe_ecommerce.s_sweet_hero"/>
                 <t t-call="sweet_cafe_ecommerce.s_sweet_flavors"/>
                 <t t-call="sweet_cafe_ecommerce.s_sweet_product_carousel"/>
+                <!-- Best Sellers & Available Products -->
+                <t t-call="sweet_cafe_ecommerce.s_sweet_best_sellers"/>
                 <t t-call="sweet_cafe_ecommerce.s_sweet_about_us"/>
                 <t t-call="sweet_cafe_ecommerce.s_sweet_branches"/>
                 <t t-call="sweet_cafe_ecommerce.s_sweet_custom_order"/>
+                <!-- Reserve CTA -->
+                <t t-call="sweet_cafe_ecommerce.s_sweet_reservation_cta"/>
             </div>
-            
-            <!-- Additional structure for user customization -->
             <div class="oe_structure"/>
         </xpath>
+    </template>
+
+    <!-- ══════════════════════════════════════════════
+         Best Sellers Section (dynamic, from sale data)
+    ══════════════════════════════════════════════ -->
+    <template id="s_sweet_best_sellers" name="Sweet Café — Más Vendidos">
+        <section class="sc-best-sellers py-5 bg-light">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold" style="color:#8B4513;">⭐ Los Más Vendidos</h2>
+                    <p class="text-muted">Los favoritos de nuestros clientes, siempre disponibles para ti.</p>
+                </div>
+
+                <!-- Dynamic best sellers loaded via JS -->
+                <div id="sc-best-sellers-grid" class="row row-cols-2 row-cols-md-4 g-3">
+                    <!-- Skeleton placeholders shown before JS loads -->
+                    <t t-foreach="range(4)" t-as="i">
+                        <div class="col sc-skeleton-card">
+                            <div class="card border-0 shadow-sm h-100 placeholder-glow">
+                                <div class="placeholder card-img-top" style="height:160px; background:#ddd;"/>
+                                <div class="card-body">
+                                    <p class="placeholder col-8 mb-1"/>
+                                    <p class="placeholder col-4"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="/shop" class="btn px-4 text-white" style="background:#8B4513;">Ver todos los productos</a>
+                </div>
+            </div>
+        </section>
+
+        <script type="text/javascript">
+            (function () {
+                function loadBestSellers() {
+                    fetch('/sweet/best-sellers', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { limit: 8 } }),
+                    })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        var products = data.result || [];
+                        var grid = document.getElementById('sc-best-sellers-grid');
+                        if (!grid) return;
+                        grid.innerHTML = '';
+                        if (!products.length) {
+                            grid.innerHTML = '<div class="col-12 text-center text-muted">Próximamente disponible</div>';
+                            return;
+                        }
+                        products.forEach(function (p) {
+                            var badge = p.available
+                                ? '<span class="badge text-bg-success position-absolute top-0 end-0 m-2">Disponible</span>'
+                                : '<span class="badge text-bg-secondary position-absolute top-0 end-0 m-2">Sin stock</span>';
+                            var card = '<div class="col"><a href="' + p.url + '" class="text-decoration-none">' +
+                                '<div class="card border-0 shadow-sm h-100 position-relative sc-hover-card">' +
+                                badge +
+                                '<img src="' + p.image_url + '" class="card-img-top" style="height:160px;object-fit:cover;" alt="' + p.name + '"/>' +
+                                '<div class="card-body text-center p-2">' +
+                                '<p class="fw-semibold mb-0 small">' + p.name + '</p>' +
+                                '<p class="text-muted small mb-1">' + p.price.toFixed(2) + ' CUP</p>' +
+                                '<span class="small text-warning">&#9733; ' + Math.round(p.qty_sold) + ' vendidos</span>' +
+                                '</div></div></a></div>';
+                            grid.innerHTML += card;
+                        });
+                    })
+                    .catch(function () {
+                        // Silently fail — skeleton cards remain
+                    });
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', loadBestSellers);
+                } else {
+                    loadBestSellers();
+                }
+            })();
+        </script>
+    </template>
+
+    <!-- ══════════════════════════════════════════════
+         Reserve CTA Banner
+    ══════════════════════════════════════════════ -->
+    <template id="s_sweet_reservation_cta" name="Sweet Café — CTA Reservar">
+        <section class="sc-reservation-cta py-5 text-white text-center" style="background: linear-gradient(135deg, #8B4513 0%, #C0722A 100%);">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <h2 class="fw-bold mb-3">🎂 ¿Tienes un pedido especial?</h2>
+                        <p class="lead mb-4">Reserva con anticipación y personalizamos tu dulce: decoración, sabor, tamaño y mensaje.</p>
+                        <a href="/reservar" class="btn btn-light btn-lg px-5 fw-bold" style="color:#8B4513;">
+                            Reservar ahora
+                        </a>
+                        <a href="/reservar/estado" class="btn btn-outline-light btn-lg px-4 ms-3">
+                            Ver mi reserva
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </template>
 </odoo>

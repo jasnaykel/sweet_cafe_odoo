@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ Form view ════════════════════════════════════════════════════ -->
+    <record id="view_sweet_onat_report_form" model="ir.ui.view">
+        <field name="name">sweet.onat.report.form</field>
+        <field name="model">sweet.onat.report</field>
+        <field name="arch" type="xml">
+            <form string="Declaración ONAT">
+                <header>
+                    <button name="action_compute_from_accounting"
+                            string="Calcular desde Contabilidad"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_compute_from_accounting"
+                            string="Recalcular"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="state == 'draft'"/>
+                    <button name="action_open_export_wizard"
+                            string="Exportar CSV"
+                            type="object"
+                            invisible="state == 'draft'"/>
+                    <button name="action_mark_submitted"
+                            string="Marcar como Presentada"
+                            type="object"
+                            class="btn-success"
+                            invisible="state != 'computed'"
+                            confirm="¿Confirma que esta declaración fue presentada a la ONAT?"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,computed,submitted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="display_name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group col="4">
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="company_id" readonly="1"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Bases Imponibles">
+                            <group string="Ingresos y Gastos">
+                                <field name="gross_income" widget="monetary"/>
+                                <field name="total_purchases" widget="monetary"/>
+                                <field name="net_income" widget="monetary" readonly="1"
+                                       class="fw-bold text-success"/>
+                                <field name="total_wages" widget="monetary"/>
+                            </group>
+                        </page>
+
+                        <page string="Impuestos y Tasas">
+                            <group string="Tasas configurables (%)">
+                                <field name="income_tax_rate"
+                                       help="Impuesto sobre los Ingresos"/>
+                                <field name="labor_tax_rate"
+                                       help="IUFT — Fuerza de Trabajo"/>
+                                <field name="social_security_rate"
+                                       help="Contribución SS Empleador"/>
+                                <field name="sales_tax_rate"
+                                       help="Impuesto sobre Ventas (si aplica)"/>
+                            </group>
+                            <group string="Importes Calculados (CUP)">
+                                <field name="income_tax" widget="monetary" readonly="1"/>
+                                <field name="labor_tax" widget="monetary" readonly="1"/>
+                                <field name="social_security" widget="monetary" readonly="1"/>
+                                <field name="sales_tax" widget="monetary" readonly="1"/>
+                                <field name="total_to_pay" widget="monetary" readonly="1"
+                                       class="fw-bold text-danger"/>
+                            </group>
+                        </page>
+
+                        <page string="Observaciones">
+                            <field name="notes" widget="html"
+                                   placeholder="Observaciones, notas de ajuste, referencias normativas..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ List view ════════════════════════════════════════════════════ -->
+    <record id="view_sweet_onat_report_list" model="ir.ui.view">
+        <field name="name">sweet.onat.report.list</field>
+        <field name="model">sweet.onat.report</field>
+        <field name="arch" type="xml">
+            <list string="Declaraciones ONAT" decoration-success="state == 'submitted'"
+                  decoration-warning="state == 'computed'">
+                <field name="display_name" string="Período"/>
+                <field name="year" optional="hide"/>
+                <field name="month" optional="hide"/>
+                <field name="company_id"/>
+                <field name="gross_income" widget="monetary" sum="Total"/>
+                <field name="total_purchases" widget="monetary" sum="Total"/>
+                <field name="net_income" widget="monetary" sum="Total"/>
+                <field name="total_wages" widget="monetary" sum="Total"/>
+                <field name="total_to_pay" widget="monetary" sum="Total a Pagar"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'submitted'"
+                       decoration-warning="state == 'computed'"/>
+                <field name="currency_id" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ══ Search view ══════════════════════════════════════════════════ -->
+    <record id="view_sweet_onat_report_search" model="ir.ui.view">
+        <field name="name">sweet.onat.report.search</field>
+        <field name="model">sweet.onat.report</field>
+        <field name="arch" type="xml">
+            <search string="Declaraciones ONAT">
+                <field name="year"/>
+                <field name="month"/>
+                <field name="company_id"/>
+                <filter name="draft" string="Borrador" domain="[('state','=','draft')]"/>
+                <filter name="computed" string="Calculadas" domain="[('state','=','computed')]"/>
+                <filter name="submitted" string="Presentadas" domain="[('state','=','submitted')]"/>
+                <separator/>
+                <filter name="this_year"
+                        string="Este año"
+                        domain="[('year','=', context_today().year)]"/>
+                <group>
+                    <filter name="group_year" string="Año" context="{'group_by': 'year'}"/>
+                    <filter name="group_month" string="Mes" context="{'group_by': 'month'}"/>
+                    <filter name="group_company" string="Empresa" context="{'group_by': 'company_id'}"/>
+                    <filter name="group_state" string="Estado" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══ Action ═══════════════════════════════════════════════════════ -->
+    <record id="action_sweet_onat_report" model="ir.actions.act_window">
+        <field name="name">Declaraciones ONAT</field>
+        <field name="res_model">sweet.onat.report</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sweet_onat_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay declaraciones ONAT aún.
+            </p>
+            <p>
+                Crea tu primera declaración y calcula los impuestos
+                automáticamente desde la contabilidad de Odoo.
+            </p>
+        </field>
+    </record>
+
+    <!-- ══ Menu ═════════════════════════════════════════════════════════ -->
+    <menuitem id="menu_sweet_onat_report"
+              name="Declaraciones ONAT"
+              parent="sweet_menu_root"
+              action="action_sweet_onat_report"
+              sequence="80"/>
+
+</odoo>

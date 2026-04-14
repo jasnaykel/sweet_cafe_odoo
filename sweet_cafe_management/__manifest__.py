@@ -46,9 +46,11 @@
         'data/product_attributes.xml',
         'data/hr_salary_scales.xml',
         'data/sweet_branches.xml',
+        'data/sweet_reservation_sequence.xml',
 
         # Wizard views
         'wizard/scrap_approve_wizard_views.xml',
+        'wizard/sweet_onat_wizard_views.xml',
 
         # Views
         'views/sweet_branch_views.xml',
@@ -58,6 +60,8 @@
         'views/hr_employee_views.xml',
         'views/hr_contract_views.xml',
         'views/pos_config_views.xml',
+        'views/sweet_reservation_views.xml',
+        'views/sweet_onat_report_views.xml',
         'views/sweet_menus.xml',
 
         # Reports

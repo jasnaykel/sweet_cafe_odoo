@@ -20,6 +20,7 @@ Incluye:
     'data': [
         'views/website_sale_templates.xml',
         'views/homepage_templates.xml',
+        'views/sweet_reservation_templates.xml',
         'views/snippets/s_sweet_hero.xml',
         'views/snippets/s_sweet_flavors.xml',
         'views/snippets/s_sweet_about_us.xml',

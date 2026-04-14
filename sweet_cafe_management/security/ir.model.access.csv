@@ -14,3 +14,15 @@ access_hr_salary_scale_rrhh,hr.salary.scale.rrhh,model_hr_salary_scale,sweet_gro
 access_hr_salary_scale_gerente,hr.salary.scale.gerente,model_hr_salary_scale,sweet_group_gerente,1,0,0,0
 access_hr_salary_scale_user,hr.salary.scale.user,model_hr_salary_scale,base.group_user,1,0,0,0
 access_sweet_scrap_approve_wizard_user,sweet.scrap.approve.wizard.user,model_sweet_scrap_approve_wizard,base.group_user,1,1,1,1
+access_sweet_reservation_admin,sweet.reservation.admin,model_sweet_reservation,sweet_group_admin,1,1,1,1
+access_sweet_reservation_gerente,sweet.reservation.gerente,model_sweet_reservation,sweet_group_gerente,1,1,1,0
+access_sweet_reservation_cajero,sweet.reservation.cajero,model_sweet_reservation,sweet_group_cajero,1,1,1,0
+access_sweet_reservation_user,sweet.reservation.user,model_sweet_reservation,base.group_user,1,0,0,0
+access_sweet_reservation_line_admin,sweet.reservation.line.admin,model_sweet_reservation_line,sweet_group_admin,1,1,1,1
+access_sweet_reservation_line_gerente,sweet.reservation.line.gerente,model_sweet_reservation_line,sweet_group_gerente,1,1,1,0
+access_sweet_reservation_line_cajero,sweet.reservation.line.cajero,model_sweet_reservation_line,sweet_group_cajero,1,1,1,0
+access_sweet_reservation_line_user,sweet.reservation.line.user,model_sweet_reservation_line,base.group_user,1,0,0,0
+access_sweet_onat_admin,sweet.onat.admin,model_sweet_onat_report,sweet_group_admin,1,1,1,1
+access_sweet_onat_gerente,sweet.onat.gerente,model_sweet_onat_report,sweet_group_gerente,1,1,1,0
+access_sweet_onat_export_wizard_user,sweet.onat.export.wizard.user,model_sweet_onat_export_wizard,base.group_user,1,1,1,1
+access_sweet_onat_import_wizard_user,sweet.onat.import.wizard.user,model_sweet_onat_import_wizard,base.group_user,1,1,1,1

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════
+         Reservation Form — Public website page
+    ══════════════════════════════════════════════ -->
+    <template id="reservation_form" name="Sweet Café — Reservar Pedido">
+        <t t-call="website.layout">
+            <div id="wrap" class="sc-reservation-page py-5">
+                <div class="container">
+
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bold" style="color:#8B4513;">Reserva tu Pedido</h1>
+                        <p class="lead text-muted">Personaliza tu dulce especial con anticipación y lo tendremos listo en tu sucursal favorita.</p>
+                    </div>
+
+                    <!-- Error / success alerts -->
+                    <t t-if="error == 'campos_requeridos'">
+                        <div class="alert alert-danger">Por favor completa todos los campos obligatorios.</div>
+                    </t>
+                    <t t-if="error == 'sin_productos'">
+                        <div class="alert alert-danger">Debes seleccionar al menos un producto.</div>
+                    </t>
+
+                    <form action="/reservar/enviar" method="post" class="needs-validation" novalidate="novalidate">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                        <div class="row g-4">
+
+                            <!-- LEFT: Customer + Delivery -->
+                            <div class="col-lg-5">
+                                <div class="card shadow-sm border-0">
+                                    <div class="card-header" style="background:#8B4513; color:white;">
+                                        <h5 class="mb-0"><i class="fa fa-user me-2"/>Tus Datos</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Nombre completo *</label>
+                                            <input type="text" name="name" class="form-control" required="required" placeholder="Ej: María García"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Correo electrónico *</label>
+                                            <input type="email" name="email" class="form-control" required="required" placeholder="tu@correo.com"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Teléfono</label>
+                                            <input type="tel" name="phone" class="form-control" placeholder="+53 5 XXX XXXX"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow-sm border-0 mt-3">
+                                    <div class="card-header" style="background:#8B4513; color:white;">
+                                        <h5 class="mb-0"><i class="fa fa-map-marker me-2"/>Entrega</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Sucursal *</label>
+                                            <select name="branch_id" class="form-select" required="required">
+                                                <option value="">-- Elige una sucursal --</option>
+                                                <t t-foreach="branches" t-as="b">
+                                                    <option t-att-value="b.id"><t t-out="b.name"/></option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Fecha de entrega *</label>
+                                            <input type="date" name="delivery_date" class="form-control"
+                                                   t-att-min="min_date" required="required"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Hora aproximada</label>
+                                            <input type="text" name="delivery_time" class="form-control" placeholder="Ej: 10:00 – 11:00"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Indicaciones especiales</label>
+                                            <textarea name="customer_notes" class="form-control" rows="3"
+                                                      placeholder="Mensajes, decoración, alergias, tamaño..."/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT: Product selection -->
+                            <div class="col-lg-7">
+                                <div class="card shadow-sm border-0">
+                                    <div class="card-header" style="background:#8B4513; color:white;">
+                                        <h5 class="mb-0"><i class="fa fa-birthday-cake me-2"/>Productos *</h5>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="sc-product-grid p-3" style="max-height:420px; overflow-y:auto;">
+                                            <div class="row row-cols-2 row-cols-md-3 g-3">
+                                                <t t-foreach="products" t-as="p">
+                                                    <div class="col">
+                                                        <div class="card h-100 sc-product-card" style="cursor:pointer; border:2px solid #eee; transition:border .2s;"
+                                                             t-att-data-id="p.id"
+                                                             t-att-data-name="p.name"
+                                                             t-att-data-price="p.list_price">
+                                                            <img t-att-src="'/web/image/product.template/%d/image_256' % p.id"
+                                                                 class="card-img-top" style="height:100px; object-fit:cover;"
+                                                                 t-att-alt="p.name"/>
+                                                            <div class="card-body p-2 text-center">
+                                                                <p class="mb-0 small fw-semibold"><t t-out="p.name"/></p>
+                                                                <p class="mb-0 small text-muted"><t t-out="p.list_price"/> CUP</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Selected products table -->
+                                <div class="card shadow-sm border-0 mt-3">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">Productos seleccionados</h6>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <table class="table table-sm mb-0" id="sc-selected-products">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Producto</th>
+                                                    <th style="width:80px;">Cant.</th>
+                                                    <th>Sabor / Variante</th>
+                                                    <th style="width:40px;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="sc-selected-tbody">
+                                                <tr id="sc-empty-row">
+                                                    <td colspan="4" class="text-center text-muted py-3">
+                                                        Haz clic en un producto para agregarlo
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-lg px-5 text-white fw-bold"
+                                    style="background:#8B4513; border-color:#8B4513;">
+                                <i class="fa fa-check me-2"/>Enviar Reserva
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- JS for product selection -->
+            <script type="text/javascript">
+                (function () {
+                    var selected = {};
+                    document.querySelectorAll('.sc-product-card').forEach(function (card) {
+                        card.addEventListener('click', function () {
+                            var id = card.dataset.id;
+                            var name = card.dataset.name;
+                            var price = parseFloat(card.dataset.price);
+                            if (selected[id]) {
+                                selected[id].qty += 1;
+                                document.getElementById('sc-qty-' + id).value = selected[id].qty;
+                            } else {
+                                selected[id] = { id: id, name: name, price: price, qty: 1 };
+                                renderRow(id, name);
+                            }
+                            card.style.border = '2px solid #8B4513';
+                            document.getElementById('sc-empty-row') &amp;&amp; (document.getElementById('sc-empty-row').style.display = 'none');
+                        });
+                    });
+
+                    function renderRow(id, name) {
+                        var tbody = document.getElementById('sc-selected-tbody');
+                        var tr = document.createElement('tr');
+                        tr.id = 'sc-row-' + id;
+                        tr.innerHTML = '<td>' + name +
+                            '<input type="hidden" name="product_ids" value="' + id + '"/></td>' +
+                            '<td><input type="number" id="sc-qty-' + id + '" name="quantities" value="1" min="1" class="form-control form-control-sm"/></td>' +
+                            '<td><input type="text" name="flavors" placeholder="Sabor..." class="form-control form-control-sm"/></td>' +
+                            '<td><button type="button" class="btn btn-sm btn-outline-danger" onclick="removeRow(\'' + id + '\')">✕</button></td>';
+                        tbody.appendChild(tr);
+                    }
+
+                    window.removeRow = function (id) {
+                        var row = document.getElementById('sc-row-' + id);
+                        if (row) row.remove();
+                        delete selected[id];
+                        var card = document.querySelector('[data-id="' + id + '"]');
+                        if (card) card.style.border = '2px solid #eee';
+                    };
+                })();
+            </script>
+        </t>
+    </template>
+
+    <!-- ══════════════════════════════════════════════
+         Thank you page
+    ══════════════════════════════════════════════ -->
+    <template id="reservation_thanks" name="Sweet Café — Reserva Recibida">
+        <t t-call="website.layout">
+            <div id="wrap" class="py-5 text-center">
+                <div class="container" style="max-width:600px;">
+                    <div style="font-size:4rem; color:#8B4513;">🎂</div>
+                    <h2 class="mt-3 fw-bold" style="color:#8B4513;">¡Reserva recibida!</h2>
+                    <p class="lead">Tu pedido ha sido registrado con la referencia:</p>
+                    <div class="alert alert-success fs-5 fw-bold"><t t-out="ref"/></div>
+                    <p class="text-muted">Nuestro equipo confirmará tu reserva en breve. Puedes verificar el estado de tu pedido en cualquier momento.</p>
+                    <a href="/reservar/estado" class="btn btn-outline-secondary me-2">Ver estado del pedido</a>
+                    <a href="/" class="btn text-white" style="background:#8B4513;">Volver al inicio</a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ══════════════════════════════════════════════
+         Reservation status page
+    ══════════════════════════════════════════════ -->
+    <template id="reservation_status" name="Sweet Café — Estado de Reserva">
+        <t t-call="website.layout">
+            <div id="wrap" class="py-5">
+                <div class="container" style="max-width:700px;">
+                    <h2 class="fw-bold mb-4" style="color:#8B4513;">Estado de tu Reserva</h2>
+
+                    <form method="get" action="/reservar/estado" class="d-flex gap-2 mb-4">
+                        <input type="text" name="ref" class="form-control" placeholder="Introduce tu número de reserva (ej: RES/2026/001)"
+                               t-att-value="ref"/>
+                        <button type="submit" class="btn text-white" style="background:#8B4513; white-space:nowrap;">Consultar</button>
+                    </form>
+
+                    <t t-if="reservation">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header text-white" style="background:#8B4513;">
+                                <strong><t t-out="reservation.name"/></strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p><strong>Estado:</strong>
+                                            <span class="badge ms-2"
+                                                  t-attf-class="#{{'draft':'text-bg-secondary','confirmed':'text-bg-primary','ready':'text-bg-warning','done':'text-bg-success','cancelled':'text-bg-danger'}[reservation.state]}">
+                                                <t t-out="dict(reservation._fields['state'].selection)[reservation.state]"/>
+                                            </span>
+                                        </p>
+                                        <p><strong>Fecha de entrega:</strong> <t t-out="reservation.delivery_date"/></p>
+                                        <t t-if="reservation.delivery_time">
+                                            <p><strong>Hora:</strong> <t t-out="reservation.delivery_time"/></p>
+                                        </t>
+                                        <p><strong>Sucursal:</strong> <t t-out="reservation.branch_id.name"/></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p><strong>Total estimado:</strong>
+                                            <t t-out="reservation.amount_total"/> CUP
+                                        </p>
+                                        <p><strong>Seña:</strong>
+                                            <t t-if="reservation.deposit_paid">
+                                                <span class="badge text-bg-success">Cobrada</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="badge text-bg-secondary">Pendiente</span>
+                                            </t>
+                                        </p>
+                                    </div>
+                                </div>
+                                <t t-if="reservation.line_ids">
+                                    <hr/>
+                                    <h6>Productos:</h6>
+                                    <ul>
+                                        <t t-foreach="reservation.line_ids" t-as="line">
+                                            <li>
+                                                <t t-out="line.product_id.name"/>
+                                                × <t t-out="line.qty"/>
+                                                <t t-if="line.flavor"> — <em><t t-out="line.flavor"/></em></t>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-elif="ref">
+                        <div class="alert alert-warning">No se encontró ninguna reserva con la referencia <strong><t t-out="ref"/></strong>.</div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

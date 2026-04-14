@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ Export Wizard ════════════════════════════════════════════════ -->
+    <record id="view_sweet_onat_export_wizard_form" model="ir.ui.view">
+        <field name="name">sweet.onat.export.wizard.form</field>
+        <field name="model">sweet.onat.export.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Exportar Declaración ONAT">
+                <group invisible="state == 'done'">
+                    <field name="report_id" readonly="1"/>
+                    <field name="export_format" widget="radio"/>
+                </group>
+                <group invisible="state != 'done'" string="Archivo generado">
+                    <field name="file_data" filename="file_name" widget="binary"/>
+                    <field name="file_name"/>
+                </group>
+                <footer>
+                    <button name="action_export" string="Generar archivo"
+                            type="object" class="btn-primary"
+                            invisible="state == 'done'"/>
+                    <button name="action_download" string="Descargar"
+                            type="object" class="btn-success"
+                            invisible="state != 'done'"/>
+                    <button string="Cerrar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ Import Wizard ════════════════════════════════════════════════ -->
+    <record id="view_sweet_onat_import_wizard_form" model="ir.ui.view">
+        <field name="name">sweet.onat.import.wizard.form</field>
+        <field name="model">sweet.onat.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Importar Declaraciones ONAT">
+                <group invisible="state == 'done'">
+                    <field name="file_data" filename="file_name" widget="binary"
+                           string="Archivo CSV"
+                           help="CSV con columnas: year, month, gross_income, total_wages, total_purchases"/>
+                    <field name="file_name" invisible="1"/>
+                </group>
+                <group invisible="state != 'done'" string="Resultado de la importación">
+                    <field name="result_summary" readonly="1" widget="text" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_import" string="Importar"
+                            type="object" class="btn-primary"
+                            invisible="state == 'done'"/>
+                    <button string="Cerrar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ Import action (accessible from menu) ═════════════════════════ -->
+    <record id="action_sweet_onat_import_wizard" model="ir.actions.act_window">
+        <field name="name">Importar Declaraciones ONAT</field>
+        <field name="res_model">sweet.onat.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_sweet_onat_import"
+              name="Importar ONAT"
+              parent="sweet_menu_root"
+              action="action_sweet_onat_import_wizard"
+              sequence="85"/>
+
+</odoo>

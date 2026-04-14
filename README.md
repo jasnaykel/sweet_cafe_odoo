@@ -45,10 +45,34 @@ Sistema modular desarrollado sobre **Odoo 19** para la gestión integral de una 
 ### E-commerce (`sweet_cafe_ecommerce`)
 
 - Página de inicio personalizada con hero, sabores, nosotros, sucursales y pedidos especiales
+- **Sección "Más Vendidos"**: muestra los 8 productos más vendidos en tiempo real, con badge de disponibilidad de stock
+- **Formulario de reservas online** (`/reservar`): los clientes reservan pedidos especiales desde el sitio web con selección de producto, sucursal, fecha y especificaciones personalizadas
 - Snippets de arrastrar-y-soltar para el editor web de Odoo
 - Tienda online con plantilla de producto para pastelería
 - Carrusel de productos destacados
 - Paleta de colores y tipografía artesanal (SCSS personalizado)
+
+### Reservas de Pedidos (`sweet.reservation`)
+
+- Flujo completo: Borrador → Confirmada → Lista para Entrega → Entregada / Cancelada
+- Formulario público en `/reservar` para que clientes reserven sin cuenta Odoo
+- Gestión interna: vista kanban, lista y formulario con chatter y seguimiento de actividades
+- Soporte para pedidos personalizados (decoraciones, sabores especiales, mensajes)
+- Numeración automática por secuencia (`RESV/YYYY/NNNN`)
+- Confirmación por correo electrónico desde el backend
+
+### Declaración Tributaria ONAT (`sweet.onat.report`)
+
+- Cálculo automático desde la contabilidad de Odoo: ingresos, gastos deducibles, salarios pagados
+- Impuestos calculados conforme a legislación cubana vigente:
+  - Impuesto sobre los Ingresos (IS) — tasa configurable
+  - IUFT (Fuerza de Trabajo) — tasa configurable
+  - Contribución SS Empleador — tasa configurable
+  - Impuesto sobre Ventas (si aplica)
+- **Exportación CSV**: descarga la declaración en formato hoja de cálculo compatible con Excel
+- **Importación CSV**: carga declaraciones históricas desde archivo, detecta duplicados automáticamente
+- Estados: Borrador → Calculada → Presentada (con trazabilidad en chatter)
+- Restricción de unicidad por empresa + mes + año
 
 ### Localización Cubana (RRHH)
 
@@ -109,14 +133,15 @@ sweet_cafe_management,sweet_cafe_ecommerce \
 ```
 sweet_cafe_odoo/
 ├── sweet_cafe_management/       # Módulo principal de gestión
-│   ├── models/                  # Modelos: producto, empleado, contrato, sucursal
+│   ├── models/                  # Modelos: producto, empleado, contrato, sucursal, reservas, ONAT
 │   ├── views/                   # Vistas: menús, formularios, listas
 │   ├── report/                  # Reportes PDF (mermas, nómina)
 │   ├── security/                # Grupos y reglas de acceso
-│   ├── data/                    # Datos iniciales (categorías, atributos, escalas)
-│   └── wizard/                  # Asistentes (aprobación de mermas)
+│   ├── data/                    # Datos iniciales (categorías, atributos, escalas, secuencias)
+│   └── wizard/                  # Asistentes (aprobación de mermas, exportar/importar ONAT)
 ├── sweet_cafe_ecommerce/        # Módulo de sitio web y tienda online
-│   ├── views/                   # Plantillas QWeb y snippets
+│   ├── controllers/             # Rutas web: /reservar, /sweet/best-sellers
+│   ├── views/                   # Plantillas QWeb, snippets y formulario de reservas
 │   └── static/src/scss/         # Estilos personalizados
 ├── l10n_cu_address/             # Municipios y provincias de Cuba
 ├── l10n_cu_banks/               # Bancos cubanos
