@@ -1,0 +1,38 @@
+<odoo>
+    <record id="hr_contract_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.version.payroll.movement.form.inherit</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="l10n_cu_hr_contract.hr_version_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <div class="oe_button_box" name="button_box" groups="hr.group_hr_manager">
+                    <button name="action_open_movement_list"
+                            class="oe_stat_button"
+                            icon="fa-book"
+                            type="object"
+                            invisible="movements_count == 0">
+                        <div class="o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="movements_count"/>
+                            </span>
+                            <span class="o_stat_text">Movements</span>
+                        </div>
+                    </button>
+                </div>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Payroll Movements" name="payroll_movements">
+                    <field name="movements_count_change" invisible="1"/>
+                    <field name="payroll_movement_ids">
+                        <list>
+                            <field name="details_movement_type_id"/>
+                            <field name="effective_date"/>
+                            <field name="reasons_movement_type_id"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

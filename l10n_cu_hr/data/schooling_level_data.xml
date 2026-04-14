@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+	  <record id="schooling_level_6" model="schooling.level">
+          <field name="name">Sexto</field>
+      </record>
+      <record id="schooling_level_9" model="schooling.level">
+          <field name="name">Noveno</field>
+      </record>
+	  <record id="schooling_level_12" model="schooling.level">
+          <field name="name">Doce</field>
+      </record>
+        <record id="schooling_level_obrero" model="schooling.level">
+          <field name="name">Obrero Calificado</field>
+      </record>
+        <record id="schooling_level_uni" model="schooling.level">
+          <field name="name">Universitario</field>
+      </record>
+        <record id="schooling_level_tm" model="schooling.level">
+          <field name="name">TM</field>
+      </record>
+    </data>
+</odoo>

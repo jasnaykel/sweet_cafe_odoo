@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+ <record id="view_schooling_level_form" model="ir.ui.view">
+        <field name="name">hr.schooling.level.form</field>
+        <field name="model">schooling.level</field>
+        <field name="arch" type="xml">
+            <form string="Schooling level">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+     <record id="view_schooling_level_list" model="ir.ui.view">
+        <field name="name">hr.schooling.leve.list</field>
+        <field name="model">schooling.level</field>
+        <field eval="8" name="priority"/>
+        <field name="arch" type="xml">
+            <list string="Schooling level" editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+     </record>
+
+     <record id="open_schooling_level_action" model="ir.actions.act_window">
+        <field name="name">Schooling level</field>
+        <field name="res_model">schooling.level</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Level found ! Let's create one
+            </p>
+            <p>
+                Use levels to categorize your Employees.
+            </p>
+        </field>
+     </record>
+
+    <menuitem
+                id="menu_view_schooling_level"
+                name="Schooling level"
+                action="open_schooling_level_action"
+                parent="hr.menu_config_employee"
+                groups="hr.group_hr_manager,hr.group_hr_user"
+                sequence="12"/>
+</odoo>
+
+

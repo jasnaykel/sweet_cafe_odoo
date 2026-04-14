@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_form_hr_employee_inherited" model="ir.ui.view">
+        <field name="name">view_hr_employee_form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+        
+    <!-- Ocultar el campo job_title que es el campo de texto libre -->
+        <xpath expr="//field[@name='job_title']" position="attributes">
+            <attribute name="invisible">1</attribute>
+        </xpath>
+            <xpath expr="//field[@name='work_location_id']" position="after">
+                <field name="res_personal_municipality_id"
+                    options="{'no_create': True, 'no_edit': True, 'no_quick_create': True}"
+                    placeholder="Municipality..."
+                    context="{'state_id': private_state_id}" />
+            </xpath>
+            <xpath expr="//page[@name='personal_information']/group" position="inside">
+                    <group string="Cuban Location Details">
+                        <field name="res_personal_municipality_id"
+                            options="{'no_create': True, 'no_edit': True, 'no_quick_create': True}"
+                            placeholder="Municipality..."
+                            context="{'state_id': personal_state_id}" />
+                        <field name="personal_state_id" />
+                        <field name="personal_country_id" invisible="1"/>
+                    </group>
+            </xpath>
+             <xpath expr="//field[@name='country_of_birth']" position="after">
+                <field name="state_of_birth_id" />
+                <field name="municipality_of_birth_id" />
+             </xpath>
+
+            <xpath expr="//field[@name='name']" position="after">
+                    <div class="d-flex flex-column">
+                        <field name="last_name" placeholder="Primer Apellido" required="1" class="oe_inline" style="font-size: 1.2rem;"/>
+                        <field name="second_last_name" placeholder="Segundo Apellido" required="1" class="oe_inline" style="font-size: 1.2rem;"/>
+                    </div>
+            </xpath>
+            <xpath expr="//field[@name='mobile_phone']" position="before">
+                <field name="number" string="Código Empleado" required="1" />
+             </xpath>
+            <xpath expr="//field[@name='certificate']" position="after">
+                <field name="profession_id" required="1" />
+             </xpath>
+             <xpath expr="//field[@name='study_field']" position="after">
+                <field name="schooling_level_id" required="1" />
+             </xpath>
+<!--            <xpath expr="//field[@name='schooling_level_id']" position="after">-->
+<!--                    <field name="occupational_category_id" required="1"/>-->
+<!--             </xpath>-->
+            <xpath expr="//field[@name='identification_id']" position="after">
+                <field name="skin_color" />
+             </xpath>
+            <xpath expr="//page[@name='hr_settings']" position="after">
+                <page name="others" string="Others" groups="hr.group_hr_user">
+                    <group>
+                        <field name="political_affiliation" />
+                    </group>
+                </page>
+             </xpath>
+            <xpath expr="//field[@name='department_id']" position="replace">
+                <field name="department_id"
+                    required="1"/>
+            </xpath>      
+            <xpath expr="//field[@name='job_id']" position="replace">
+                <field name="job_id"
+                    invisible="department_id == False"
+                    context="{'default_department_id': department_id}" />
+            </xpath>           
+             <xpath expr="//field[@name='identification_id']" position="replace">
+                <field name="identification_id" required="1"
+                       placeholder="Ingrese 11 dígitos"
+                           pattern="^\d{11}$" string="CI"/>
+            </xpath>
+              
+          <xpath expr="//field[@name='parent_id']" position="attributes">
+                <!-- <attribute name="options">{'no_create': True, 'no_quick_create': True}</attribute> -->
+                <attribute name="domain">[('id', 'in', available_manager_ids)]</attribute>
+            </xpath>
+            <!-- Añadir un campo invisible para almacenar los IDs de gerentes disponibles -->
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="available_manager_ids" invisible="1"/>
+            </xpath>  
+
+        </field>
+    </record>
+    <record id="view_kanban_hr_employee_inherited" model="ir.ui.view">
+        <field name="name">view_hr_employee_kanban</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <xpath expr="//main//field[@name='name']" position="replace">
+                <field name="full_name" class="fw-bold fs-5" placeholder="Employee's Name"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_tree_hr_employee_inherited" model="ir.ui.view">
+        <field name="name">view_hr_employee_tree</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='name']" position="replace">
+                <field name="full_name" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,54 +1,25 @@
 # Part of Sweet Café Management. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models
 
 
 class HrEmployee(models.Model):
-    """Extension of hr.employee for Cuban labor law requirements.
+    """Sweet Café extension of hr.employee.
 
-    Adds fields required by Cuban legislation:
-    - Carnet de Identidad (CI) — unique national ID
-    - Address details (municipio, provincia)
-    - Education level (escolaridad)
-    - Number of dependants (hijos) — affects payroll
-    - Salary scale (escala salarial 1-18)
-    - Occupational category (operario, técnico, administrativo, cuadro)
-    - Payment form (escala fija, destajo, mixto)
+    Cuban personal/labor fields provided by l10n_cu_hr and
+    l10n_cu_hr_employee_contract (identification_id, schooling_level_id,
+    occupational_category_id, res_private_municipality_id, etc.).
+
+    This class adds only what is exclusive to Sweet Café:
+    - num_hijos           — dependants, drives plus por hijos in payroll
+    - salary_scale_id     — Cuban salary scale 1-18 (Sweet's own table)
+    - forma_pago          — payment form (scale / piece-rate / mixed)
+    - horario_trabajo     — shift type
+    - branch_id           — Sweet Café branch assignment
     """
     _inherit = 'hr.employee'
 
-    # ─── Cuban personal data ────────────────────────────────────────────────
-    carnet_identidad = fields.Char(
-        string='Carnet de Identidad (CI)',
-        size=11,
-        groups='hr.group_hr_user',
-        tracking=True,
-        help='Número de carnet de identidad cubano (11 dígitos)',
-    )
-    municipio = fields.Char(
-        string='Municipio',
-        groups='hr.group_hr_user',
-        tracking=True,
-    )
-    provincia = fields.Char(
-        string='Provincia',
-        groups='hr.group_hr_user',
-        tracking=True,
-    )
-    escolaridad = fields.Selection(
-        selection=[
-            ('primaria', 'Primaria'),
-            ('9no', '9no Grado'),
-            ('12mo', '12mo Grado / Preuniversitario'),
-            ('tecnico', 'Técnico Medio'),
-            ('universitario', 'Universitario'),
-            ('postgrado', 'Postgrado / Máster / Doctor'),
-        ],
-        string='Escolaridad',
-        groups='hr.group_hr_user',
-        tracking=True,
-    )
+    # ─── Sweet-exclusive payroll data ───────────────────────────────────────
     num_hijos = fields.Integer(
         string='Número de Hijos (menores)',
         default=0,
@@ -56,20 +27,6 @@ class HrEmployee(models.Model):
         tracking=True,
         help='Hijos menores de 18 años. Genera plus de 40 CUP por hijo en nómina.',
     )
-    estado_civil = fields.Selection(
-        selection=[
-            ('soltero', 'Soltero/a'),
-            ('casado', 'Casado/a'),
-            ('divorciado', 'Divorciado/a'),
-            ('viudo', 'Viudo/a'),
-            ('union_consensual', 'Unión Consensual'),
-        ],
-        string='Estado Civil',
-        groups='hr.group_hr_user',
-        tracking=True,
-    )
-
-    # ─── Labor data (Cuba) ──────────────────────────────────────────────────
     salary_scale_id = fields.Many2one(
         'hr.salary.scale',
         string='Escala Salarial',
@@ -90,18 +47,6 @@ class HrEmployee(models.Model):
         string='Moneda CUP',
         related='salary_scale_id.currency_id',
         groups='hr.group_hr_user',
-    )
-    categoria_ocupacional = fields.Selection(
-        selection=[
-            ('operario', 'Operario'),
-            ('tecnico', 'Técnico'),
-            ('administrativo', 'Administrativo'),
-            ('cuadro', 'Cuadro / Directivo'),
-            ('servicio', 'Servicios'),
-        ],
-        string='Categoría Ocupacional',
-        groups='hr.group_hr_user',
-        tracking=True,
     )
     forma_pago = fields.Selection(
         selection=[
@@ -135,25 +80,23 @@ class HrEmployee(models.Model):
         help='Sucursal donde labora principalmente el trabajador',
     )
 
-    # ─── SQL constraints ────────────────────────────────────────────────────
-    _sql_constraints = [
-        ('carnet_identidad_unique', 'unique(carnet_identidad)',
-         'El Carnet de Identidad debe ser único por empleado.'),
-    ]
-
-    # ─── Compute / onchange ─────────────────────────────────────────────────
-    @api.constrains('carnet_identidad')
-    def _check_carnet_identidad(self):
-        for emp in self:
-            if emp.carnet_identidad and (
-                not emp.carnet_identidad.isdigit() or len(emp.carnet_identidad) != 11
-            ):
-                raise ValidationError(
-                    _('El Carnet de Identidad debe contener exactamente 11 dígitos numéricos.')
-                )
-
+    # ─── Onchange ───────────────────────────────────────────────────────────
     @api.onchange('salary_scale_id')
     def _onchange_salary_scale_id(self):
-        """Auto-set occupational category from salary scale."""
+        """Sync occupational_category_id from salary scale category."""
         if self.salary_scale_id:
-            self.categoria_ocupacional = self.salary_scale_id.category
+            category_map = {
+                'operario': self.env['occupational.category'].search(
+                    [('name', 'ilike', 'Operario')], limit=1),
+                'tecnico': self.env['occupational.category'].search(
+                    [('name', 'ilike', 'Técnico')], limit=1),
+                'administrativo': self.env['occupational.category'].search(
+                    [('name', 'ilike', 'Administrativo')], limit=1),
+                'cuadro': self.env['occupational.category'].search(
+                    [('name', 'ilike', 'Cuadro')], limit=1),
+                'servicio': self.env['occupational.category'].search(
+                    [('name', 'ilike', 'Servicio')], limit=1),
+            }
+            cat = category_map.get(self.salary_scale_id.category)
+            if cat:
+                self.occupational_category_id = cat

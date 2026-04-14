@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Provinces (using standard Odoo states if they exist, or creating them) -->
+        <!-- This is a placeholder for the actual data -->
+    </data>
+</odoo>

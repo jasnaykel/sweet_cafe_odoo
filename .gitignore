@@ -5,6 +5,16 @@
 !/sweet_cafe_management/
 !/sweet_cafe_ecommerce/
 
+# Módulos RRHH Cuba
+!/l10n_cu_address/
+!/l10n_cu_banks/
+!/l10n_cu_hr/
+!/l10n_cu_hr_contract/
+!/l10n_cu_hr_employee_contract/
+!/l10n_cu_hr_payroll/
+!/l10n_cu_hr_payroll_movement/
+!/rrhh_5p/
+
 # Y el propio .gitignore
 !/.gitignore
 

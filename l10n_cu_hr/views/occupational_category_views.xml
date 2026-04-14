@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+ <record id="view_occupational_category_form" model="ir.ui.view">
+        <field name="name">hr.occupational.category.form</field>
+        <field name="model">occupational.category</field>
+        <field name="arch" type="xml">
+            <form string="Occupational Category">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+     <record id="view_occupational_category_list" model="ir.ui.view">
+        <field name="name">hr.occupational.category.list</field>
+        <field name="model">occupational.category</field>
+        <field eval="8" name="priority"/>
+        <field name="arch" type="xml">
+            <list string="Occupational Category" editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+                <!-- <field name="company_id" readonly="1"/> -->
+            </list>
+        </field>
+     </record>
+
+     <record id="open_occupational_category_action" model="ir.actions.act_window">
+        <field name="name">Occupational Category</field>
+        <field name="res_model">occupational.category</field>
+        <field name="view_mode">list,form</field>
+        <!-- <field name="domain">[('company_id', 'in', allowed_company_ids)]</field> -->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Occupational Category found ! Let's create one
+            </p>
+            <p>
+                Use Occupational Categories to categorize your Employees.
+            </p>
+        </field>
+     </record>
+
+    <menuitem
+                id="menu_view_occupational_category"
+                name="Occupational Category"
+                action="open_occupational_category_action"
+                parent="hr.menu_config_employee"
+                groups="hr.group_hr_manager,hr.group_hr_user"
+                sequence="14"/>
+</odoo>

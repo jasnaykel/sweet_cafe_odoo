@@ -40,7 +40,7 @@
                                     <tr><td><b>Trabajador:</b></td>
                                         <td><t t-esc="v.employee_id.name"/></td></tr>
                                     <tr><td><b>C.I.:</b></td>
-                                        <td><t t-esc="v.employee_id.carnet_identidad or '—'"/></td></tr>
+                                        <td><t t-esc="v.employee_id.identification_id or '—'"/></td></tr>
                                     <tr><td><b>Cargo:</b></td>
                                         <td><t t-esc="v.employee_id.job_id.name or '—'"/></td></tr>
                                     <tr><td><b>Sucursal:</b></td>
@@ -52,7 +52,7 @@
                                     <tr><td><b>Escala Salarial:</b></td>
                                         <td><t t-esc="v.employee_id.salary_scale_id.name or '—'"/></td></tr>
                                     <tr><td><b>Categoría:</b></td>
-                                        <td><t t-esc="v.employee_id.categoria_ocupacional or '—'"/></td></tr>
+                                        <td><t t-esc="v.employee_id.occupational_category_id.name or '—'"/></td></tr>
                                     <tr><td><b>Antigüedad:</b></td>
                                         <td><t t-esc="v.antiguedad_years"/> años
                                             (<t t-esc="'%.1f' % v.plus_antiguedad_pct"/>%)</td></tr>
@@ -75,7 +75,7 @@
                                 <tr>
                                     <td>Salario Básico (Escala)</td>
                                     <td class="text-right">
-                                        <t t-esc="'%.2f' % v.contract_wage"/>
+                                        <t t-esc="'%.2f' % v.wage"/>
                                     </td>
                                 </tr>
                                 <tr t-if="v.plus_antiguedad">

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_report_contract" model="ir.actions.report">
+            <field name="model">hr.contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">l10n_cu_hr_employee_contract.report_contract_proforma</field>
+            <field name="report_file">l10n_cu_hr_employee_contract.report_contract_proforma</field>
+            <field name="print_report_name">'Contract proforma'</field>
+            <field name="name">Contract proforma</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="l10n_cu_hr_employee_contract.paper_contract_format_global"/>
+        </record>
+        <template id="report_contract_proforma">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <style>
+                        .subrayado {
+                        text-decoration: underline;
+                        }
+                        .justificado {
+                        text-align: justify;
+                        }
+
+                    </style>
+                    <t t-foreach="docs" t-as="doc">
+<!--                        <t t-if="doc.button_visible == True">-->
+                            <div class="page">
+                                <div class="d-flex">
+                                    <div class="col-6">
+<!--                                        <img style=" max-width: 250px; height: auto; margin-left:auto"-->
+<!--                                             src="/l10n_cu_hr_employee_contract/static/description/logo.png" alt=""/>-->
+                                    </div>
+                                    <div class="col-3"/>
+                                    <div class="col-3">
+<!--                                        <img style=" max-width: 80px; height: auto; align:end;"-->
+<!--                                             src="/l10n_cu_hr_employee_contract/static/src/img/logo2.jpg" alt=""/>-->
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <strong>
+                                        <h5>CONTRATO INDIVIDUAL DE TRABAJO</h5>
+                                    </strong>
+                                    <br/>
+                                    <br/>
+                                </div>
+                                <p class="justificado">
+                                    <strong>DE UNA PARTE:</strong>
+                                    <span class="white-space: nowrap;">La</span>
+                                    <strong>
+                                        <t t-esc="doc.company_id.central_office"/>
+                                    </strong>
+                                    en forma abreviada
+                                    <strong>
+                                        <t t-esc="doc.company_id.central_office_abbreviation"/>
+                                    </strong>
+                                    , subordinada al
+                                    <t t-esc="doc.company_id.business_group"/>, en su forma abreviada
+                                    <t t-esc="doc.company_id.abbreviation_group"/>
+                                    , atendida por el
+                                    <t t-esc="doc.company_id.ministry"/>, en su forma abreviada
+                                    <t t-esc="doc.company_id.ministry_abbreviation"/>, con domicilio legal en
+                                    <t t-esc="doc.company_id.legal_address"/>
+                                    , representada en este acto por
+                                    <strong>
+                                        <t t-esc="doc.company_id.director"/>
+                                    </strong>
+                                    , en su carácter de Directora de la
+                                    <strong>
+                                        <t t-esc="doc.company_id.job_id"/>
+                                    </strong>
+                                    , en virtud de la<t t-esc="doc.company_id.resolution"/>, de la Directora General, teléfono:<t t-esc="doc.company_id.phone"/>, correo electrónico:
+                                    <span class="subrayado">
+                                        <t t-esc="doc.company_id.email"/>
+                                    </span>
+                                    quien en lo adelante y a los efectos del presente Contrato se denominará,
+                                    <strong>LA EMPLEADORA.</strong>
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>DE OTRA PARTE:</strong>
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.full_name"/>
+                                    </span>
+                                    con Carnét de Identidad
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.identification_id"/>
+                                    </span>
+                                    y vecino de
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.private_street"/>
+                                    </span>
+                                    municipio
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.res_private_municipality_id.name"/>
+                                    </span>
+                                    , Provincia
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.private_state_id.name"/>
+                                    </span>
+                                    quien en lo sucesivo y a los efectos del presente Contrato, se denominará
+                                    <strong>EL TRABAJADOR</strong>
+                                </p>
+                                <br/>
+                                <p>
+                                    Ambas partes, reconocida la personalidad con que comparecen a este acto, acuerdan:
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>PRIMERO: OBJETO DEL CONTRATO Y OBLIGACIONES</strong>
+                                    <br/>
+                                    Establecer la relación jurídica laboral entre <strong>LA EMPLEADORA</strong> y
+                                    <strong>EL TRABAJADOR,</strong>
+                                    mediante el cual <strong>EL TRABAJADOR</strong> se compromete a ejecutar con
+                                    eficiencia una labor, a observar las normas de disciplina y las demás que se
+                                    acuerden, asi mismo <strong>LA EMPLEADORA</strong> se obliga a pagarle una
+                                    remuneración y a garantizarle las condiciones y derechos de trabajo y seguridad
+                                    social que establece la legislación. <strong>EL TRABAJADOR</strong>,
+                                    viene obligado al cumplimiento del Convenio Colectivo de Trabajo y el Reglamento
+                                    Disciplinario Interno se encuentre afiliado o no a la Organización Sindical,
+                                    igualmente a cumplir las Reglas de Seguridad y Salud del Trabajo, de Seguridad y
+                                    Protección, de lo que será debidamente instruido inicialmente.
+                                </p>
+                                <br/>
+                                <p>
+                                    <strong>SEGUNDO: TIPO DE CONTRATO.</strong>
+                                </p>
+                                <br/>
+                                <p class="subrayado">
+                                    EL PRESENTE CONTRATO SERÁ POR:
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                <t t-if="doc.contract_type == 'indeterminado'">X</t>
+                                            </div>
+                                            <div class="d-inline-block mt-1">
+                                                <span>Tiempo Indeterminado</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <div class="mr-4">
+                                            <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                <t t-if="doc.contract_type_id == 'determinado'">X</t>
+                                            </div>
+                                            <div class="d-inline-block mt-1">
+                                                <span>Tiempo Determinado:</span>
+                                            </div>
+                                        </div>
+                                        <div class="mr-4">
+                                            <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                <t t-if="doc.determined_contract_type_id.name == 'Período a prueba'">X</t>
+                                            </div>
+                                            <div class="d-inline-block mt-1">
+                                                <span>PERÍODO A PRUEBA;</span>
+                                            </div>
+                                        </div>
+                                        <div class="mr-4">
+                                            <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                <t t-if="doc.determined_contract_type_id.name == 'Para la ejecución de un trabajo u obra'">
+                                                    X
+                                                </t>
+                                            </div>
+                                            <div class="d-inline-block mt-1">
+                                                <span>PARA LA EJECUCIÓN DE UN TRABAJO U OBRA;</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <div class="mr-4">
+                                            <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                <t t-if="doc.determined_contract_type_id.name == 'Labores eventuales o emergentes'">
+                                                    X
+                                                </t>
+                                            </div>
+                                            <div class="d-inline-block mt-1" style="white-space: nowrap;">
+                                                <span>LABORES EVENTUALES O EMERGENTES;</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mr-4">
+                                            <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                <t t-if="doc.determined_contract_type_id.name == 'Servicio social'">
+                                                    X
+                                                </t>
+                                            </div>
+                                            <div class="d-inline-block mt-1">
+                                                <span>SERVICIO SOCIAL;</span>
+                                            </div>
+                                        </div>
+                                        <div class="mr-4">
+                                            <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                <t t-if="doc.determined_contract_type_id.name == 'Distancia'">
+                                                    X
+                                                </t>
+                                            </div>
+                                            <div class="d-inline-block mt-1">
+                                                <span>DISTANCIA;</span>
+                                            </div>
+                                        </div>
+                                        <div class="mr-4">
+                                            <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                <t t-if="doc.determined_contract_type_id.name == 'Teletrabajo'">
+                                                    X
+                                                </t>
+                                            </div>
+                                            <div class="d-inline-block mt-1">
+                                                <span>TELETRABAJO;</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <div class="mr-4">
+                                            <div class="mr-4">
+                                                <div class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                                    <t t-if="doc.determined_contract_type_id.name == 'Sustitución temporal a trabajadores ausentes por causas justificadas'">
+                                                        X
+                                                    </t>
+                                                </div>
+                                                <div class="d-inline-block mt-1">
+                                                    <span>SUSTITUCIÓN TEMPORAL A TRABAJADORES AUSENTES POR CAUSAS
+                                                        JUSTIFICADAS;
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>TERCERO: PERÍODO A PRUEBA</strong>
+                                    <br/>
+                                    <strong>El TRABAJADOR</strong>
+                                    se someterá a una evaluación de desempeño laboral por un término de
+                                    treinta (30) a ciento ochenta (180) días. En función del resultado, se realizará
+                                    contrato de mayor duración o se dará por terminada la relación laboral, Si vencido
+                                    este término las partes no manifiestan su voluntad en contrario, se formalizará la
+                                    relación de trabajo por tiempo Indeterminado.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>CUARTO: LUGAR EN QUE SE PRESTARÁN SERVICIOS Y TIPO SE SERVICIO A
+                                        EJECUTARSE:
+                                    </strong>
+                                    <br/>
+                                    <strong>EL TRABAJADOR</strong>, prestará sus servicios en la empresa
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.company_id.name"/>
+                                    </span>
+                                    desempeñando el cargo de
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.job_id.name"/>
+                                    </span>
+                                    , con categoría de
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.occupational_category_id.name"/>
+                                    </span>
+                                    y con un salario de
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.wage"/>
+                                    </span>
+                                    CUP, el que se hará efectivo el día Diez (10) de cada mes.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>QUINTO:</strong>
+                                    Funciones Generales inherentes al cargo: se anexan.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>SEXTO: TIEMPO DE JORNADA</strong>
+                                    <br/>
+                                    <strong>EL TRABAJADOR</strong>
+                                    viene obligado a laborar una jornada de
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.resource_calendar_id.name"/>
+                                    </span>
+                                    horas semanales, computando
+                                    un total de 190.60 horas mensuales. Con un horario semanal distribuido de la
+                                    siguiente forma:
+                                    <br/>
+                                    <br/>
+                                    <span class="text-center" style="color: red">
+                                        La aprobada en Contrato de Suministro (El horario cambia según lo aprobado para
+                                        cada Empresa)
+                                         <br/>
+<!--                                        <t t-esc="doc.company_id.company_work_schedule"/>-->
+                                    </span>
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>SEPTIMO: TERMINACIÓN DEL CONTRATO</strong>
+                                    <br/>
+                                    La terminación del presente Contrato Individual de Trabajo se hace efectiva por
+                                    alguna de las causas siguientes:
+                                    <br/>
+                                    <br/>
+                                    a) Acuerdo de las partes.
+                                    <br/>
+                                    b) Iniciativa de una de las partes.
+                                    <br/>
+                                    c) Jubilación del trabajador.
+                                    <br/>
+                                    d) Fallecimiento del trabajador.
+                                    <br/>
+                                    e) Extinción de <strong>LA EMPLEADORA</strong>, cuando no exista otra que se
+                                    subrogue en su lugar y grado.
+                                    <br/>
+                                    f) Vencimiento del tiempo fijado o conclusión de la labor pactada, cuando se trate
+                                    de los contratos por tiempo determinado o para la ejecución de un trabajo u obra.
+                                    <br/>
+                                    <br/>
+                                    En el caso de que la terminación del Contrato sea a iniciativa del <strong>EL
+                                    TRABAJADOR</strong>,
+                                    éste dispone de los siguientes términos para hacerla efectiva:
+                                    <br/>
+                                    <br/>
+                                    a) Para los <strong>contratos por tiempo determinado</strong> o para la ejecución de
+                                    un trabajo u obra, hasta quince (15) días hábiles.
+                                    <br/>
+                                    b) Para los <strong>contratos por tiempo indeterminado</strong>, hasta Treinta
+                                    (30) días hábiles.
+                                    <br/>
+                                    c) Para los casos de cargos técnicos que requieren como requisito poseer nivel
+                                    superior, hasta cuatro (4) meses.
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    La solicitud de Terminación del Contrato Individual de Trabajo se hará por escrito,
+                                    debiendo continuar trabajando, según el término que corresponda, hasta tanto la
+                                    empresa acepte la solicitud.
+                                    <br/>
+                                    <br/>
+                                    <strong>OCTAVO:</strong>
+                                    En relación a los aspectos de Seguridad y Salud Del Trabajo, Período a
+                                    Prueba, Idoneidad Demostrada, devolución de trabajadores, Capacitación y Superación,
+                                    Modificación del Contrato y Suspensión de Relación de Trabajo, Tratamiento a
+                                    Trabajadores Disponibles e Interruptos, Protección a la Madre Trabajadora,
+                                    Protección Especial en El Trabajo en los Jóvenes de 15 a 18 años, Descanso Semanal y
+                                    Tratamiento Laboral en los Días de Conmemoración Nacional, Oficial y Feriados,
+                                    Vacaciones Anuales Pagadas, Licencia No Retribuida a Trabajadores con
+                                    Responsabilidades Familiares, Salarios, Disciplina del Trabajo y Servicio Social, se
+                                    regularán por lo establecido en la Norma Laboral Vigente, El Convenio Colectivo de
+                                    Trabajo y Contrato de Suministro de Fuerza de Trabajo.
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    Ambas partes suscriben el presente Contrato Individual en tres copias.
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    Dado en La Habana a los
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3"/>
+                                    días del mes
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3"/>
+                                    del año
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3"/>
+                                </p>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="d-flex">
+                                    <div class="col-6">
+                                        <span class="border-bottom border-dark d-inline-block mr-2 px-3 w-100"/>
+                                        <br/>
+                                        <strong>LA EMPLEADORA</strong>
+                                        <br/>
+                                        <strong>
+                                            <t t-esc="doc.company_id.employer"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-3"/>
+                                    <div class="col-3">
+                                        <span class="border-bottom border-dark d-inline-block mr-2 px-3 w-100"/>
+                                        <br/>
+                                        <strong>EL TRABAJADOR</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p style="page-break-after:always;"/>
+                            </div>
+<!--                        </t>-->
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

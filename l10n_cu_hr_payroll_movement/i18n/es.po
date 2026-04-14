@@ -1,0 +1,429 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_cu_hr_payroll_movement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-26 14:37+0000\n"
+"PO-Revision-Date: 2021-12-26 09:38-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/l10n_cu_hr_payroll_movement/models/payroll_movement.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_payroll_employee_form
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_payroll_employee_tree
+#, python-format
+msgid "Movement"
+msgstr "Mov. de Nómina"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__effective_date
+msgid "Effective Date"
+msgstr "Fecha Efectiva"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__date
+msgid "Date"
+msgstr "Fecha de emisión"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__create_date
+msgid "Created on"
+msgstr "Fecha"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__employee_id
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__contract_id
+msgid "Contract Reference"
+msgstr "Referencia del Contrato"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__state
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/l10n_cu_hr_payroll_movement/models/payroll_movement.py:0
+#: model:ir.model.fields.selection,name:l10n_cu_hr_payroll_movement.selection__payroll_movement__state__draft
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/co_rr_hh/models/payroll_movement.py:0
+#: model:ir.model.fields.selection,name:l10n_cu_hr_payroll_movement.selection__payroll_movement__state__open
+#, python-format
+msgid "Open"
+msgstr "Aprobado"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__actual_wage
+msgid "Basic Salary"
+msgstr "Salario básico"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__actual_situation_id
+msgid "Job Name"
+msgstr "Puesto de Trabajo"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__actual_occupational_category_id
+msgid "Occupational Category"
+msgstr "Categoría Ocupacional"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__actual_department_id
+msgid "Work Area"
+msgstr "Departamento"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__actual_resource_calendar_id
+msgid "Working Hours"
+msgstr "Horario Laboral"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__new_wage
+msgid "New Salary"
+msgstr "Nuevo salario básico"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__new_situation_id
+msgid "New Job"
+msgstr "Nuevo Puesto de Trabajo"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__new_occupational_category_id
+msgid "New Occupational Category"
+msgstr "Nueva Categoría Ocupacional"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__new_department_id
+msgid "New Work Area"
+msgstr "Nuevo Departamento"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__new_resource_calendar_id
+msgid "New Working Hours"
+msgstr "Nuevo Horario Laboral"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.ui.menu,name:l10n_cu_hr_payroll_movement.menu_hr_payroll_configuration
+#: model:ir.ui.menu,name:l10n_cu_hr_payroll_movement.hr_menu_hr_payroll
+#: model:ir.actions.act_window,name:l10n_cu_hr_payroll_movement.action_hr_payroll
+msgid "Payroll Movements"
+msgstr "Mov. de Nómina"
+
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.actions.act_window,name:l10n_cu_hr_payroll_movement.open_details_movement_type_action
+#: model:ir.ui.menu,name:l10n_cu_hr_payroll_movement.menu_view_details_movement_type
+msgid "Details Movement Type"
+msgstr "Tipos de Mov. de Nómina"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.actions.act_window,name:l10n_cu_hr_payroll_movement.open_reasons_movement_type_action
+#: model:ir.ui.menu,name:l10n_cu_hr_payroll_movement.menu_view_reasons_movement_type
+msgid "Reasons Movement Type"
+msgstr "Motivos de Mov. de Nómina"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.actions.act_window,help:l10n_cu_hr_payroll_movement.open_details_movement_type_action
+msgid "Use Details Movement Types to categorize your Contract."
+msgstr "Utilice Tipos de Movimientos de Nómina para clasificar a sus contratos."
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.actions.act_window,help:l10n_cu_hr_payroll_movement.open_details_movement_type_action
+msgid "No Details Movement Type found ! Let's create one"
+msgstr "No se encontraron Tipos de Movimientos de Nómina. ¡Creemos una!"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.actions.act_window,help:l10n_cu_hr_payroll_movement.open_reasons_movement_type_action
+msgid "Use Reasons Movement Types to categorize your Contract."
+msgstr "Utilice Motivo de Movimientos de Nómina para clasificar a sus contratos."
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.actions.act_window,help:l10n_cu_hr_payroll_movement.open_reasons_movement_type_action
+msgid "No Reasons Movement Type found ! Let's create one"
+msgstr "No se encontraron Motivos de Movimientos de Nómina. ¡Creemos una!"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.actions.act_window,help:l10n_cu_hr_payroll_movement.action_hr_payroll
+msgid "Use Movement to categorize your Employees."
+msgstr "Utilice Movimientos de Nómina para clasificar a sus empleados."
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.actions.act_window,help:l10n_cu_hr_payroll_movement.action_hr_payroll
+msgid "No Movement found ! Let's create one"
+msgstr "No se encontraron Movimientos de Nómina. ¡Creemos una!"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_payroll_employee_form
+msgid "Actual Situation"
+msgstr "Situación Actual"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_payroll_employee_form
+msgid "New Situation"
+msgstr "Nueva Situación"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_payroll_employee_form
+msgid "Employee name"
+msgstr "Empleado"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_payroll_employee_form
+msgid "Contract"
+msgstr "Referencia del Contrato"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_payroll_employee_form
+msgid "Confirm"
+msgstr "Aprobar"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model,name:l10n_cu_hr_payroll_movement.model_payroll_movement
+msgid "Payroll Movement"
+msgstr "Movimiento de Nómina"
+
+#. module: l10n_cu_hr_payroll_movement
+#. odoo-python
+#: code:addons/l10n_cu_hr_payroll_movement/models/payroll_movement.py:0
+#, python-format
+msgid "The payroll movement has already been approved, it cannot be deleted."
+msgstr "El movimiento de nómina ya ha sido aprobado, no se puede eliminar."
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_reasons_movement_type__movement_type
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__movement_type
+msgid "Movement Type"
+msgstr "Tipo de movimiento"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_details_movement_type__reasons_movement_type_ids
+msgid "Reasons"
+msgstr "Motivos"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_details_movement_type__movement_type
+msgid "Classification"
+msgstr "Clasificación"
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/co_rr_hh/models/payroll_movement.py:0
+#: model:ir.model.fields.selection,name:l10n_cu_hr_payroll_movement.selection__details_movement_type__movement_type__high
+#: model:ir.model.fields.selection,name:l10n_cu_hr_payroll_movement.selection__payroll_movement__movement_type__high
+#, python-format
+msgid "High"
+msgstr "Alta"
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/l10n_cu_hr_payroll_movement/models/payroll_movement.py:0
+#: model:ir.model.fields.selection,name:l10n_cu_hr_payroll_movement.selection__details_movement_type__movement_type__low
+#: model:ir.model.fields.selection,name:l10n_cu_hr_payroll_movement.selection__payroll_movement__movement_type__low
+#, python-format
+msgid "Low"
+msgstr "Baja"
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/l10n_cu_hr_payroll_movement/models/payroll_movement.py:0
+#: model:ir.model.fields.selection,name:l10n_cu_hr_payroll_movement.selection__details_movement_type__movement_type__change
+#: model:ir.model.fields.selection,name:l10n_cu_hr_payroll_movement.selection__payroll_movement__movement_type__change
+#, python-format
+msgid "Change"
+msgstr "Cambio"
+
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.actions.report,name:l10n_cu_hr_payroll_movement.action_report_summary_registrations_internal_movements
+msgid "Summary of Registrations and Internal Movements"
+msgstr "Resumen de altas y movimientos internos"
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/l10n_cu_hr_payroll_movement/reports/summary_registrations_internal_movements_report.py:0
+#: model:ir.actions.act_window,name:l10n_cu_hr_payroll_movement.action_summary_registrations_internal_movements
+#: model:ir.ui.menu,name:l10n_cu_hr_payroll_movement.menu_summary_registrations_internal_movements
+#, python-format
+msgid "Summary of registrations and internal movements"
+msgstr "Resumen de altas y movimientos internos"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model,name:l10n_cu_hr_payroll_movement.model_report_co_rr_hh_summary_registrations_internal_movements_report
+msgid "Summary of registrations and internal movements Report"
+msgstr "Resumen de altas y movimientos internos"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model,name:l10n_cu_hr_payroll_movement.model_report_resumen_wizard
+msgid "Summary of registrations and internal movements Wizard"
+msgstr "Resumen de altas y movimientos internos"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_report_internal_movement_wizard__date_from
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_internal_movement_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_contracting_behavior
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_summary_registrations_internal_movements
+msgid "Date From"
+msgstr "Fecha de inicio"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_report_internal_movement_wizard__date_from
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_internal_movement_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_contracting_behavior
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_summary_registrations_internal_movements
+msgid "Date To"
+msgstr "Fecha de final"
+
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_details_movement_type__name
+msgid "Name"
+msgstr "Tipo de movimiento"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_reasons_movement_type__name
+msgid "Name"
+msgstr "Motivos de movimiento"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_details_movement_type__movement_type
+msgid "Classification"
+msgstr "Clasificación"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__details_movement_type_id
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_reasons_details_rel__details_movement_type_id
+msgid "Movement Type"
+msgstr "Tipo de movimiento"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_payroll_movement__reasons_movement_type_id
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_reasons_details_rel__reasons_movement_type_id
+msgid "Reasons Movement Type"
+msgstr "Motivo"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_report_resumen_wizard__date_from
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_report_contracting_behavior_wizard__date_from
+#: model_terms:ir.ui.view,arch_db:co_rr_hh.view_contracting_behavior_wizard
+msgid "Date From"
+msgstr "Fecha Inicio"
+
+#. module: l10n_cu_hr_payroll_movement
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_report_resumen_wizard__date_to
+#: model_terms:ir.ui.view,arch_db:co_rr_hh.view_contracting_behavior_wizard
+#: model:ir.model.fields,field_description:l10n_cu_hr_payroll_movement.field_report_contracting_behavior_wizard__date_to
+msgid "Date To"
+msgstr "Fecha Fin"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_contracting_behavior
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_summary_registrations_internal_movements
+msgid "Cancelar"
+msgstr ""
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_contracting_behavior
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_summary_registrations_internal_movements
+msgid "Company Name"
+msgstr "Empresa"
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/l10n_cu_hr_payroll_movement/reports/contracting_behavior_report.py:0
+#: model:ir.actions.report,name:l10n_cu_hr_payroll_movement.action_report_contracting_behavior
+#: model:ir.actions.act_window,name:l10n_cu_hr_payroll_movement.action_report_contracting_behavior_wizard
+#: model:ir.ui.menu,name:l10n_cu_hr_payroll_movement.menu_contracting_behavior_wizard
+#, python-format
+msgid "Report Behavior of the workforce hiring"
+msgstr "Comportamiento de la contratación de la fuerza de trabajo"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_contract_view_form_inherit
+msgid "Movements"
+msgstr "Movimientos"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.hr_contract_view_form_inherit
+msgid ""
+"<span invisible=\"movements_count == 1\" class=\"o_stat_text\">\n"
+"                                        Movements\n"
+"                                    </span>\n"
+"                                    <span invisible=\"movements_count &gt; 1\" class=\"o_stat_text\">\n"
+"                                        Movements\n"
+"                                    </span>"
+msgstr ""
+"<span invisible=\"movements_count == 1\" class=\"o_stat_text\">\n"
+"                                        Movimientos\n"
+"                                    </span>\n"
+"                                    <span invisible=\"movements_count &gt; 1\" class=\"o_stat_text\">\n"
+"                                        Movimientos\n"
+"                                    </span>"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: model_terms:ir.ui.view,arch_db:l10n_cu_hr_payroll_movement.view_form_hr_contract_employee_inherited
+msgid ""
+"<span invisible=\"movements_count == 1\" class=\"o_stat_text\">\n"
+"                                        Movements\n"
+"                                    </span>\n"
+"                                    <span invisible=\"movements_count &gt; 1\" class=\"o_stat_text\">\n"
+"                                        Movements\n"
+"                                    </span>"
+msgstr ""
+"<span invisible=\"movements_count == 1\" class=\"o_stat_text\">\n"
+"                                        Movimientos\n"
+"                                    </span>\n"
+"                                    <span invisible=\"movements_count &gt; 1\" class=\"o_stat_text\">\n"
+"                                        Movimientos\n"
+"                                    </span>"
+
+
+#. module: l10n_cu_hr_payroll_movement
+#: code:addons/l10n_cu_hr_payroll_movement/models/payroll_movement.py:0
+#, python-format
+msgid "Error computing fields. Please check the logs or contact your administrator."
+msgstr "Error al calcular los campos. Por favor, revise los registros o póngase en contacto con su administrador."
+
+

@@ -1,0 +1,15 @@
+<odoo>
+    <record id="view_form_hr_contract_employee_inherited" model="ir.ui.view">
+        <field name="name">view_hr_contract_employee_form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='o_work_information']" position="inside">
+                <group name="wage_info" string="Salary" groups="hr.group_hr_user">
+                    <field name="wage" required="1"/>
+                    <field name="occupational_category_id" required="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

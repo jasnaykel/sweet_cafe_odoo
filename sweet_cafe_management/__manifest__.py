@@ -29,6 +29,11 @@
         'purchase',
         'account',
         'uom',
+        # Cuban RRHH modules
+        'l10n_cu_hr',
+        'l10n_cu_hr_contract',
+        'l10n_cu_hr_employee_contract',
+        'l10n_cu_hr_payroll_movement',
     ],
     'data': [
         # Security — always first

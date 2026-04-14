@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- ═══════════════════════════════════════════════
-         hr.version — Cuban Payroll Tab (inherited)
+         hr.version — Pestaña Nómina Cuba (inherited)
+         Adds Cuban payroll perception/deduction fields
+         to the contract form defined by l10n_cu_hr_contract.
     ═══════════════════════════════════════════════ -->
 
     <record id="view_hr_version_cuba_form" model="ir.ui.view">
-        <field name="name">hr.employee.cuba.form</field>
-        <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="name">hr.version.sweet.cuba.form</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="l10n_cu_hr_contract.hr_version_form_view"/>
         <field name="arch" type="xml">
             <!-- Add Cuban payroll notebook page -->
             <xpath expr="//notebook" position="inside">

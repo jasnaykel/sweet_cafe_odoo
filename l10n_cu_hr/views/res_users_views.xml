@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <record id="res_users_view_form" model="ir.ui.view">
+            <field name="name">res.users.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="hr.res_users_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_create_employee']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="domain">[('id', 'in', company_ids)]</attribute>
+                    <attribute name="groups">base.group_multi_company</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_users_search_company" model="ir.ui.view">
+            <field name="name">res.users.search.company</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_search" />
+              <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="company_id" groups="base.group_multi_company" />
+                    <field name="company_ids" string="Compañías permitidas" />
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_report_payroll_movement" model="ir.actions.report">
+            <field name="model">payroll.movement</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">l10n_cu_hr_payroll_movement.report_payroll_movement</field>
+            <field name="report_file">l10n_cu_hr_payroll_movement.report_payroll_movement</field>
+            <field name="print_report_name">'SC-4-02'</field>
+            <field name="name">'SC-4-02'</field>
+            <field name="binding_model_id" ref="model_payroll_movement" />
+            <field name="binding_type">report</field>
+            <field name="binding_view_types">list</field>
+            <field name="paperformat_id" ref="l10n_cu_hr_payroll_movement.paper_format_global" />
+        </record>
+
+        <template id="report_payroll_movement">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <style>
+                        .page{
+                        border: 1px solid black;
+                        }
+                        .margin { margin-bottom: 10px;
+                        }
+                        .left{
+                        border-left: 1px solid black;
+                        }
+                        .right{
+                        border-right: 1px solid black;
+                        }
+                        .height{
+                        height: 25px;
+                        }
+                        .bottom {
+                        border-bottom: 1px solid black
+                        }
+                        .cuadrado {
+                        width: 20px;
+                        height: 20px;
+                        border: 1px solid black;
+                        margin-right: 10px;
+                        }
+                        .col-1 {
+                        flex: 0 0 8.33%;
+                        max-width: 8.33%;
+                        }
+                        .my-1 {
+                        margin-top: 0.25rem!important;
+                        margin-bottom: 0.25rem!important;
+                        }
+                    </style>
+                    <t t-set="counter" t-value="0" />
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-if="doc.state == 'open'">
+                            <t t-if="counter != 0 and counter % 2 == 0">
+                                <div style="page-break-after: always;" />
+                            </t>
+                            <div t-att-class="'page' + (' margin' if counter % 2 == 0 else '')">
+                                <div class="d-flex">
+                                    <t t-set="counter" t-value="counter + 1" />
+                                    <div class="col-3 right bottom">
+                                        <strong>SC-4-02</strong>
+                                    </div>
+                                    <div class="col-4 right" />
+                                    <div class="col-5 bottom">
+                                        <strong>Expediente Laboral:</strong>
+                                        <t t-esc="doc.employee_id.number" />
+                                    </div>
+                                </div>
+<!--                                <div class="d-flex">-->
+<!--                                    <div class="col-3 right bottom">-->
+<!--                                        <strong>Organismo: GESIME</strong>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-4 right" />-->
+<!--                                    <div class="col-5 bottom" />-->
+<!--                                </div>-->
+                                <div class="d-flex">
+                                    <div class="col-3 right bottom">
+                                        <strong>Empresa: <t t-esc="doc.company_id.name" /></strong>
+                                    </div>
+                                    <div class="col-4 right" />
+                                    <div class="col-5 bottom">
+                                        <strong>Carnét de Identidad:</strong>
+                                        <t t-esc="doc.employee_id.identification_id" />
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-3 right bottom">
+                                        <strong>Código: 102-0-06047</strong>
+                                    </div>
+                                    <div class="col-4 right" />
+                                    <div class="col-5 bottom" />
+                                </div>
+                                <div class="d-flex" style="height:25px;">
+                                    <div class="col-3 right" />
+                                    <div class="col-4 right" />
+                                    <div class="col-5 d-flex text-center bottom">
+                                        <div class="right" style="padding-right: 46px;">
+                                            <strong>Fecha de emisión</strong>
+                                        </div>
+                                        <div style="padding-left:20px;">
+                                            <strong>Fecha efectiva</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex bottom">
+                                    <div class="col-3 right" style="white-space: nowrap;">
+                                        <strong>Unidad:</strong>
+                                        <t t-esc="doc.company_id.name" />
+                                    </div>
+                                    <div class="col-4 text-center right" style="margin-top: -70px;">
+<!--                                        <img style=" max-width: 50%; height: auto; align:center"-->
+<!--                                            src="/co_rr_hh/static/description/logo.png" alt="" />-->
+                                        <br />
+                                        <h5>MOVIMIENTO DE NÓMINA</h5>
+                                    </div>
+
+                                    <div class="col-5 d-flex">
+                                        <div class="right text-center" style="padding-right: 25px;">
+                                            <strong>Día</strong>
+                                        </div>
+                                        <div class="right text-center" style="padding-right: 19px;">
+                                            <strong>Mes</strong>
+                                        </div>
+                                        <div class="right text-center" style="padding-right: 38px;">
+                                            <strong>Año</strong>
+                                        </div>
+                                        <div class="right text-center" style="padding-right: 25px;">
+                                            <strong>Día</strong>
+                                        </div>
+                                        <div class="right text-center" style="padding-right: 19px;">
+                                            <strong>Mes</strong>
+                                        </div>
+                                        <div class="text-center" style="padding-right: 38px;">
+                                            <strong>Año</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex" style="height:25px;">
+                                    <div class="col-7 right" />
+                                    <div class="col-5 d-flex bottom">
+                                        <div class="right"
+                                            style="padding-right: 41px; align:center;">
+                                            <t t-esc="doc.date.day" />
+                                        </div>
+                                        <div class="right"
+                                            style="padding-right: 41px; align:center;">
+                                            <t t-esc="doc.date.month" />
+                                        </div>
+                                        <div class="right"
+                                            style="padding-right: 30px; align:center;">
+                                            <t t-esc="doc.date.year" />
+                                        </div>
+                                        <div class="right"
+                                            style="padding-right: 41px; align:center;">
+                                            <t t-esc="doc.effective_date.day" />
+                                        </div>
+                                        <div class="right"
+                                            style="padding-right: 40px; align:center;">
+                                            <t t-esc="doc.effective_date.month" />
+                                        </div>
+                                        <div class="">
+                                            <t t-esc="doc.effective_date.year" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex bottom" style="height:25px;">
+                                    <div class="col-7 right">
+                                        <strong>Datos generales</strong>
+                                    </div>
+                                    <div class="col-3" style="margin-right: -53px;">
+                                        <strong>Sexo</strong>
+                                    </div>
+                                    <div class="col-3 d-flex">
+                                        <div class="left right d-flex"
+                                            style="padding-right: 25px; padding-left: 25px;">
+                                            <strong class="mr-2">F</strong>
+                                            <div class="position-relative">
+                                                <span
+                                                    class="border-bottom border-dark d-inline-block mr-2 px-2" />
+                                                <span class="position-absolute"
+                                                    style="top: 0px; left: 0;">
+                                                    <t t-if="doc.employee_id.gender == 'female'">X</t>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class=" d-flex"
+                                            style="padding-right: 25px; padding-left: 25px;">
+                                            <strong class="mr-2">M</strong>
+                                            <div class="position-relative">
+                                                <span
+                                                    class="border-bottom border-dark d-inline-block mr-2 px-2" />
+                                                <span class="position-absolute"
+                                                    style="top: 0px; left: 0;">
+                                                    <t t-if="doc.employee_id.gender == 'male'">X</t>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex bottom">
+                                    <div class="col-4 right">
+                                        <strong>Nombre</strong>
+                                        <t t-esc="doc.employee_id.name" />
+                                    </div>
+                                    <div class="col-4 right">
+                                        <strong>Primer Apellido</strong>
+                                        <t t-esc="doc.employee_id.last_name" />
+                                    </div>
+                                    <div class="col-4">
+                                        <strong>Segundo Apellido</strong>
+                                        <t t-esc="doc.employee_id.second_last_name" />
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <div class="d-flex">
+                                        <strong>Tipo de movimiento:</strong>
+                                        <div class="col-1 my-1">
+                                            <div class="cuadrado">
+                                                <t t-if="doc.details_movement_type_id.name == 'Cambio de horario' and doc.movement_type == 'change'">
+                                                    X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;">
+                                            <strong>CAMBIO DE HORARIO</strong>
+                                        </div>
+                                        <div class="col-1 my-1"
+                                                    t-if="doc.contract_id.contract_type == 'indeterminado'">
+                                            <div class="cuadrado">
+                                                <t>
+                                                    X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;"
+                                                    t-if="doc.contract_id.contract_type == 'indeterminado'">
+                                            <strong>CONTRATO INDENTERM.</strong>
+                                        </div>
+                                        <div class="col-1 my-1"
+                                                    t-if="doc.contract_id.contract_type == 'determinado'">
+                                            <div class="cuadrado">
+                                                <t>
+                                                    X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;"
+                                                    t-if="doc.contract_id.contract_type == 'determinado'">
+                                            <strong>CONTRATO DENTERM.</strong>
+                                        </div>
+
+                                        <div class="col-1 my-1">
+                                            <div class="cuadrado">
+                                                <t t-if="doc.details_movement_type_id.name == 'Reubicación' and doc.movement_type == 'change'">X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;">
+                                            <strong>REUBICACIÓN</strong>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="col-1 my-1">
+                                            <div class="cuadrado">
+                                                <t t-if="doc.movement_type == 'high'">X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;">
+                                            <strong>ALTA</strong>
+                                        </div>
+                                        <div class="col-1 my-1">
+                                            <div class="cuadrado">
+                                                <t t-if="doc.movement_type == 'low'">X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;">
+                                            <strong>BAJA</strong>
+                                        </div>
+                                        <div class="col-1 my-1">
+                                            <div class="cuadrado">
+                                                <t t-if="doc.details_movement_type_id.name == 'Cambio de cargo' and doc.movement_type == 'change'">X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;">
+                                            <strong>CAMBIO DE CARGO</strong>
+                                        </div>
+                                        <div class="col-1 my-1">
+                                            <div class="cuadrado">
+                                                <t t-if="doc.details_movement_type_id.name == 'Cambio de salario' and doc.movement_type == 'change'">
+                                                    X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;">
+                                            <strong>CAMBIO DE SALARIO</strong>
+                                        </div>
+                                        <div class="col-1 my-1">
+                                            <div class="cuadrado">
+                                                <t
+                                                    t-if="doc.details_movement_type_id.name == 'Cambio de área de trabajo' and doc.movement_type == 'change'">
+                                                    X</t>
+                                            </div>
+                                        </div>
+                                        <div style="margin-left: -35px;">
+                                            <strong>CAMBIO ÁREA DE TRABAJO</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center bottom">
+                                    <strong>SITUACIÓN</strong>
+                                </div>
+                                <div class="d-flex bottom text-center">
+                                    <div class="right col-6">
+                                        <strong>Actual</strong>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Nuevo</strong>
+                                    </div>
+                                </div>
+                                <div class="d-flex bottom">
+                                    <div class="col-6 right">
+                                        <strong>Puesto de trabajo</strong>
+                                        <t t-if="doc.movement_type != 'high'"><t t-esc="doc.actual_situation_id.name" /></t>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Puesto de trabajo</strong>
+                                        <t t-if="doc.movement_type == 'high'"><t t-esc="doc.actual_situation_id.name" /></t>
+                                        <t t-else=""><t t-esc="doc.new_situation_id.name" /></t>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex bottom">
+                                    <div class="col-6 right">
+                                        <strong>Área de trabajo</strong>
+                                        <t t-if="doc.movement_type != 'high'"><t t-esc="doc.actual_department_id.name" /></t>
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>Área de trabajo</strong>
+                                        <t t-if="doc.movement_type == 'high'"><t t-esc="doc.actual_department_id.name" /></t>
+                                        <t t-else=""><t t-esc="doc.new_department_id.name" /></t>
+                                    </div>
+                                </div>
+                                <div class="d-flex bottom">
+                                    <div class="col-2"
+                                        style="white-space: nowrap; padding-left: 0 !important; margin-right: -40px !important;">
+                                        <strong>Régimen salarial</strong>
+                                    </div>
+                                    <div class="col-3 d-flex">
+                                        <div class="left right"
+                                            style="padding-left: 5px !important; padding-right: 5px !important">
+                                            <strong>Horario</strong>
+                                        </div>
+                                        <div class="right"
+                                            style="padding-left: 5px !important; padding-right: 5px !important">
+                                            <strong>1</strong>
+                                        </div>
+                                        <div class="right"
+                                            style="padding-left: 5px !important; padding-right: 5px !important">
+                                            <strong class="">Mensual</strong>
+                                        </div>
+                                        <div
+                                            style="padding-left: 5px !important; padding-right: 5px !important">
+                                            <strong>2</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 d-flex">
+                                        <div class="left right text-center"
+                                            style="white-space: nowrap; padding-left: 10px; padding-right: 13px !important; margin-left: -40px !important;">
+                                            <strong>Rendimiento</strong>
+                                        </div>
+                                        <div style="padding-left: 10px;">
+                                            <strong>3</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 left"
+                                        style="white-space: nowrap; margin-left: -34px !important; margin-right: -15px !important;">
+                                        <strong>Régimen salarial</strong>
+                                    </div>
+                                    <div class="col-3 d-flex">
+                                        <div class="left right"
+                                            style="padding-left: 5px !important; padding-right: 5px !important">
+                                            <strong>Horario</strong>
+                                        </div>
+                                        <div class="right"
+                                            style="padding-left: 5px !important; padding-right: 5px !important">
+                                            <strong>1</strong>
+                                        </div>
+                                        <div class="right"
+                                            style="padding-left: 5px !important; padding-right: 5px !important">
+                                            <strong class="">Mensual</strong>
+                                        </div>
+                                        <div
+                                            style="padding-left: 5px !important; padding-right: 5px !important">
+                                            <strong>2</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 d-flex">
+                                        <div class="left right"
+                                            style="margin-left: -35px !important;">
+                                            <strong>Rendimiento</strong>
+                                        </div>
+                                        <div style="padding-left: 5px;padding-right: 5px;">
+                                            <strong>3</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex bottom">
+                                    <div class="col-2 text-center"
+                                        style="white-space: nowrap; padding-left: 0 !important; margin-right: -40px !important;">
+                                        <strong>Básico</strong>
+                                        <br />
+                                        <t t-if="doc.movement_type != 'high'"><t t-esc="doc.actual_wage"/></t>
+
+                                    </div>
+                                    <div class="col-3 d-flex text-center">
+                                        <div class="left right"
+                                            style="padding-left: 7px; padding-right: 7px;">
+                                            <strong>Condición</strong>
+                                        </div>
+                                        <div style="padding-left: 15px; padding-right: 18px;">
+                                            <strong>Plus</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 left text-center"
+                                        style="margin-left: -24px !important;">
+                                        <strong>Total</strong>
+                                        <br />
+                                        <t t-if="doc.movement_type != 'high'"><t t-esc="doc.actual_wage" /></t>
+                                    </div>
+                                    <div class="col-2 text-center left right"
+                                        style="white-space: nowrap; margin-left: -10px !important; margin-right: -15px !important;">
+                                        <strong>Básico</strong>
+                                        <br />
+                                        <t t-if="doc.movement_type == 'high'"><t t-esc="doc.actual_wage" /></t>
+                                        <t t-else=""><t t-esc="doc.new_wage" /></t>
+                                    </div>
+                                    <div class="col-3 d-flex text-center">
+                                        <div class="right"
+                                            style="padding-left: 7px; padding-right: 7px;">
+                                            <strong>Condición</strong>
+                                        </div>
+                                        <div style="padding-left: 10px; padding-right: 9px;">
+                                            <strong>Plus</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 text-center left"
+                                        style="margin-left: -20px !important">
+                                        <strong style="padding-right: 2px;">Total</strong>
+                                        <br />
+                                        <t t-if="doc.movement_type == 'high'"><t t-esc="doc.actual_wage" /></t>
+                                        <t t-else=""><t t-esc="doc.new_wage" /></t>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex bottom">
+                                    <div class="col-2"
+                                        style="white-space: nowrap; padding-left: 0 !important; margin-right: -33px !important;">
+                                        <strong>Grupo</strong>
+                                    </div>
+                                    <div class="col-3 left" style="margin-left: 7px;">
+                                        <strong>Escala Decreto</strong>
+                                    </div>
+                                    <div class="col-2 left" style="margin-left: -38px !important">
+                                        <strong>Categoría</strong>
+                                        <t t-esc="doc.actual_occupational_category_id.code" />
+                                    </div>
+                                    <div class="col-2 left" style="margin-left: -10px !important">
+                                        <strong>Grupo</strong>
+                                    </div>
+                                    <div class="col-3 left">
+                                        <strong>Escala Decreto</strong>
+                                    </div>
+                                    <div class="col-2 left" style="margin-left: -35px !important">
+                                        <strong>Categoría</strong>
+                                        <t t-esc="doc.new_occupational_category_id.code" />
+                                    </div>
+                                </div>
+                                <div class="bottom">
+                                    <strong>Motivo de movimiento:</strong>
+                                    <t t-esc="doc.reasons_movement_type_id.reasons_movement_type_id.name" />
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-2 right bottom"
+                                        style="white-space: nowrap; padding-left: 0 !important;">
+                                        <strong>Confeccionado por:</strong>
+                                    </div>
+                                    <div class="col-2 right bottom"
+                                        style="white-space: nowrap; padding-left: 0 !important;">
+                                        <strong>Revisado por:</strong>
+                                    </div>
+                                    <div class="col-2 right bottom"
+                                        style="white-space: nowrap; padding-left: 0 !important;">
+                                        <strong>Aprobado por:</strong>
+                                    </div>
+                                    <div class="col-2 right bottom"
+                                        style="white-space: nowrap; padding-left: 0 !important;">
+                                        <strong>Actualizado por:</strong>
+                                    </div>
+                                    <div class="col-2 right bottom"
+                                        style="white-space: nowrap; padding-left: 0 !important;">
+                                        <strong>Registrado por:</strong>
+                                    </div>
+                                    <div class="col-2 bottom"
+                                        style="white-space: nowrap; padding-left: 0 !important;">
+                                        <strong>Número consecutivo</strong>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="height right col-2" />
+                                    <div class="height right col-2" />
+                                    <div class="height right col-2" />
+                                    <div class="height right col-2" />
+                                    <div class="height right col-2" />
+                                    <div class="height col-2" />
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

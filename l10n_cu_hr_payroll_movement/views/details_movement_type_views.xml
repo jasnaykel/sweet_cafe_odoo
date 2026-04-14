@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+ <record id="view_details_movement_type_form" model="ir.ui.view">
+        <field name="name">hr.details.movement.type.form</field>
+        <field name="model">details.movement.type</field>
+        <field name="arch" type="xml">
+            <form string="Details Movement Type">
+                <sheet>
+                    <field name="company_id" invisible="1"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="movement_type"/>
+                    </group>
+                    <group>
+                        <field name="reasons_movement_type_ids" mode="list" string="">
+                            <list limit="10">
+                                <field name="name"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+     <record id="view_details_movement_type_list" model="ir.ui.view">
+        <field name="name">hr.details.movement.type.list</field>
+        <field name="model">details.movement.type</field>
+        <field eval="8" name="priority"/>
+        <field name="arch" type="xml">
+            <list string="Details Movement Type">
+                <field name="name"/>
+                <field name="movement_type"/>
+            </list>
+        </field>
+     </record>
+
+     <record id="open_details_movement_type_action" model="ir.actions.act_window">
+        <field name="name">Details Movement Type</field>
+        <field name="res_model">details.movement.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Details Movement Type found ! Let's create one
+            </p>
+            <p>
+                Use Details Movement Types to categorize your Contract.
+            </p>
+        </field>
+     </record>
+
+
+    <menuitem
+            id="menu_hr_payroll_configuration"
+            name="Payroll Movements"
+            parent="hr.menu_human_resources_configuration"
+            sequence="30"/>
+
+    <menuitem
+                id="menu_view_details_movement_type"
+                name="Details Movement Type"
+                action="open_details_movement_type_action"
+                parent="menu_hr_payroll_configuration"
+                groups="hr.group_hr_manager,hr.group_hr_user"
+                sequence="0"/>
+</odoo>
+
+

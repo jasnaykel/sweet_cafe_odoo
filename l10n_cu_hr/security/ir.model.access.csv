@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_assistance_cards_wizard,access_hr_assistance_cards_wizard,model_hr_assistance_cards_wizard,base.group_user,1,1,1,1
+access_schooling_level,access_schooling_level,model_schooling_level,base.group_user,1,1,1,1
+access_occupational_category,access_occupational_category,model_occupational_category,base.group_user,1,1,1,1
+access_profession,access_profession,model_profession,base.group_user,1,1,1,1
+access_res_partner_user,res.partner.user,base.model_res_partner,base.group_user,1,0,0,0

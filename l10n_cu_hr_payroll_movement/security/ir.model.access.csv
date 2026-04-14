@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payroll_movement,access_payroll_movement,model_payroll_movement,hr.group_hr_manager,1,1,1,1
+access_report_resumen_wizard,access_report_resumen_wizard,model_report_resumen_wizard,hr.group_hr_manager,1,1,1,1
+access_details_movement_type,access_details_movement_type,model_details_movement_type,hr.group_hr_manager,1,1,1,1
+access_reasons_movement_type,access_reasons_movement_type,model_reasons_movement_type,hr.group_hr_manager,1,1,1,1
+access_reasons_details_rel,access_reasons_details_rel,model_reasons_details_rel,hr.group_hr_manager,1,1,1,1
+access_report_contracting_behavior_wizard,access_report_contracting_behavior_wizard,model_report_contracting_behavior_wizard,hr.group_hr_manager,1,1,1,1

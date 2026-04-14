@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="l10n_cu_hr_employee_contract.report_fixed_term_contract">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <style>
+                    #miTabla {
+                        position: relative;
+                        top: 10px; /* ajusta este valor según cuánto quieras mover la tabla hacia arriba */
+                      }
+                </style>
+                <div class="page" style="text-align: center;">
+                    <div style="text-align: left;">
+<!--                        <img style=" max-width: 250px; height: auto; margin-left:auto" src="/co_rr_hh/static/description/logo.png" alt="logo"/>-->
+                    </div>
+                    <div style="text-align: center;">
+                        <h2  style="font-weight: bold; font-size: 30px;" >Reporte de contratos por tiempo determinado a vencerse en un período
+                            </h2>
+                    </div>
+                    <table id="miTabla" class="table table-bordered" style="table-layout: auto; width: 100%; overflow-x: auto; border: 2px solid black;">
+                        <thead>
+                            <tr>
+                                <th colspan="5" style="text-align: center; background-color: white; color: black; border: 1px solid black; font-size: 20px; padding: 1cm;">
+                                    Contratos próximos a vencerse
+                                  </th>
+                            </tr>
+                            <tr>
+                                <th style="border: 1px solid black; text-align: center; color: black;">No.</th>  
+                                <th style="border: 1px solid black; text-align: center; color: black; white-space: nowrap;">Empresa</th>
+                                <th style="border: 1px solid black; text-align: center; color: black; white-space: nowrap;">Empleado (Nombre y apellidos)</th>
+                                <th style="border: 1px solid black; text-align: center; color: black; white-space: nowrap;">Fecha inicio</th>
+                                <th style="border: 1px solid black; text-align: center; color: black; white-space: nowrap;">Fecha fin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="contract">
+                                <td style="border: 1px solid black;"><span t-esc="contract_index + 1"/></td>
+                                <td style="border: 1px solid black;"><span t-field="contract.company_id"/></td>
+                                <td style="border: 1px solid black;"><span t-field="contract.employee_id"/></td>
+                                <td style="border: 1px solid black;"><span t-field="contract.date_start"/></td>
+                                <td style="border: 1px solid black;"><span t-field="contract.date_end"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="server_action_expiring_contracts_report" model="ir.actions.server">
+                <field name="name">Imprimir Reporte</field>
+                <field name="model_id" ref="hr.model_hr_version"/>
+                <field name="state">code</field>
+                <field name="code">
+                        action = env['hr.version'].print_expiring_contracts_report()
+                </field>
+        </record>
+        <record id="report_fixed_term_contract_action" model="ir.actions.report">
+               <field name="name">Report of contracts due to expire within a period</field>
+               <field name="model">hr.version</field>
+               <field name="report_type">qweb-pdf</field>
+               <field name="report_name">l10n_cu_hr_employee_contract.report_fixed_term_contract</field>
+               <field name="report_file">l10n_cu_hr_employee_contract.report_fixed_term_contract</field>
+               <field name="binding_model_id" eval="False"/>
+               <field name="binding_type">report</field>
+        </record>
+            <menuitem id="menu_fixed_term_contract_report" name="Report of contracts due to expire within a period"
+                  parent="hr.hr_menu_hr_reports" action="server_action_expiring_contracts_report" sequence="40"/>
+</odoo>

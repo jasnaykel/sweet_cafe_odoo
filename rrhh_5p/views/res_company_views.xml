@@ -1,0 +1,18 @@
+<odoo>
+    <record id="res_company_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.5p</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="report_template_id" options="{'no_create': True, 'no_open': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='street2']" position="after">
+                <field name="res_municipality_id"
+                       options="{'no_create': True, 'no_edit': True, 'no_quick_create': True}"
+                       placeholder="Municipio..."
+                       context="{'state_id': state_id, 'default_state_id': state_id}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

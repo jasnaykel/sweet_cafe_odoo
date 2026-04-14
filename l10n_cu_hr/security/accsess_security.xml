@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- group security restrictions views company -->
+    <record id="profession_company_rule" model="ir.rule">
+        <field name="name">multi-compañía</field>
+        <field name="model_id" ref="model_profession"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="global" eval="True"/>
+    </record>
+     <!-- Regla para usuarios -->
+    <record id="user_company_rule" model="ir.rule">
+        <field name="name">Usuario multi-compañía</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="domain_force">['|', ('company_ids', 'in', company_ids), ('id', '=', user.id)]</field>
+        <field name="global" eval="True"/>
+    </record> 
+</odoo>

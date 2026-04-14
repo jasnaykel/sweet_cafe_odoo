@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <record id="view_summary_registrations_internal_movements" model="ir.ui.view">
+            <field name="name">report.resumen.wizard.form</field>
+            <field name="model">report.resumen.wizard</field>
+            <field name="arch" type="xml">
+                <form style="width: 30%; margin: auto;">
+                    <group style="width: 100%; margin: auto;">
+<!--                        <group>-->
+<!--                            <label for="company_id" string="Company Name" style="margin-left:80px;"/>-->
+<!--                            <field name="company_id" nolabel="1" style="width: 100%" options="{'no_create': True,'no_create_edit':True}"/>-->
+<!--                        </group>-->
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                            <label for="date_from" string="Date From" style="margin-left: 80px; white-space: nowrap;"/>
+                            <field name="date_from" nolabel="1" style="width: 100%"/>
+                            <label for="date_to" string="Date To" style="margin-left: 80px; white-space: nowrap;"/>
+                            <field name="date_to" nolabel="1" style="width: 100%"/>
+                        </group>
+                    </group>
+                    <footer style="display: flex; justify-content: center;">
+                        <button type="object" name="generate_report" string="Imprimir" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_summary_registrations_internal_movements" model="ir.actions.act_window">
+            <field name="name">Summary of registrations and internal movements</field>
+            <field name="res_model">report.resumen.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_summary_registrations_internal_movements"
+                  name="Summary of registrations and internal movements"
+                  parent="hr.hr_menu_hr_reports" action="action_summary_registrations_internal_movements"
+                  sequence="30"/>
+
+    </data>
+</odoo>

@@ -15,15 +15,17 @@
                       groups="hr.group_hr_user">
                     <group>
                         <group string="Datos Personales (Cuba)">
-                            <field name="carnet_identidad"/>
-                            <field name="estado_civil"/>
-                            <field name="escolaridad"/>
+                            <!-- identification_id, schooling_level_id,
+                                 res_private_municipality_id, private_state_id
+                                 son añadidos por l10n_cu_hr en la tab "Private Information".
+                                 Aquí sólo mostramos lo exclusivo de Sweet. -->
                             <field name="num_hijos"/>
-                            <field name="municipio"/>
-                            <field name="provincia"/>
                         </group>
                         <group string="Datos Laborales">
-                            <field name="categoria_ocupacional"/>
+                            <!-- occupational_category_id viene de l10n_cu_hr /
+                                 l10n_cu_hr_employee_contract (tab "Work Information").
+                                 salary_scale_id, forma_pago, horario_trabajo y branch_id
+                                 son exclusivos de Sweet. -->
                             <field name="salary_scale_id"/>
                             <field name="basic_salary_cup"
                                    invisible="not salary_scale_id"/>

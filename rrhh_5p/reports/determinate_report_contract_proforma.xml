@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_determinate_report_contract" model="ir.actions.report">
+            <field name="model">hr.contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">rrhh_5p.determinate_report_contract_proforma</field>
+            <field name="report_file">rrhh_5p.determinate_report_contract_proforma</field>
+            <field name="print_report_name">'Determinate Contract proforma'</field>
+            <field name="name">Proforma Contrato Determinado Ruedas Caimán S.R.L</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="rrhh_5p.paper_format_global_rrhhp5"/>
+        </record>
+        <template id="determinate_report_contract_proforma">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <style>
+                        .subrayado {
+                        text-decoration: underline;
+                        }
+                        .justificado {
+                        text-align: justify;
+                        }
+                    </style>
+                    <t t-foreach="docs" t-as="doc">
+<!--                        <t t-if="doc.button_visible == True">-->
+                            <div class="page">
+                                <div class="d-flex">
+                                    <div class="col-6">
+<!--                                        <img style=" max-width: 250px; height: auto; margin-left:auto"-->
+<!--                                             src="/l10n_cu_hr_payroll_movement/static/description/logo.png" alt=""/>-->
+                                    </div>
+                                    <div class="col-3"/>
+                                    <div class="col-3">
+<!--                                        <img style=" max-width: 80px; height: auto; align:end;"-->
+<!--                                             src="/l10n_cu_hr_payroll_movement/static/src/img/logo2.jpg" alt=""/>-->
+                                    </div>
+                                </div>
+                                <div class="text-center subrayado">
+                                    <strong>CONTRATO DE TRABAJO POR TIEMPO DETERMINADO</strong>
+                                </div>
+                                <br/>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>DE UNA PARTE:</strong>
+                                    <span class="white-space: nowrap;">La Empresa Privada </span>
+                                    <strong>
+                                        <t t-esc="doc.company_id.name"/>
+                                    </strong>
+                                    Constituida mediante la escritura pública No. 41 de fecha 11 de noviembre de 2021,
+                                    con domicilio legal en:
+                                    <strong>
+                                        <t t-esc="doc.company_id.street"/>
+                                    </strong>
+                                    , Municipio:
+                                    <t t-esc="doc.company_id.res_municipality_id.name"/>, Provincia,
+                                    <t t-esc="doc.company_id.state_id.name"/>
+                                    , Empresa cubana, teléfono:
+                                    <t t-esc="doc.company_id.phone"/>, número de Identificación Tributaria (NIT):
+                                    <t t-esc="doc.company_id.vat"/>, Inscripción Mercantil en el Libro MIPYME, al Tomo IV, Folio 31, Hoja 53,
+                                    , representada en este acto por
+                                    <strong>
+                                        <t t-esc="doc.company_id.director"/>
+                                    </strong>
+                                    , con Carnet de Identidad No. 72121628541
+                                    , en su carácter de Presidente según se acredita mediante el Acuerdo No.
+                                    <strong>
+                                        <t t-esc="doc.company_id.resolution"/>
+                                    </strong>
+                                    , De la Junta Extraordinaria General de Socios, del 24 de febrero de 2023,
+                                    quien en lo sucesivo y a los efectos de este Contrato se denominará
+                                    <strong>El EMPLEADOR.</strong>
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>DE OTRA PARTE:</strong>
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.full_name"/>
+                                    </span>
+                                    , de
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.age"/>
+                                    </span>
+                                    años, estado civil
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.marital"/>
+                                    </span>
+                                    con carnet de identidad No.
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.identification_id"/>
+                                    </span>
+                                    , ciudadanía Cubana, con domicilio legal en
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.private_street"/>
+                                    </span>
+                                    municipio
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.res_private_municipality_id.name"/>
+                                    </span>
+                                    , Provincia
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.private_state_id.name"/>
+                                    </span>
+                                    quien a los efectos de este contrato y en lo sucesivo se denomina
+                                    <strong>EL TRABAJADOR</strong>
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong> AMBAS PARTES</strong>
+
+                                    , libre y voluntariamente, reconociendo la capacidad legal con que comparecen,
+                                    convienen suscribir el presente
+
+                                <strong> CONTRATO DE TRABAJO</strong>
+                                , mediante el cual:
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>PRIMERO: El trabajador </strong>
+                                    prestará sus servicios bajo los términos y condiciones siguientes:
+                                    <br/>
+                                     a)	El tipo de contrato que se suscribe es por Tiempo Determinado (
+                                    <t t-esc="doc.number_of_days"/>
+                                    días).
+                                    Una vez terminado este periodo si ambas partes lo consideran
+                                    se concertará Contrato Indeterminado.
+                                    <br/>
+                                    b)	Desempeña el cargo denominado:
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.job_id.name"/>
+                                    </span>
+                                    , que corresponde a la categoría ocupacional
+                                     <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.occupational_category_id.name"/>
+                                    </span>
+                                    <br/>
+                                    c)	Comenzará a laborar a partir del día
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.date_start"/>
+                                    </span>
+                                    , en el área
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.department_id.name"/>
+                                    </span>
+                                    <br/>
+                                    d)	Estará sujeto a una jornada de trabajo flexible, laborando
+                                     <p class="subrayado"> <t t-esc="doc.employee_id.resource_calendar_id.hours_per_day"/>
+                                    horas promedio diarias y 44 horas promedio semanales.</p>
+                                    <br/>
+                                    e)	Devenga un Salario Básico de $
+                                    <span class="border-bottom border-dark d-inline-block mr-2 px-3">
+                                        <t t-esc="doc.employee_id.wage"/>
+                                    </span>
+                                    . Con una periodicidad mensual según tiempo real trabajado.
+                                    <br/>
+                                     <br/>
+                                    f)	Podrá estar sujeto a un pago por resultado para el cargo según reglamento aprobado.
+                                    <br/>
+                                     <br/>
+                                    g)	Teniendo en cuenta las utilidades alcanzadas por la Sociedad, trimestralmente
+                                    la Junta General de Socios podrá aprobar la distribución de utilidades, según el reglamento aprobado.
+                                </p>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>SEGUNDO: El Trabajador </strong>
+                                    se compromete a cumplir las atribuciones y obligaciones generales
+                                    y específicas inherentes al cargo que desempeña en condiciones
+                                    de amplio perfil dadas por la organización del trabajo existente;
+                                    a cumplir con las orientaciones que le sean impartidas por los jefes facultados para ello;
+                                    a cumplir el Reglamento Disciplinario Interno de la Sociedad
+                                    y las disposiciones vigentes en materia de seguridad,
+                                    salud y medio ambiente de trabajo relacionadas con su cargo.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>TERCERO: El Empleador </strong>
+                                    se compromete a abonar a <strong>El Trabajador</strong> su salario en la forma establecida en el presente contrato,
+                                    así como brindar las prestaciones de seguridad social,
+                                    pagar las vacaciones anuales y cumplir las demás disposiciones establecidas en materia laboral.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>CUARTO: El Trabajador </strong>
+                                    , disfrutará de los beneficios de las vacaciones anuales pagadas,
+                                    seguridad social y otros pagos legalmente establecidos,
+                                    siempre que se cumpla con lo dispuesto en la legislación laboral vigente.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>QUINTO: El Trabajador </strong>
+                                    , en caso de enfermedad o accidente que le incapacite temporalmente para el trabajo,
+                                    lo informa al <strong>Empleador </strong> dentro de las 24 horas de ocurrido el hecho.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>SEXTO: </strong>
+                                   El presente Contrato de Trabajo termina por las causas generales siguientes:
+                                    <br/>
+                                    a)	Acuerdo de las partes.
+                                    <br/>
+                                    b)	Iniciativa de alguna de las partes.
+                                    <br/>
+                                    c)	Vencimiento del término fijado o conclusión de la labor pactada.
+                                    <br/>
+                                    d)	Extinción de la Sociedad.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>SEPTIMO: </strong>
+                                   La terminación del contrato por iniciativa de <strong>El Trabajador </strong>
+                                    se produce una vez transcurrido hasta 30 días del aviso previo a <strong>El Empleador</strong>.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>OCTAVO: </strong>
+                                    A la terminación del contrato de trabajo, por cualquier,
+                                    causa <strong>El Trabajador </strong> tiene derecho a percibir es salario por el trabajo realizado y
+                                    el pago correspondiente a las vacaciones anuales acumuladas hasta ese momento.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>NOVENO: </strong>
+                                    Ambas partes convienen en lo expresado en el presente documento,
+                                    comprometiéndose a su más estricto cumplimiento.
+                                </p>
+                                <br/>
+                                <p class="justificado">
+                                    <strong>Y PARA QUE ASÍ CONSTE</strong>
+                                    , se expide el presente Contrato de Trabajo que suscriben las partes de común acuerdo,
+                                    original y copia en el Expediente del Trabajador
+                                </p>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="d-flex">
+                                    <div class="col-6">
+                                        <span class="border-bottom border-dark d-inline-block mr-2 px-3 w-100"/>
+                                        <br/>
+                                        <strong>LA EMPLEADORA</strong>
+                                        <br/>
+                                        <strong>
+                                            <t t-esc="doc.company_id.employer"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-3"/>
+                                    <div class="col-3">
+                                        <span class="border-bottom border-dark d-inline-block mr-2 px-3 w-100"/>
+                                        <br/>
+                                        <strong>EL TRABAJADOR</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p style="page-break-after:always;"/>
+                            </div>
+<!--                        </t>-->
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -2,7 +2,10 @@
 <odoo>
     <!-- ═══════════════════════════════════════════════
          DEMO DATA — Sweet Café Employees (RRHH Cuba)
-         Only loaded in demo/testing environments
+         Only loaded in demo/testing environments.
+         Uses field names from l10n_cu_hr (identification_id,
+         schooling_level_id, occupational_category_id) and
+         standard Odoo hr.employee (marital).
     ═══════════════════════════════════════════════ -->
 
     <!-- Gerente / Administrador -->
@@ -10,13 +13,11 @@
         <field name="name">Ana García Martínez</field>
         <field name="job_title">Gerente General</field>
         <field name="gender">female</field>
-        <field name="carnet_identidad">85122345678</field>
-        <field name="escolaridad">universitario</field>
-        <field name="estado_civil">casado</field>
+        <field name="identification_id">85122345678</field>
+        <field name="schooling_level_id" ref="l10n_cu_hr.schooling_level_uni"/>
+        <field name="marital">married</field>
         <field name="num_hijos">2</field>
-        <field name="municipio">Plaza de la Revolución</field>
-        <field name="provincia">La Habana</field>
-        <field name="categoria_ocupacional">cuadro</field>
+        <field name="occupational_category_id" ref="l10n_cu_hr.schooling_level_c"/>
         <field name="salary_scale_id" ref="salary_scale_14"/>
         <field name="forma_pago">escala</field>
         <field name="horario_trabajo">continuo</field>
@@ -28,13 +29,11 @@
         <field name="name">María Torres Pérez</field>
         <field name="job_title">Repostera Principal</field>
         <field name="gender">female</field>
-        <field name="carnet_identidad">90034512345</field>
-        <field name="escolaridad">tecnico</field>
-        <field name="estado_civil">soltero</field>
+        <field name="identification_id">90034512345</field>
+        <field name="schooling_level_id" ref="l10n_cu_hr.schooling_level_tm"/>
+        <field name="marital">single</field>
         <field name="num_hijos">1</field>
-        <field name="municipio">Cerro</field>
-        <field name="provincia">La Habana</field>
-        <field name="categoria_ocupacional">tecnico</field>
+        <field name="occupational_category_id" ref="l10n_cu_hr.schooling_level_t"/>
         <field name="salary_scale_id" ref="salary_scale_9"/>
         <field name="forma_pago">mixto</field>
         <field name="horario_trabajo">turno</field>
@@ -46,13 +45,11 @@
         <field name="name">Carlos Rodríguez López</field>
         <field name="job_title">Cajero</field>
         <field name="gender">male</field>
-        <field name="carnet_identidad">95071289012</field>
-        <field name="escolaridad">12mo</field>
-        <field name="estado_civil">soltero</field>
+        <field name="identification_id">95071289012</field>
+        <field name="schooling_level_id" ref="l10n_cu_hr.schooling_level_12"/>
+        <field name="marital">single</field>
         <field name="num_hijos">0</field>
-        <field name="municipio">Centro Habana</field>
-        <field name="provincia">La Habana</field>
-        <field name="categoria_ocupacional">operario</field>
+        <field name="occupational_category_id" ref="l10n_cu_hr.schooling_level_o"/>
         <field name="salary_scale_id" ref="salary_scale_4"/>
         <field name="forma_pago">escala</field>
         <field name="horario_trabajo">turno</field>
@@ -64,13 +61,11 @@
         <field name="name">Roberto Díaz Suárez</field>
         <field name="job_title">Almacenista</field>
         <field name="gender">male</field>
-        <field name="carnet_identidad">78091567890</field>
-        <field name="escolaridad">9no</field>
-        <field name="estado_civil">casado</field>
+        <field name="identification_id">78091567890</field>
+        <field name="schooling_level_id" ref="l10n_cu_hr.schooling_level_9"/>
+        <field name="marital">married</field>
         <field name="num_hijos">3</field>
-        <field name="municipio">Guanabacoa</field>
-        <field name="provincia">La Habana</field>
-        <field name="categoria_ocupacional">operario</field>
+        <field name="occupational_category_id" ref="l10n_cu_hr.schooling_level_o"/>
         <field name="salary_scale_id" ref="salary_scale_5"/>
         <field name="forma_pago">escala</field>
         <field name="horario_trabajo">continuo</field>
@@ -82,13 +77,11 @@
         <field name="name">Luisa Fernández Castro</field>
         <field name="job_title">Especialista en RRHH</field>
         <field name="gender">female</field>
-        <field name="carnet_identidad">87050623456</field>
-        <field name="escolaridad">universitario</field>
-        <field name="estado_civil">casado</field>
+        <field name="identification_id">87050623456</field>
+        <field name="schooling_level_id" ref="l10n_cu_hr.schooling_level_uni"/>
+        <field name="marital">married</field>
         <field name="num_hijos">2</field>
-        <field name="municipio">Vedado</field>
-        <field name="provincia">La Habana</field>
-        <field name="categoria_ocupacional">tecnico</field>
+        <field name="occupational_category_id" ref="l10n_cu_hr.schooling_level_t"/>
         <field name="salary_scale_id" ref="salary_scale_11"/>
         <field name="forma_pago">escala</field>
         <field name="horario_trabajo">continuo</field>

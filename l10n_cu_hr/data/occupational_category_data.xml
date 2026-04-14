@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+	  <record id="schooling_level_o" model="occupational.category">
+          <field name="name">Operario</field>
+          <field name="code">O</field>
+      </record>
+      <record id="schooling_level_s" model="occupational.category">
+          <field name="name">Servicio</field>
+          <field name="code">S</field>
+      </record>
+	  <record id="schooling_level_a" model="occupational.category">
+          <field name="name">Administrativo</field>
+          <field name="code">A</field>
+      </record>
+        <record id="schooling_level_t" model="occupational.category">
+          <field name="name">Técnico</field>
+          <field name="code">T</field>
+      </record>
+        <record id="schooling_level_c" model="occupational.category">
+          <field name="name">Cuadro</field>
+          <field name="code">C</field>
+      </record>
+    </data>
+</odoo>

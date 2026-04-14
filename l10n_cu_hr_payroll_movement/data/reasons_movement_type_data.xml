@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Reason Movement Types -->
+       <record id="reasons_movement_type_1" model="reasons.movement.type">
+            <field name="name">Salarial</field>
+        </record>
+        <record id="reasons_movement_type_2"  model="reasons.movement.type">
+            <field name="name">Jubilación</field>
+        </record>
+        <record id="reasons_movement_type_3"  model="reasons.movement.type">
+            <field name="name">Fallecimiento</field>
+        </record>
+        <record id="reasons_movement_type_4" model="reasons.movement.type">
+            <field name="name">Invalidez Total</field>
+        </record>
+        <record id="reasons_movement_type_5"  model="reasons.movement.type">
+            <field name="name">Invalidez Parcial</field>
+        </record>
+        <record id="reasons_movement_type_6" model="reasons.movement.type">
+            <field name="name">Privación de Libertad</field>
+        </record>
+        <record id="reasons_movement_type_7" model="reasons.movement.type">
+            <field name="name">Paso a formas no estatales</field>
+        </record>
+        <record id="reasons_movement_type_8" model="reasons.movement.type">
+            <field name="name">Proceso de disponibilidad</field>
+        </record>
+        <record id="reasons_movement_type_9"  model="reasons.movement.type">
+            <field name="name">Sanción Administrativa</field>
+        </record>
+        <record id="reasons_movement_type_10" model="reasons.movement.type">
+            <field name="name">Salida del país</field>
+        </record>
+        <record id="reasons_movement_type_11" model="reasons.movement.type">
+            <field name="name">Devolución con indemnización</field>
+        </record>
+        <record id="reasons_movement_type_10" model="reasons.movement.type">
+            <field name="name">Devolución sin indemnización</field>
+        </record>
+        <record id="reasons_movement_type_11" model="reasons.movement.type">
+            <field name="name">Otras</field>
+        </record>
+    </data>
+</odoo>

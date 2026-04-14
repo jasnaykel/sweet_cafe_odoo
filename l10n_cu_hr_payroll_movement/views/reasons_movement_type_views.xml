@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+ <record id="view_reasons_movement_type_form" model="ir.ui.view">
+        <field name="name">hr.reasons.movement.type.form</field>
+        <field name="model">reasons.movement.type</field>
+        <field name="arch" type="xml">
+            <form string="Reasons Movement Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+
+
+     <record id="view_reasons_movement_type_list" model="ir.ui.view">
+        <field name="name">hr.reasons.movement.type.list</field>
+        <field name="model">reasons.movement.type</field>
+        <field eval="8" name="priority"/>
+        <field name="arch" type="xml">
+            <list string="Reasons Movement Type" editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+     </record>
+
+     <record id="view_reasons_details_rel_form" model="ir.ui.view">
+        <field name="name">hr.reasons.details.rel.form</field>
+        <field name="model">reasons.details.rel</field>
+        <field name="arch" type="xml">
+            <form string="Reasons Details Rel">
+                <sheet>
+                    <group>
+                        <field name="details_movement_type_id"/>
+                        <field name="reasons_movement_type_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+    <record id="view_reasons_details_rel_list" model="ir.ui.view">
+        <field name="name">hr.reasons.details.rel.list</field>
+        <field name="model">reasons.details.rel</field>
+        <field eval="8" name="priority"/>
+        <field name="arch" type="xml">
+            <list string="Reasons Details Rel" editable="bottom">
+                <field name="details_movement_type_id" readonly="context.get('default_details_movement_type_id')"/>
+                <field name="reasons_movement_type_id"/>
+            </list>
+        </field>
+     </record>
+
+     <record id="open_reasons_movement_type_action" model="ir.actions.act_window">
+        <field name="name">Reasons Movement Type</field>
+        <field name="res_model">reasons.movement.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Reasons Movement Type found ! Let's create one
+            </p>
+            <p>
+                Use Reasons Movement Types to categorize your Contract.
+            </p>
+        </field>
+     </record>
+
+
+
+    <menuitem
+                id="menu_view_reasons_movement_type"
+                name="Reasons Movement Type"
+                action="open_reasons_movement_type_action"
+                parent="menu_hr_payroll_configuration"
+                groups="hr.group_hr_manager,hr.group_hr_user"
+                sequence="0"/>
+</odoo>
+
+

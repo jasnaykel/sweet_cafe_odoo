@@ -10,7 +10,10 @@
 
                 <div id="sweetProductCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <t t-set="products" t-value="request.env['product.template'].sudo().search([('is_pastry', '=', True), ('website_published', '=', True)], limit=12)"/>
+                        <t t-set="products" t-value="request.env['product.template'].sudo().search(
+                            [('is_pastry', '=', True), ('is_published', '=', True)]
+                            if 'is_pastry' in request.env['product.template']._fields
+                            else [('is_published', '=', True)], limit=12)"/>
                         <t t-set="chunks" t-value="[products[i:i + 4] for i in range(0, len(products), 4)]"/>
                         
                         <t t-foreach="chunks" t-as="chunk">

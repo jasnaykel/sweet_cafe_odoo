@@ -1,0 +1,78 @@
+<odoo>
+    <!--
+        Inherits the base hr.version form view defined in l10n_cu_hr_contract
+        and adds Cuban employment-law specific fields.
+    -->
+    <record id="hr_version_form_employee_contract_inherit" model="ir.ui.view">
+        <field name="name">hr.version.employee.contract.form.inherit</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="l10n_cu_hr_contract.hr_version_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']" position="before">
+                <header>
+                    <button name="print_contract_proforma" string="Imprimir Contrato"
+                            type="object" class="btn-primary"
+                            invisible="contract_state == 'draft'"/>
+                    <button name="print_supplier_contract" string="Imprimir Suplemento"
+                            type="object"
+                            invisible="contract_state == 'draft'"/>
+                    <field name="contract_state" widget="statusbar"
+                           statusbar_visible="draft,open,close"/>
+                </header>
+            </xpath>
+            <xpath expr="//group[@name='top_info_left']/field[@name='contract_date_start']" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="readonly">contract_state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='top_info_left']/field[@name='contract_date_end']" position="replace">
+                <field name="skip_compute_date_end" invisible="1"/>
+                <field name="number_of_days"
+                       invisible="contract_type != 'determinado'"
+                       readonly="contract_state != 'draft'"/>
+                <field name="contract_date_end"
+                       invisible="contract_type != 'determinado' and not skip_compute_date_end"
+                       required="contract_type == 'determinado'"
+                       string="Contract End Date" readonly="1"/>
+            </xpath>
+            <xpath expr="//group[@name='top_info_right']/field[@name='department_id']" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="readonly">contract_state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='top_info_right']/field[@name='job_id']" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="readonly">contract_state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='top_info_right']/field[@name='job_id']" position="after">
+                <field name="occupational_category_id" required="1" readonly="1"/>
+                <field name="contract_type" readonly="contract_state != 'draft'"/>
+                <field name="determined_contract_type_id"
+                       invisible="contract_type != 'determinado'"
+                       required="contract_type == 'determinado'"
+                       readonly="contract_state != 'draft'"
+                       options="{'no_open': True, 'no_create': True}"/>
+            </xpath>
+            <xpath expr="//group[@name='top_info_left']/field[@name='employee_id']" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="readonly">contract_state != 'draft'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend the hr.version list view to show contract_state -->
+    <record id="hr_version_list_employee_contract_inherit" model="ir.ui.view">
+        <field name="name">hr.version.employee.contract.list.inherit</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_version_list_view"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="before">
+                <field name="name"/>
+                <field name="contract_type" optional="show"/>
+                <field name="contract_state" widget="badge"
+                       decoration-info="contract_state == 'draft'"
+                       decoration-warning="contract_state == 'close'"
+                       decoration-success="contract_state == 'open'"
+                       optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

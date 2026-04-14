@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Details Movement Types -->
+       <record id="details_movement_type_1" model="details.movement.type">
+            <field name="name">Alta</field>
+            <field name="movement_type">high</field>
+        </record>
+        <record id="details_movement_type_2"  model="details.movement.type">
+            <field name="name">Baja</field>
+            <field name="movement_type">low</field>
+        </record>
+        <record id="details_movement_type_3"  model="details.movement.type">
+            <field name="name">Cambio de cargo</field>
+            <field name="movement_type">change</field>
+        </record>
+        <record id="details_movement_type_4" model="details.movement.type">
+            <field name="name">Cambio de salario</field>
+            <field name="movement_type">change</field>
+        </record>
+        <record id="details_movement_type_5"  model="details.movement.type">
+            <field name="name">Cambio de área de trabajo</field>
+            <field name="movement_type">change</field>
+        </record>
+        <record id="details_movement_type_6" model="details.movement.type">
+            <field name="name">Cambio de horario</field>
+            <field name="movement_type">change</field>
+        </record>
+        <record id="details_movement_type_7" model="details.movement.type">
+            <field name="name">Reubicación</field>
+            <field name="movement_type">change</field>
+        </record>
+    </data>
+</odoo>
