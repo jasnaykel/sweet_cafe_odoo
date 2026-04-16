@@ -74,6 +74,8 @@
         'report/report_merma.xml',
         'report/report_nomina_cuba.xml',
         'report/report_onat_declaration.xml',
+        'report/report_declaracion_anual.xml',
+        'report/report_libro_igi.xml',
     ],
     'demo': [
         'demo/sweet_products_demo.xml',

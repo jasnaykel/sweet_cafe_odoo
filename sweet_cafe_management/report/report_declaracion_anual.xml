@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ Acción del reporte ═════════════════════════════════════════ -->
+    <record id="action_report_declaracion_anual" model="ir.actions.report">
+        <field name="name">Declaración Jurada Anual ONAT</field>
+        <field name="model">sweet.declaracion.anual</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sweet_cafe_management.report_declaracion_anual_document</field>
+        <field name="report_file">sweet_cafe_management.report_declaracion_anual_document</field>
+        <field name="binding_model_id" ref="model_sweet_declaracion_anual"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <!-- ══ Plantilla QWeb ════════════════════════════════════════════ -->
+    <template id="report_declaracion_anual_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <!-- Encabezado -->
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <h2 class="text-primary fw-bold">
+                                    DECLARACIÓN JURADA ANUAL — ONAT
+                                </h2>
+                                <h4>
+                                    <t t-esc="o.company_id.name"/>
+                                    <t t-if="o.company_id.nit">
+                                        &#160;|&#160;NIT: <t t-esc="o.company_id.nit"/>
+                                    </t>
+                                </h4>
+                                <p class="text-muted mb-0">
+                                    Año Fiscal: <strong><t t-esc="o.year"/></strong>
+                                    &#160;|&#160;
+                                    Estado: <strong><t t-esc="dict(o._fields['state'].selection)[o.state]"/></strong>
+                                    &#160;|&#160;
+                                    Declaraciones mensuales vinculadas: <strong><t t-esc="o.monthly_count"/></strong>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Datos empresa -->
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Empresa</th>
+                                            <th>NIT</th>
+                                            <th>Figura Legal</th>
+                                            <th>Inscripción ONAT</th>
+                                            <th>Oficina ONAT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><t t-esc="o.company_id.name"/></td>
+                                            <td><t t-esc="o.company_id.nit or '—'"/></td>
+                                            <td><t t-esc="o.company_id.legal_type or '&#8212;'"/></td>
+                                            <td><t t-esc="o.company_id.onat_registration_number or '—'"/></td>
+                                            <td><t t-esc="o.company_id.onat_office or '—'"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- I. Bases Anuales -->
+                        <h5 class="bg-primary text-white p-2 rounded">I. BASES IMPONIBLES ANUALES</h5>
+                        <table class="table table-sm table-bordered mb-3">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th class="text-end">Importe Anual (CUP)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ingresos Brutos Anuales</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.annual_gross_income)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Gastos Deducibles Anuales</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.annual_purchases)"/></td>
+                                </tr>
+                                <tr class="fw-bold table-info">
+                                    <td>Ingresos Netos Anuales (Base IS)</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.annual_net_income)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Salarios Pagados Anuales (Base IUFT/CSS)</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.annual_wages)"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- II. IS Anual Real vs Anticipos -->
+                        <h5 class="bg-primary text-white p-2 rounded">II. CONCILIACIÓN FISCAL ANUAL</h5>
+                        <table class="table table-sm table-bordered mb-3">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Impuesto</th>
+                                    <th class="text-end">IS Anual Real (CUP)</th>
+                                    <th class="text-end">Anticipos Pagados (CUP)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Impuesto sobre los Ingresos (IS) — Escala progresiva</td>
+                                    <td class="text-end fw-bold"><t t-esc="'{:,.2f}'.format(o.annual_income_tax)"/></td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_is_anticipos)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>IUFT (Fuerza de Trabajo)</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.annual_iuft)"/></td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_iuft_anticipos)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Contribución a la Seguridad Social</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.annual_css)"/></td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_css_anticipos)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Impuesto sobre Ventas</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.annual_sales_tax)"/></td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_sales_tax_anticipos)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Contribución Territorial</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.annual_territorial)"/></td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_territorial_anticipos)"/></td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="table-primary fw-bold">
+                                <tr>
+                                    <td>TOTAL</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_annual_tax)"/> CUP</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_anticipos)"/> CUP</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- III. Diferencia -->
+                        <h5 class="bg-primary text-white p-2 rounded">III. RESULTADO DE LA CONCILIACIÓN</h5>
+                        <table class="table table-sm table-bordered mb-3">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold" style="width:50%">Diferencia (IS Real − Anticipos)</td>
+                                    <td t-attf-class="text-end fw-bold #{' text-danger' if o.difference > 0 else ' text-success'}">
+                                        <t t-esc="'{:,.2f}'.format(o.difference)"/> CUP
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Resultado</td>
+                                    <td t-attf-class="text-end #{' text-danger' if o.difference > 0 else ' text-success'}">
+                                        <t t-if="o.difference > 0">Deuda complementaria con la ONAT</t>
+                                        <t t-elif="o.difference &lt; 0">Crédito a favor — derecho a devolución</t>
+                                        <t t-else="">Liquidado exactamente</t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- IV. Pago -->
+                        <h5 class="bg-primary text-white p-2 rounded">IV. DATOS DE PAGO DE LA DJ ANUAL</h5>
+                        <table class="table table-sm table-bordered mb-3">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold" style="width:35%">Fecha de Pago</td>
+                                    <td><t t-esc="o.payment_date or '—'"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Referencia Bancaria</td>
+                                    <td><t t-esc="o.payment_reference or '—'"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Monto Pagado (CUP)</td>
+                                    <td><t t-esc="'{:,.2f}'.format(o.payment_amount) if o.payment_amount else '—'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Notas -->
+                        <t t-if="o.notes">
+                            <h5 class="bg-secondary text-white p-2 rounded">V. OBSERVACIONES</h5>
+                            <p><t t-esc="o.notes"/></p>
+                        </t>
+
+                        <!-- Firmas -->
+                        <div class="row mt-5">
+                            <div class="col-4 text-center">
+                                <div style="border-top:1px solid #000;padding-top:5px;margin-top:40px;">
+                                    Firma del Contribuyente
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top:1px solid #000;padding-top:5px;margin-top:40px;">
+                                    Sello de la Empresa
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top:1px solid #000;padding-top:5px;margin-top:40px;">
+                                    Firma del Inspector ONAT
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie -->
+                        <div class="row mt-4">
+                            <div class="col-12 text-muted" style="font-size:9px;border-top:1px solid #ccc;padding-top:6px;">
+                                Declaración Jurada Anual — Sweet Café. Conforme a la Ley 113 del Sistema Tributario
+                                y el Decreto 308/2012. Documento válido con firma y sello originales.
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

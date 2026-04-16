@@ -332,3 +332,10 @@ class SweetDeclaracionAnual(models.Model):
         """Regresa a borrador (solo administradores)."""
         self.state = 'draft'
         self.message_post(body=_('Declaración regresada a borrador para correcciones.'))
+
+    def action_print_pdf(self):
+        """Genera el PDF de la Declaración Jurada Anual."""
+        self.ensure_one()
+        return self.env.ref(
+            'sweet_cafe_management.action_report_declaracion_anual'
+        ).report_action(self)

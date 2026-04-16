@@ -29,6 +29,11 @@
                             type="object"
                             invisible="state != 'submitted'"
                             groups="sweet_cafe_management.sweet_group_admin"/>
+                    <button name="action_print_pdf"
+                            string="Imprimir PDF"
+                            type="object"
+                            class="btn-secondary"
+                            icon="fa-print"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,computed,submitted"/>
                 </header>

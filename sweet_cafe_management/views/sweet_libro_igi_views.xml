@@ -25,6 +25,11 @@
                             type="object"
                             invisible="state == 'open'"
                             groups="sweet_cafe_management.sweet_group_admin"/>
+                    <button name="action_print_pdf"
+                            string="Imprimir PDF"
+                            type="object"
+                            class="btn-secondary"
+                            icon="fa-print"/>
                     <field name="state" widget="statusbar" statusbar_visible="open,closed"/>
                 </header>
                 <sheet>

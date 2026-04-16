@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ Acción del reporte ═════════════════════════════════════════ -->
+    <record id="action_report_libro_igi" model="ir.actions.report">
+        <field name="name">Libro de Ingresos y Gastos ONAT</field>
+        <field name="model">sweet.libro.igi</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sweet_cafe_management.report_libro_igi_document</field>
+        <field name="report_file">sweet_cafe_management.report_libro_igi_document</field>
+        <field name="binding_model_id" ref="model_sweet_libro_igi"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <!-- ══ Plantilla QWeb ════════════════════════════════════════════ -->
+    <template id="report_libro_igi_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <!-- Encabezado -->
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <h2 class="text-primary fw-bold">
+                                    LIBRO DE INGRESOS Y GASTOS — ONAT
+                                </h2>
+                                <h4>
+                                    <t t-esc="o.company_id.name"/>
+                                    <t t-if="o.company_id.nit">
+                                        &#160;|&#160;NIT: <t t-esc="o.company_id.nit"/>
+                                    </t>
+                                </h4>
+                                <p class="text-muted mb-0">
+                                    Per&#237;odo: <strong><t t-esc="dict(o._fields['month'].selection)[o.month]"/> <t t-esc="o.year"/></strong>
+                                    &#160;|&#160;
+                                    Estado: <strong><t t-esc="dict(o._fields['state'].selection)[o.state]"/></strong>
+                                    <t t-if="o.branch_id">
+                                        &#160;|&#160; Sucursal: <strong><t t-esc="o.branch_id.name"/></strong>
+                                    </t>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Datos empresa -->
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Empresa</th>
+                                            <th>NIT</th>
+                                            <th>Figura Legal</th>
+                                            <th>Inscripci&#243;n ONAT</th>
+                                            <th>Oficina ONAT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><t t-esc="o.company_id.name"/></td>
+                                            <td><t t-esc="o.company_id.nit or '&#8212;'"/></td>
+                                            <td><t t-esc="o.company_id.legal_type or '&#8212;'"/></td>
+                                            <td><t t-esc="o.company_id.onat_registration_number or '&#8212;'"/></td>
+                                            <td><t t-esc="o.company_id.onat_office or '&#8212;'"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Resumen -->
+                        <h5 class="bg-primary text-white p-2 rounded">I. RESUMEN DEL PER&#205;ODO</h5>
+                        <table class="table table-sm table-bordered mb-3">
+                            <tbody>
+                                <tr>
+                                    <td style="width:40%" class="fw-bold">Total Ingresos</td>
+                                    <td class="text-end text-success fw-bold"><t t-esc="'{:,.2f}'.format(o.total_income)"/> CUP</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Total Gastos</td>
+                                    <td class="text-end text-danger fw-bold"><t t-esc="'{:,.2f}'.format(o.total_expense)"/> CUP</td>
+                                </tr>
+                                <tr class="table-info">
+                                    <td class="fw-bold">Balance (Ingresos &#8722; Gastos)</td>
+                                    <td class="text-end fw-bold"><t t-esc="'{:,.2f}'.format(o.balance)"/> CUP</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Ingresos en Efectivo (CUP)</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_cash)"/> CUP</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Ingresos por Transferencia</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_transfer)"/> CUP</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Ingresos QR / MLC</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_qr)"/> CUP</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Movimientos -->
+                        <h5 class="bg-primary text-white p-2 rounded">II. DETALLE DE MOVIMIENTOS</h5>
+                        <table class="table table-sm table-bordered mb-3" style="font-size:9px;">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width:8%">Fecha</th>
+                                    <th style="width:22%">Descripci&#243;n</th>
+                                    <th style="width:8%">Tipo</th>
+                                    <th style="width:12%">M&#233;todo</th>
+                                    <th style="width:12%">Comprobante</th>
+                                    <th style="width:12%">Referencia</th>
+                                    <th style="width:10%" class="text-end">Importe (CUP)</th>
+                                    <th style="width:16%">Observaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.line_ids" t-as="line">
+                                    <tr t-attf-class="#{'table-success' if line.move_type == 'income' else 'table-danger'}">
+                                        <td><t t-esc="line.date"/></td>
+                                        <td><t t-esc="line.description"/></td>
+                                        <td><t t-esc="dict(line._fields['move_type'].selection)[line.move_type]"/></td>
+                                        <td><t t-esc="dict(line._fields['payment_method'].selection)[line.payment_method]"/></td>
+                                        <td><t t-esc="dict(line._fields['document_type'].selection)[line.document_type]"/></td>
+                                        <td><t t-esc="line.document_ref or ''"/></td>
+                                        <td class="text-end fw-bold"><t t-esc="'{:,.2f}'.format(line.amount)"/></td>
+                                        <td><t t-esc="line.notes or ''"/></td>
+                                    </tr>
+                                </t>
+                                <t t-if="not o.line_ids">
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted">Sin movimientos registrados</td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot class="table-primary fw-bold">
+                                <tr>
+                                    <td colspan="6">TOTAL INGRESOS</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_income)"/></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">TOTAL GASTOS</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.total_expense)"/></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">BALANCE</td>
+                                    <td class="text-end"><t t-esc="'{:,.2f}'.format(o.balance)"/></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- Observaciones -->
+                        <t t-if="o.notes">
+                            <h5 class="bg-secondary text-white p-2 rounded">III. OBSERVACIONES</h5>
+                            <p><t t-esc="o.notes"/></p>
+                        </t>
+
+                        <!-- Firmas -->
+                        <div class="row mt-5">
+                            <div class="col-4 text-center">
+                                <div style="border-top:1px solid #000;padding-top:5px;margin-top:40px;">
+                                    Firma del Contribuyente
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top:1px solid #000;padding-top:5px;margin-top:40px;">
+                                    Sello de la Empresa
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top:1px solid #000;padding-top:5px;margin-top:40px;">
+                                    Firma del Inspector ONAT
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie -->
+                        <div class="row mt-4">
+                            <div class="col-12 text-muted" style="font-size:9px;border-top:1px solid #ccc;padding-top:6px;">
+                                Libro de Ingresos y Gastos — Sweet Caf&#233;. Conforme a la Ley 113 del Sistema Tributario
+                                y el Decreto 308/2012. Documento v&#225;lido con firma y sello originales.
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

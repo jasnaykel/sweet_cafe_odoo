@@ -145,6 +145,13 @@ class SweetLibroIGI(models.Model):
         self.state = 'open'
         self.message_post(body=_('Libro reabierto para correcciones.'))
 
+    def action_print_pdf(self):
+        """Genera el PDF del Libro de Ingresos y Gastos."""
+        self.ensure_one()
+        return self.env.ref(
+            'sweet_cafe_management.action_report_libro_igi'
+        ).report_action(self)
+
     def action_populate_from_accounting(self):
         """Importa movimientos desde facturas de Odoo sin duplicar."""
         self.ensure_one()
