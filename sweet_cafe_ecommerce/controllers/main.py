@@ -152,27 +152,27 @@ class SweetCafeController(http.Controller):
     # Add to cart (HTTP wrapper — /shop/cart/update is jsonrpc in Odoo 17+)
     # ─────────────────────────────────────────────
 
-    @http.route('/sweet/cart/add', type='http', auth='public', website=True,
-                methods=['POST'], csrf=True)
+    @http.route('/sweet/cart/add', type='jsonrpc', auth='public', website=True,
+                methods=['POST'], csrf=False)
     def sweet_cart_add(self, product_id=None, add_qty=1, **kwargs):
-        """Accepts a plain form POST and adds the product to the cart.
+        """Adds a product to the cart and returns the new cart quantity.
 
-        This wrapper exists because /shop/cart/update changed to type='jsonrpc'
-        in Odoo 17+, making traditional HTML form submissions incompatible.
-        Uses the Odoo 19 API: request.cart + order._cart_add().
+        Called via fetch() from the carousels. Returns JSON so the page can
+        update the header badge without a full redirect.
         """
         if not product_id:
-            return request.redirect('/shop')
+            return {'error': 'no product_id'}
         try:
             product_id = int(product_id)
             add_qty = int(float(add_qty)) if add_qty else 1
         except (ValueError, TypeError):
-            return request.redirect('/shop')
+            return {'error': 'invalid params'}
 
-        # Odoo 19 API: request.cart (sale.order sudo) or create one
         order = request.cart or request.website._create_cart()
         order.with_context(skip_cart_verification=True)._cart_add(
             product_id=product_id,
             quantity=add_qty,
         )
-        return request.redirect('/shop/cart')
+        return {
+            'cart_quantity': order.cart_quantity,
+        }
