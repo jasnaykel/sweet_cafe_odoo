@@ -158,16 +158,21 @@ class SweetCafeController(http.Controller):
         """Accepts a plain form POST and adds the product to the cart.
 
         This wrapper exists because /shop/cart/update changed to type='jsonrpc'
-        in Odoo 17, making traditional HTML form submissions incompatible.
+        in Odoo 17+, making traditional HTML form submissions incompatible.
+        Uses the Odoo 19 API: request.cart + order._cart_add().
         """
         if not product_id:
             return request.redirect('/shop')
         try:
             product_id = int(product_id)
-            add_qty = float(add_qty) if add_qty else 1.0
+            add_qty = int(float(add_qty)) if add_qty else 1
         except (ValueError, TypeError):
             return request.redirect('/shop')
 
-        order = request.website.sale_get_order(force_create=True)
-        order._cart_update(product_id=product_id, add_qty=add_qty)
+        # Odoo 19 API: request.cart (sale.order sudo) or create one
+        order = request.cart or request.website._create_cart()
+        order.with_context(skip_cart_verification=True)._cart_add(
+            product_id=product_id,
+            quantity=add_qty,
+        )
         return request.redirect('/shop/cart')
