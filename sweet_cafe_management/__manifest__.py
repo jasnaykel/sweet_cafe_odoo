@@ -28,6 +28,7 @@
         'sale_management',
         'purchase',
         'account',
+        'sale_pdf_quote_builder',
         'uom',
         # Cuban RRHH modules
         'l10n_cu_hr',

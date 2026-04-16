@@ -7,6 +7,8 @@ from . import (
     hr_employee,
     hr_contract,
     product_template,
+    product_document,
+    quotation_document,
     pos_config,
     res_company,
     sweet_reservation,
