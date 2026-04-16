@@ -81,9 +81,10 @@
         </section>
 
         <script type="text/javascript">
+        //<![CDATA[
         (function () {
             /* Update the Odoo header cart badge without page reload.
-               Selector .my_cart_quantity is the <sup> used in Odoo 19 website_sale. */
+               Selector: .my_cart_quantity (sup badge in Odoo 19 website_sale) */
             function updateCartBadge(qty) {
                 document.querySelectorAll('.my_cart_quantity').forEach(function (el) {
                     el.textContent = qty;
@@ -95,9 +96,8 @@
                 });
             }
 
-            /* Event delegation on document — captures ALL .sweet_add_cart_form
-               regardless of where they appear in the page (even sections rendered
-               after this script tag, like the best sellers carousel). */
+            /* Event delegation — captures ALL .sweet_add_cart_form
+               regardless of render order (best sellers loads after this tag). */
             document.addEventListener('submit', function (e) {
                 var form = e.target.closest('.sweet_add_cart_form');
                 if (!form) return;
@@ -120,7 +120,7 @@
                     var result = data.result || {};
                     if (result.cart_quantity !== undefined) {
                         updateCartBadge(result.cart_quantity);
-                        btn.innerHTML = '<i class="fa fa-check me-1"></i> A&#241;adido';
+                        btn.innerHTML = '<i class="fa fa-check me-1"></i> A\u00f1adido';
                         btn.style.backgroundColor = '#28a745';
                         btn.style.borderColor = '#28a745';
                         btn.style.color = '#fff';
@@ -138,6 +138,7 @@
                 .catch(function () { btn.disabled = false; });
             });
         })();
+        //]]>
         </script>
     </template>
 </odoo>
