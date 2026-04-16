@@ -73,6 +73,7 @@
         # Reports
         'report/report_merma.xml',
         'report/report_nomina_cuba.xml',
+        'report/report_onat_declaration.xml',
     ],
     'demo': [
         'demo/sweet_products_demo.xml',

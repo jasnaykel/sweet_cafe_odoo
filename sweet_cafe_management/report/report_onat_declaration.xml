@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- â•â• AcciÃ³n del reporte PDF â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <record id="action_report_onat_declaration" model="ir.actions.report">
+        <field name="name">DeclaraciÃ³n ONAT</field>
+        <field name="model">sweet.onat.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sweet_cafe_management.report_onat_declaration_document</field>
+        <field name="report_file">sweet_cafe_management.report_onat_declaration_document</field>
+        <field name="binding_model_id" ref="model_sweet_onat_report"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <!-- â•â• Plantilla QWeb â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+    <template id="report_onat_declaration_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <!-- Encabezado -->
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <h2 class="text-primary fw-bold">
+                                    DECLARACIÃ“N JURADA MENSUAL â€” ONAT
+                                </h2>
+                                <h4>
+                                    <t t-esc="o.company_id.name"/>
+                                    <t t-if="o.company_id.nit">
+                                        &#160;|&#160;NIT: <t t-esc="o.company_id.nit"/>
+                                    </t>
+                                </h4>
+                                <p class="text-muted mb-0">
+                                    PerÃ­odo:
+                                    <strong>
+                                        <t t-esc="dict(o._fields['month'].selection)[o.month]"/>
+                                        /
+                                        <t t-esc="o.year"/>
+                                    </strong>
+                                    &#160;|&#160; Estado:
+                                    <strong>
+                                        <t t-esc="dict(o._fields['state'].selection)[o.state]"/>
+                                    </strong>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Datos de empresa -->
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-primary">
+                                        <tr><th colspan="2">Datos del Contribuyente</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-bold">Empresa</td>
+                                            <td><t t-esc="o.company_id.name"/></td>
+                                        </tr>
+                                        <tr t-if="o.company_id.nit">
+                                            <td class="fw-bold">NIT</td>
+                                            <td><t t-esc="o.company_id.nit"/></td>
+                                        </tr>
+                                        <tr t-if="o.company_id.legal_type">
+                                            <td class="fw-bold">Figura Legal</td>
+                                            <td><t t-esc="dict(o.company_id._fields['legal_type'].selection).get(o.company_id.legal_type, '')"/></td>
+                                        </tr>
+                                        <tr t-if="o.company_id.onat_registration_number">
+                                            <td class="fw-bold">InscripciÃ³n ONAT</td>
+                                            <td><t t-esc="o.company_id.onat_registration_number"/></td>
+                                        </tr>
+                                        <tr t-if="o.company_id.onat_office">
+                                            <td class="fw-bold">Oficina ONAT</td>
+                                            <td><t t-esc="o.company_id.onat_office"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm table-bordered">
+                                    <thead class="table-primary">
+                                        <tr><th colspan="2">Sucursal / PerÃ­odo</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-if="o.branch_id">
+                                            <td class="fw-bold">Sucursal</td>
+                                            <td><t t-esc="o.branch_id.name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">AÃ±o</td>
+                                            <td><t t-esc="o.year"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Mes</td>
+                                            <td><t t-esc="dict(o._fields['month'].selection)[o.month]"/></td>
+                                        </tr>
+                                        <tr t-if="o.payment_date">
+                                            <td class="fw-bold">Fecha de Pago</td>
+                                            <td><t t-esc="o.payment_date"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Bases Imponibles -->
+                        <h5 class="bg-primary text-white p-2 rounded">I. BASES IMPONIBLES</h5>
+                        <table class="table table-sm table-bordered mb-3">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th class="text-end">Importe (CUP)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Ingresos Brutos</td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.gross_income)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Gastos Deducibles</td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.total_purchases)"/>
+                                    </td>
+                                </tr>
+                                <tr class="fw-bold table-info">
+                                    <td>Ingresos Netos (Base IS)</td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.net_income)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Salarios Pagados (Base IUFT/CSS)</td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.total_wages)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Impuestos -->
+                        <h5 class="bg-primary text-white p-2 rounded">II. CUANTÃA DE LOS IMPUESTOS</h5>
+                        <table class="table table-sm table-bordered mb-3">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Impuesto</th>
+                                    <th class="text-center">Tasa (%)</th>
+                                    <th class="text-end">Importe (CUP)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Impuesto sobre los Ingresos (IS)
+                                        <t t-if="o.use_progressive_is">
+                                            <small class="text-muted">(tramos progresivos)</small>
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="not o.use_progressive_is">
+                                            <t t-esc="'{:.2f}'.format(o.income_tax_rate)"/>%
+                                        </t>
+                                        <t t-else="">â€”</t>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.income_tax)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>IUFT (UtilizaciÃ³n de la Fuerza de Trabajo)</td>
+                                    <td class="text-center">
+                                        <t t-esc="'{:.2f}'.format(o.labor_tax_rate)"/>%
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.labor_tax)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ContribuciÃ³n a la Seguridad Social (Empleador)</td>
+                                    <td class="text-center">
+                                        <t t-esc="'{:.2f}'.format(o.social_security_rate)"/>%
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.social_security)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Impuesto sobre Ventas</td>
+                                    <td class="text-center">
+                                        <t t-esc="'{:.2f}'.format(o.sales_tax_rate)"/>%
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.sales_tax)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ContribuciÃ³n Territorial</td>
+                                    <td class="text-center">
+                                        <t t-esc="'{:.2f}'.format(o.territorial_tax_rate)"/>%
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.territorial_tax)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="table-primary fw-bold">
+                                <tr>
+                                    <td colspan="2">TOTAL A PAGAR</td>
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(o.total_to_pay)"/> CUP
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- Pago -->
+                        <h5 class="bg-primary text-white p-2 rounded">III. DATOS DE PAGO</h5>
+                        <table class="table table-sm table-bordered mb-3">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold" style="width:35%">Fecha de Pago</td>
+                                    <td><t t-esc="o.payment_date or 'â€”'"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Referencia Bancaria</td>
+                                    <td><t t-esc="o.payment_reference or 'â€”'"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Monto Pagado (CUP)</td>
+                                    <td>
+                                        <t t-esc="'{:,.2f}'.format(o.payment_amount) if o.payment_amount else 'â€”'"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="o.company_id.fiscal_bank_account_id">
+                                    <td class="fw-bold">Cuenta Bancaria Fiscal</td>
+                                    <td>
+                                        <t t-esc="o.company_id.fiscal_bank_account_id.acc_number"/>
+                                        &#160;â€”&#160;
+                                        <t t-esc="o.company_id.fiscal_bank_account_id.bank_id.name"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Observaciones -->
+                        <t t-if="o.notes">
+                            <h5 class="bg-secondary text-white p-2 rounded">IV. OBSERVACIONES</h5>
+                            <p><t t-esc="o.notes"/></p>
+                        </t>
+
+                        <!-- Firmas -->
+                        <div class="row mt-5">
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; padding-top: 5px; margin-top: 40px;">
+                                    Firma del Contribuyente
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; padding-top: 5px; margin-top: 40px;">
+                                    Sello de la Empresa
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div style="border-top: 1px solid #000; padding-top: 5px; margin-top: 40px;">
+                                    Firma del Inspector ONAT
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie de pÃ¡gina -->
+                        <div class="row mt-4">
+                            <div class="col-12 text-muted" style="font-size:9px; border-top:1px solid #ccc; padding-top:6px;">
+                                Documento generado por Sweet CafÃ© â€” Sistema de GestiÃ³n Integral.
+                                Conforme a la Ley 113 del Sistema Tributario y el Decreto 308/2012.
+                                Este documento tiene validez oficial si estÃ¡ firmado y sellado.
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

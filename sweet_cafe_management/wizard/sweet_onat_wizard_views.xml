@@ -36,8 +36,8 @@
             <form string="Importar Declaraciones ONAT">
                 <group invisible="state == 'done'">
                     <field name="file_data" filename="file_name" widget="binary"
-                           string="Archivo CSV"
-                           help="CSV con columnas: year, month, gross_income, total_wages, total_purchases"/>
+                           string="Archivo (CSV o Excel)"
+                           help="Formatos aceptados: CSV (.csv) o Excel (.xlsx). &#10;Columnas requeridas: year, month, gross_income, total_wages, total_purchases"/>
                     <field name="file_name" invisible="1"/>
                 </group>
                 <group invisible="state != 'done'" string="Resultado de la importación">
