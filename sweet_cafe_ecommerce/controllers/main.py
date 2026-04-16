@@ -173,6 +173,10 @@ class SweetCafeController(http.Controller):
             product_id=product_id,
             quantity=add_qty,
         )
+        qty = order.cart_quantity
+        # Persist quantity in session so the header badge is correct on every
+        # subsequent page load (Odoo reads 'website_sale_cart_quantity' from session).
+        request.session['website_sale_cart_quantity'] = qty
         return {
-            'cart_quantity': order.cart_quantity,
+            'cart_quantity': qty,
         }
