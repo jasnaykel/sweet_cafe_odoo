@@ -191,14 +191,14 @@
     <menuitem id="menu_sweet_declaracion_anual"
               name="Declaración Jurada Anual"
               parent="sweet_menu_root"
-              action="sweet_declaracion_anual_views.action_sweet_declaracion_anual"
+              action="sweet_cafe_management.action_sweet_declaracion_anual"
               sequence="76"
               groups="sweet_cafe_management.sweet_group_gerente"/>
 
     <menuitem id="menu_sweet_libro_igi"
               name="Libro Ingresos y Gastos"
               parent="sweet_menu_root"
-              action="sweet_libro_igi_views.action_sweet_libro_igi"
+              action="sweet_cafe_management.action_sweet_libro_igi"
               sequence="77"
               groups="sweet_cafe_management.sweet_group_gerente"/>
 

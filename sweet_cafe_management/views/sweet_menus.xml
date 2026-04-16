@@ -151,7 +151,7 @@
         name="Tramos IS Progresivo (Cuba)"
         parent="sweet_menu_config"
         sequence="30"
-        action="sweet_tax_bracket_views.action_sweet_tax_bracket"
+        action="sweet_cafe_management.action_sweet_tax_bracket"
         groups="sweet_cafe_management.sweet_group_admin"
     />
 </odoo>

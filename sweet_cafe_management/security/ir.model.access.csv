@@ -35,12 +35,3 @@ access_sweet_libro_igi_line_admin,sweet.libro.igi.line.admin,model_sweet_libro_i
 access_sweet_libro_igi_line_gerente,sweet.libro.igi.line.gerente,model_sweet_libro_igi_line,sweet_group_gerente,1,1,1,0
 access_sweet_declaracion_anual_admin,sweet.declaracion.anual.admin,model_sweet_declaracion_anual,sweet_group_admin,1,1,1,1
 access_sweet_declaracion_anual_gerente,sweet.declaracion.anual.gerente,model_sweet_declaracion_anual,sweet_group_gerente,1,1,1,0
-access_sweet_tax_bracket_admin,sweet.tax.bracket.admin,model_sweet_tax_bracket,sweet_group_admin,1,1,1,1
-access_sweet_tax_bracket_gerente,sweet.tax.bracket.gerente,model_sweet_tax_bracket,sweet_group_gerente,1,0,0,0
-access_sweet_tax_bracket_user,sweet.tax.bracket.user,model_sweet_tax_bracket,base.group_user,1,0,0,0
-access_sweet_libro_igi_admin,sweet.libro.igi.admin,model_sweet_libro_igi,sweet_group_admin,1,1,1,1
-access_sweet_libro_igi_gerente,sweet.libro.igi.gerente,model_sweet_libro_igi,sweet_group_gerente,1,1,1,0
-access_sweet_libro_igi_line_admin,sweet.libro.igi.line.admin,model_sweet_libro_igi_line,sweet_group_admin,1,1,1,1
-access_sweet_libro_igi_line_gerente,sweet.libro.igi.line.gerente,model_sweet_libro_igi_line,sweet_group_gerente,1,1,1,0
-access_sweet_declaracion_anual_admin,sweet.declaracion.anual.admin,model_sweet_declaracion_anual,sweet_group_admin,1,1,1,1
-access_sweet_declaracion_anual_gerente,sweet.declaracion.anual.gerente,model_sweet_declaracion_anual,sweet_group_gerente,1,1,1,0

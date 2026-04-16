@@ -45,7 +45,7 @@
                     </group>
 
                     <div class="alert alert-info mt-2" role="alert">
-                        <i class="fa fa-info-circle me-1"/>
+                        <i class="fa fa-info-circle me-1" title="Información fiscal"/>
                         <strong>Recordatorio:</strong> El NIT debe aparecer en todas las
                         facturas emitidas. La cuenta bancaria fiscal registrada en la ONAT
                         es la única cuenta válida para recibir ingresos y pagar impuestos

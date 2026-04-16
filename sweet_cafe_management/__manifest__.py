@@ -65,9 +65,9 @@
         'views/pos_config_views.xml',
         'views/sweet_reservation_views.xml',
         'views/sweet_tax_bracket_views.xml',
-        'views/sweet_onat_report_views.xml',
         'views/sweet_libro_igi_views.xml',
         'views/sweet_declaracion_anual_views.xml',
+        'views/sweet_onat_report_views.xml',
         'views/sweet_menus.xml',
 
         # Reports

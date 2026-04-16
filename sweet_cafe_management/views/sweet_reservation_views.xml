@@ -169,16 +169,16 @@
                             <strong><field name="name"/></strong>
                         </div>
                         <div>
-                            <i class="fa fa-user me-1"/><field name="partner_id"/>
+                            <i class="fa fa-user me-1" title="Cliente"/><field name="partner_id"/>
                         </div>
                         <div>
-                            <i class="fa fa-calendar me-1"/><field name="delivery_date"/>
+                            <i class="fa fa-calendar me-1" title="Fecha de entrega"/><field name="delivery_date"/>
                             <span t-if="record.delivery_time.raw_value" class="ms-2 text-muted">
                                 <field name="delivery_time"/>
                             </span>
                         </div>
                         <div>
-                            <i class="fa fa-map-marker me-1"/><field name="branch_id"/>
+                            <i class="fa fa-map-marker me-1" title="Sucursal"/><field name="branch_id"/>
                         </div>
                         <div class="mt-1">
                             <strong><field name="amount_total" widget="monetary"/></strong>

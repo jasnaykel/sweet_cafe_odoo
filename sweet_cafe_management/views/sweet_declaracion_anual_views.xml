@@ -110,13 +110,13 @@
                             </group>
                             <div class="alert alert-info" invisible="difference &lt;= 0"
                                  role="alert">
-                                <i class="fa fa-exclamation-triangle me-1"/>
+                                <i class="fa fa-exclamation-triangle me-1" title="Advertencia"/>
                                 <strong>Deuda con la ONAT:</strong> Se debe pagar la diferencia
                                 como complemento a los anticipos mensuales.
                             </div>
                             <div class="alert alert-success" invisible="difference &gt; 0"
                                  role="alert">
-                                <i class="fa fa-check-circle me-1"/>
+                                <i class="fa fa-check-circle me-1" title="Crédito a favor"/>
                                 <strong>Crédito a favor:</strong> El contribuyente tiene derecho
                                 a devolución o compensación por el monto de la diferencia.
                             </div>
