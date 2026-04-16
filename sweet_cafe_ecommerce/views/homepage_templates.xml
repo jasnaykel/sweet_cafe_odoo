@@ -48,82 +48,95 @@
     <!-- ══════════════════════════════════════════════
          Best Sellers Section (dynamic, from sale data)
     ══════════════════════════════════════════════ -->
-    <template id="s_sweet_best_sellers" name="Sweet Café — Más Vendidos">
-        <section class="sc-best-sellers py-5 bg-light">
+    <template id="s_sweet_best_sellers" name="Sweet Caf&#233; &#8212; M&#225;s Vendidos">
+        <section class="sc-best-sellers py-5" style="background-color:#2C1501;">
             <div class="container">
-                <div class="text-center mb-4">
-                    <h2 class="fw-bold" style="color:#8B4513;">⭐ Los Más Vendidos</h2>
-                    <p class="text-muted">Los favoritos de nuestros clientes, siempre disponibles para ti.</p>
+                <div class="text-center mb-5">
+                    <h2 class="display-5 fw-bold text-white">&#11088; Los M&#225;s Vendidos</h2>
+                    <p style="color:#D4AF37;">Los favoritos de nuestros clientes, siempre disponibles para ti.</p>
                 </div>
 
-                <!-- Dynamic best sellers loaded via JS -->
-                <div id="sc-best-sellers-grid" class="row row-cols-2 row-cols-md-4 g-3">
-                    <!-- Skeleton placeholders shown before JS loads -->
-                    <t t-foreach="range(4)" t-as="i">
-                        <div class="col sc-skeleton-card">
-                            <div class="card border-0 shadow-sm h-100 placeholder-glow">
-                                <div class="placeholder card-img-top" style="height:160px; background:#ddd;"/>
-                                <div class="card-body">
-                                    <p class="placeholder col-8 mb-1"/>
-                                    <p class="placeholder col-4"/>
+                <!-- Carrusel server-side de m&#225;s vendidos -->
+                <t t-set="bs_groups" t-value="request.env['sale.report'].sudo().read_group([('state','in',('sale','done'))], ['product_tmpl_id','product_uom_qty:sum'], ['product_tmpl_id'], orderby='product_uom_qty desc', limit=12)"/>
+                <t t-set="bs_tmpl_ids" t-value="[g['product_tmpl_id'][0] for g in bs_groups if g.get('product_tmpl_id')]"/>
+                <t t-set="best_products" t-value="request.env['product.template'].sudo().browse(bs_tmpl_ids).filtered(lambda p: p.active and p.sale_ok) if bs_tmpl_ids else request.env['product.template'].sudo().search([('sale_ok','=',True),('active','=',True)], limit=12)"/>
+                <t t-set="best_chunks" t-value="[best_products[i:i+4] for i in range(0, len(best_products), 4)]"/>
+
+                <div id="sweetBestSellersCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000">
+                    <div class="carousel-inner">
+                        <t t-foreach="best_chunks" t-as="chunk">
+                            <div t-attf-class="carousel-item #{'active' if chunk_index == 0 else ''}">
+                                <div class="row">
+                                    <t t-foreach="chunk" t-as="product">
+                                        <div class="col-md-3 mb-4">
+                                            <div class="card h-100 border-0 shadow transition-base hover-elevate">
+                                                <div class="position-relative overflow-hidden" style="height:200px;">
+                                                    <img t-attf-src="/web/image/product.template/#{product.id}/image_512"
+                                                         class="card-img-top h-100 w-100 object-fit-cover"
+                                                         t-att-alt="product.name"/>
+                                                    <span class="badge position-absolute top-0 start-0 m-2"
+                                                          style="background-color:#D4AF37;color:#2C1501;">&#11088; Top ventas</span>
+                                                </div>
+                                                <div class="card-body d-flex flex-column p-4">
+                                                    <h5 class="card-title text-truncate" t-field="product.name"/>
+                                                    <div class="mt-auto">
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <span class="h5 mb-0 fw-bold" style="color:#8B4513;"
+                                                                  t-field="product.list_price"
+                                                                  t-options="{'widget':'monetary','display_currency':product.currency_id}"/>
+                                                        </div>
+                                                        <form action="/sweet/cart/add" method="POST" class="sweet_add_cart_form">
+                                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                            <input type="hidden" name="product_id" t-att-value="product.product_variant_id.id"/>
+                                                            <div class="input-group mb-2">
+                                                                <button class="btn btn-outline-secondary btn-sm" type="button"
+                                                                        onclick="this.parentNode.querySelector('input[name=add_qty]').stepDown()">-</button>
+                                                                <input type="number" class="form-control form-control-sm text-center"
+                                                                       name="add_qty" value="1" min="1"/>
+                                                                <button class="btn btn-outline-secondary btn-sm" type="button"
+                                                                        onclick="this.parentNode.querySelector('input[name=add_qty]').stepUp()">+</button>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-sm w-100 rounded-pill text-white"
+                                                                    style="background-color:#8B4513;">
+                                                                <i class="fa fa-shopping-cart me-1"/> A&#241;adir
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
                                 </div>
                             </div>
-                        </div>
-                    </t>
+                        </t>
+                        <t t-if="not best_products">
+                            <div class="carousel-item active">
+                                <div class="text-center py-5">
+                                    <p class="text-white-50">A&#250;n no hay ventas registradas.</p>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#sweetBestSellersCarousel" data-bs-slide="prev" style="width:5%;">
+                        <span class="carousel-control-prev-icon rounded-circle p-3"
+                              style="background-color:#D4AF37;" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#sweetBestSellersCarousel" data-bs-slide="next" style="width:5%;">
+                        <span class="carousel-control-next-icon rounded-circle p-3"
+                              style="background-color:#D4AF37;" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
                 </div>
 
                 <div class="text-center mt-4">
-                    <a href="/shop" class="btn px-4 text-white" style="background:#8B4513;">Ver todos los productos</a>
+                    <a href="/shop" class="btn btn-outline-light px-5 rounded-pill">Ver todos los productos</a>
                 </div>
             </div>
         </section>
-
-        <script type="text/javascript">
-            (function () {
-                function loadBestSellers() {
-                    fetch('/sweet/best-sellers', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { limit: 8 } }),
-                    })
-                    .then(function (r) { return r.json(); })
-                    .then(function (data) {
-                        var products = data.result || [];
-                        var grid = document.getElementById('sc-best-sellers-grid');
-                        if (!grid) return;
-                        grid.innerHTML = '';
-                        if (!products.length) {
-                            grid.innerHTML = '<div class="col-12 text-center text-muted">Próximamente disponible</div>';
-                            return;
-                        }
-                        products.forEach(function (p) {
-                            var badge = p.available
-                                ? '<span class="badge text-bg-success position-absolute top-0 end-0 m-2">Disponible</span>'
-                                : '<span class="badge text-bg-secondary position-absolute top-0 end-0 m-2">Sin stock</span>';
-                            var card = '<div class="col"><a href="' + p.url + '" class="text-decoration-none">' +
-                                '<div class="card border-0 shadow-sm h-100 position-relative sc-hover-card">' +
-                                badge +
-                                '<img src="' + p.image_url + '" class="card-img-top" style="height:160px;object-fit:cover;" alt="' + p.name + '"/>' +
-                                '<div class="card-body text-center p-2">' +
-                                '<p class="fw-semibold mb-0 small">' + p.name + '</p>' +
-                                '<p class="text-muted small mb-1">' + p.price.toFixed(2) + ' CUP</p>' +
-                                '<span class="small text-warning">&#9733; ' + Math.round(p.qty_sold) + ' vendidos</span>' +
-                                '</div></div></a></div>';
-                            grid.innerHTML += card;
-                        });
-                    })
-                    .catch(function () {
-                        // Silently fail — skeleton cards remain
-                    });
-                }
-
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', loadBestSellers);
-                } else {
-                    loadBestSellers();
-                }
-            })();
-        </script>
     </template>
 
     <!-- ══════════════════════════════════════════════
