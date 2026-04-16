@@ -12,5 +12,8 @@ from . import (
     pos_config,
     res_company,
     sweet_reservation,
+    sweet_tax_bracket,
     sweet_onat_report,
+    sweet_libro_igi,
+    sweet_declaracion_anual,
 )

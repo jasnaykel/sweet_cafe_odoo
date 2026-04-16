@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Tramos del Impuesto sobre los Ingresos (IS) — Cuba.
+        Fuente: Decreto 308/2012 del Consejo de Ministros y
+                resoluciones vigentes del MFP/ONAT.
+
+        Importes expresados en CUP anuales.
+        El administrador puede actualizarlos desde
+        Configuración → Tramos IS Progresivo.
+
+        noupdate="1": se cargan solo en la instalación inicial;
+        el usuario puede editarlos libremente desde la interfaz.
+    -->
+    <data noupdate="1">
+
+        <record id="tax_bracket_is_0" model="sweet.tax.bracket">
+            <field name="name">Tramo 0 — Exento (hasta 10.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">0.0</field>
+            <field name="limit_to">10000.0</field>
+            <field name="rate">0.0</field>
+            <field name="note">Decreto 308/2012 — ingreso mínimo exento</field>
+        </record>
+
+        <record id="tax_bracket_is_1" model="sweet.tax.bracket">
+            <field name="name">Tramo 1 — 15 % (10.001 – 20.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">10000.0</field>
+            <field name="limit_to">20000.0</field>
+            <field name="rate">15.0</field>
+            <field name="note">Decreto 308/2012, Art. 15</field>
+        </record>
+
+        <record id="tax_bracket_is_2" model="sweet.tax.bracket">
+            <field name="name">Tramo 2 — 20 % (20.001 – 30.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">20000.0</field>
+            <field name="limit_to">30000.0</field>
+            <field name="rate">20.0</field>
+            <field name="note">Decreto 308/2012, Art. 15</field>
+        </record>
+
+        <record id="tax_bracket_is_3" model="sweet.tax.bracket">
+            <field name="name">Tramo 3 — 25 % (30.001 – 50.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">30000.0</field>
+            <field name="limit_to">50000.0</field>
+            <field name="rate">25.0</field>
+            <field name="note">Decreto 308/2012, Art. 15</field>
+        </record>
+
+        <record id="tax_bracket_is_4" model="sweet.tax.bracket">
+            <field name="name">Tramo 4 — 30 % (50.001 – 60.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">50000.0</field>
+            <field name="limit_to">60000.0</field>
+            <field name="rate">30.0</field>
+            <field name="note">Decreto 308/2012, Art. 15</field>
+        </record>
+
+        <record id="tax_bracket_is_5" model="sweet.tax.bracket">
+            <field name="name">Tramo 5 — 35 % (60.001 – 80.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">60000.0</field>
+            <field name="limit_to">80000.0</field>
+            <field name="rate">35.0</field>
+            <field name="note">Decreto 308/2012, Art. 15</field>
+        </record>
+
+        <record id="tax_bracket_is_6" model="sweet.tax.bracket">
+            <field name="name">Tramo 6 — 40 % (80.001 – 100.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">80000.0</field>
+            <field name="limit_to">100000.0</field>
+            <field name="rate">40.0</field>
+            <field name="note">Decreto 308/2012, Art. 15</field>
+        </record>
+
+        <record id="tax_bracket_is_7" model="sweet.tax.bracket">
+            <field name="name">Tramo 7 — 44 % (100.001 – 150.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">100000.0</field>
+            <field name="limit_to">150000.0</field>
+            <field name="rate">44.0</field>
+            <field name="note">Decreto 308/2012, Art. 15</field>
+        </record>
+
+        <record id="tax_bracket_is_8" model="sweet.tax.bracket">
+            <field name="name">Tramo 8 — 50 % (más de 150.000 CUP/año)</field>
+            <field name="tax_type">is_income</field>
+            <field name="limit_from">150000.0</field>
+            <field name="limit_to">0.0</field>
+            <field name="rate">50.0</field>
+            <field name="note">Decreto 308/2012, Art. 15 — tramo máximo</field>
+        </record>
+
+    </data>
+</odoo>

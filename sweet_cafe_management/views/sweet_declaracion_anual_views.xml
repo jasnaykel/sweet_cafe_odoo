@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ Form ════════════════════════════════════════════════════════ -->
+    <record id="view_sweet_declaracion_anual_form" model="ir.ui.view">
+        <field name="name">sweet.declaracion.anual.form</field>
+        <field name="model">sweet.declaracion.anual</field>
+        <field name="arch" type="xml">
+            <form string="Declaración Jurada Anual — ONAT">
+                <header>
+                    <button name="action_load_monthly_reports"
+                            string="Vincular Declaraciones Mensuales"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_compute"
+                            string="Calcular DJ Anual"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state == 'submitted'"/>
+                    <button name="action_submit"
+                            string="Presentar a la ONAT"
+                            type="object"
+                            class="btn-success"
+                            invisible="state != 'computed'"
+                            confirm="¿Confirma que esta Declaración Jurada Anual fue presentada a la ONAT? Este paso es irreversible sin permiso de administrador."/>
+                    <button name="action_reset_to_draft"
+                            string="Regresar a Borrador"
+                            type="object"
+                            invisible="state != 'submitted'"
+                            groups="sweet_cafe_management.sweet_group_admin"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,computed,submitted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name" readonly="1"/></h1>
+                    </div>
+
+                    <group col="4">
+                        <field name="year"/>
+                        <field name="company_id" readonly="1"/>
+                        <field name="monthly_count" readonly="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="territorial_tax_rate_ref"
+                               invisible="state == 'submitted'"/>
+                    </group>
+
+                    <notebook>
+                        <!-- Declaraciones Mensuales -->
+                        <page string="Declaraciones Mensuales" name="monthly">
+                            <field name="monthly_report_ids"
+                                   readonly="state == 'submitted'"
+                                   domain="[('company_id', '=', company_id), ('year', '=', year)]">
+                                <list>
+                                    <field name="display_name" string="Período"/>
+                                    <field name="month" optional="hide"/>
+                                    <field name="gross_income" widget="monetary"/>
+                                    <field name="total_purchases" widget="monetary"/>
+                                    <field name="net_income" widget="monetary"/>
+                                    <field name="income_tax" string="IS Mensual" widget="monetary"/>
+                                    <field name="labor_tax" widget="monetary"/>
+                                    <field name="social_security" widget="monetary"/>
+                                    <field name="territorial_tax" widget="monetary" optional="show"/>
+                                    <field name="total_to_pay" widget="monetary"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'submitted'"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Bases Anuales -->
+                        <page string="Bases Anuales" name="bases">
+                            <group string="Ingresos y Gastos del Año">
+                                <field name="annual_gross_income" widget="monetary" readonly="1"/>
+                                <field name="annual_purchases" widget="monetary" readonly="1"/>
+                                <field name="annual_net_income" widget="monetary" readonly="1"
+                                       class="fw-bold text-success"/>
+                                <field name="annual_wages" widget="monetary" readonly="1"/>
+                            </group>
+                        </page>
+
+                        <!-- IS Anual Progresivo vs Anticipos -->
+                        <page string="Conciliación Fiscal" name="conciliacion">
+                            <group string="Impuestos Anuales Reales (Calculados)">
+                                <field name="annual_income_tax" widget="monetary" readonly="1"
+                                       class="fw-bold"/>
+                                <field name="annual_iuft" widget="monetary" readonly="1"/>
+                                <field name="annual_css" widget="monetary" readonly="1"/>
+                                <field name="annual_sales_tax" widget="monetary" readonly="1"/>
+                                <field name="annual_territorial" widget="monetary" readonly="1"/>
+                                <field name="total_annual_tax" widget="monetary" readonly="1"
+                                       class="fw-bold text-danger"/>
+                            </group>
+                            <group string="Anticipos Pagados (Suma de Mensuales)">
+                                <field name="total_is_anticipos" widget="monetary" readonly="1"/>
+                                <field name="total_iuft_anticipos" widget="monetary" readonly="1"/>
+                                <field name="total_css_anticipos" widget="monetary" readonly="1"/>
+                                <field name="total_sales_tax_anticipos" widget="monetary" readonly="1"/>
+                                <field name="total_territorial_anticipos" widget="monetary" readonly="1"/>
+                                <field name="total_anticipos" widget="monetary" readonly="1"
+                                       class="fw-bold"/>
+                            </group>
+                            <group string="Diferencia Final">
+                                <field name="difference" widget="monetary" readonly="1"
+                                       class="fw-bold"
+                                       decoration-danger="difference &gt; 0"
+                                       decoration-success="difference &lt;= 0"/>
+                            </group>
+                            <div class="alert alert-info" invisible="difference &lt;= 0"
+                                 role="alert">
+                                <i class="fa fa-exclamation-triangle me-1"/>
+                                <strong>Deuda con la ONAT:</strong> Se debe pagar la diferencia
+                                como complemento a los anticipos mensuales.
+                            </div>
+                            <div class="alert alert-success" invisible="difference &gt; 0"
+                                 role="alert">
+                                <i class="fa fa-check-circle me-1"/>
+                                <strong>Crédito a favor:</strong> El contribuyente tiene derecho
+                                a devolución o compensación por el monto de la diferencia.
+                            </div>
+                        </page>
+
+                        <!-- Pago -->
+                        <page string="Pago DJ Anual" name="payment">
+                            <group>
+                                <field name="payment_date"/>
+                                <field name="payment_reference"/>
+                                <field name="payment_amount" widget="monetary"/>
+                            </group>
+                        </page>
+
+                        <!-- Observaciones -->
+                        <page string="Observaciones" name="notas">
+                            <field name="notes" widget="text"
+                                   placeholder="Notas de conciliación, ajustes, referencias normativas..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ List ════════════════════════════════════════════════════════ -->
+    <record id="view_sweet_declaracion_anual_list" model="ir.ui.view">
+        <field name="name">sweet.declaracion.anual.list</field>
+        <field name="model">sweet.declaracion.anual</field>
+        <field name="arch" type="xml">
+            <list string="Declaraciones Juradas Anuales"
+                  decoration-success="state == 'submitted'"
+                  decoration-warning="state == 'computed'">
+                <field name="display_name" string="Declaración"/>
+                <field name="year"/>
+                <field name="company_id"/>
+                <field name="monthly_count" string="Meses"/>
+                <field name="annual_net_income" widget="monetary"/>
+                <field name="total_annual_tax" widget="monetary"/>
+                <field name="total_anticipos" widget="monetary"/>
+                <field name="difference" widget="monetary"
+                       decoration-danger="difference &gt; 0"
+                       decoration-success="difference &lt;= 0"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'submitted'"
+                       decoration-warning="state == 'computed'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ══ Search ══════════════════════════════════════════════════════ -->
+    <record id="view_sweet_declaracion_anual_search" model="ir.ui.view">
+        <field name="name">sweet.declaracion.anual.search</field>
+        <field name="model">sweet.declaracion.anual</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="year"/>
+                <field name="company_id"/>
+                <filter name="draft" string="Borrador" domain="[('state','=','draft')]"/>
+                <filter name="computed" string="Calculadas" domain="[('state','=','computed')]"/>
+                <filter name="submitted" string="Presentadas" domain="[('state','=','submitted')]"/>
+                <group>
+                    <filter name="group_year" string="Año" context="{'group_by': 'year'}"/>
+                    <filter name="group_company" string="Empresa"
+                            context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══ Action ══════════════════════════════════════════════════════ -->
+    <record id="action_sweet_declaracion_anual" model="ir.actions.act_window">
+        <field name="name">Declaración Jurada Anual (ONAT)</field>
+        <field name="res_model">sweet.declaracion.anual</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sweet_declaracion_anual_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay Declaraciones Juradas Anuales creadas aún.
+            </p>
+            <p>
+                La Declaración Jurada Anual consolida los anticipos mensuales,
+                calcula el IS real mediante la escala progresiva y determina
+                la diferencia a pagar o el crédito a favor.
+            </p>
+        </field>
+    </record>
+
+</odoo>

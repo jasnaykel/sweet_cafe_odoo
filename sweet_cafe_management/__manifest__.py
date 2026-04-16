@@ -48,12 +48,14 @@
         'data/hr_salary_scales.xml',
         'data/sweet_branches.xml',
         'data/sweet_reservation_sequence.xml',
+        'data/sweet_tax_brackets.xml',
 
         # Wizard views
         'wizard/scrap_approve_wizard_views.xml',
         'wizard/sweet_onat_wizard_views.xml',
 
         # Views
+        'views/res_company_views.xml',
         'views/sweet_branch_views.xml',
         'views/hr_salary_scale_views.xml',
         'views/sweet_scrap_views.xml',
@@ -62,7 +64,10 @@
         'views/hr_contract_views.xml',
         'views/pos_config_views.xml',
         'views/sweet_reservation_views.xml',
+        'views/sweet_tax_bracket_views.xml',
         'views/sweet_onat_report_views.xml',
+        'views/sweet_libro_igi_views.xml',
+        'views/sweet_declaracion_anual_views.xml',
         'views/sweet_menus.xml',
 
         # Reports

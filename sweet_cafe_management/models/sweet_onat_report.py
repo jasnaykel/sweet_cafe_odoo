@@ -16,7 +16,7 @@ import base64
 import csv
 import io
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class SweetOnatReport(models.Model):
@@ -42,15 +42,22 @@ class SweetOnatReport(models.Model):
         ('draft', 'Borrador'),
         ('computed', 'Calculada'),
         ('submitted', 'Presentada'),
-    ], default='draft', tracking=True, string='Estado')
+    ], default='draft', tracking=True, string='Estado', copy=False)
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id', readonly=True)
 
     # ── Tax rates (configurable) ──────────────────
+    use_progressive_is = fields.Boolean(
+        string='Usar IS Progresivo (Tramos)',
+        default=True,
+        help='Si está marcado, el IS se calcula mediante la escala progresiva cubana '
+             'configurada en Configuración → Tramos IS. '
+             'Si no, se aplica la tasa plana definida abajo.',
+    )
     income_tax_rate = fields.Float(
-        string='Tasa IS (%)', default=35.0,
-        help='Impuesto sobre los Ingresos — porcentaje aplicable según escala',
+        string='Tasa IS Plana (%)', default=35.0,
+        help='Tasa plana del Impuesto sobre los Ingresos (solo cuando IS Progresivo está desactivado).',
     )
     labor_tax_rate = fields.Float(
         string='Tasa IUFT (%)', default=5.0,
@@ -62,7 +69,11 @@ class SweetOnatReport(models.Model):
     )
     sales_tax_rate = fields.Float(
         string='Tasa IS Ventas (%)', default=0.0,
-        help='Impuesto sobre las Ventas (si aplica)',
+        help='Impuesto sobre las Ventas (si aplica según vector fiscal).',
+    )
+    territorial_tax_rate = fields.Float(
+        string='Tasa Contribución Territorial (%)', default=1.5,
+        help='Contribución Territorial al municipio (Ley 113, Art. 231–240).',
     )
 
     # ── Computed financial bases ──────────────────
@@ -99,9 +110,27 @@ class SweetOnatReport(models.Model):
         string='Impuesto s/ Ventas',
         compute='_compute_taxes', store=True,
     )
+    territorial_tax = fields.Monetary(
+        string='Contribución Territorial',
+        compute='_compute_taxes', store=True,
+    )
     total_to_pay = fields.Monetary(
         string='Total a Pagar ONAT',
         compute='_compute_taxes', store=True,
+    )
+
+    # ── Payment info ───────────────────────────────
+    payment_date = fields.Date(
+        string='Fecha de Pago',
+        help='Fecha en que se realizó el pago a la ONAT.',
+    )
+    payment_reference = fields.Char(
+        string='Referencia / Nº Operación Bancaria',
+        help='Número de operación bancaria o recibo de la ONAT.',
+    )
+    payment_amount = fields.Monetary(
+        string='Monto Pagado (CUP)',
+        help='Monto efectivamente pagado a la ONAT en este período.',
     )
 
     # ── Notes ─────────────────────────────────────
@@ -115,19 +144,53 @@ class SweetOnatReport(models.Model):
 
     @api.depends(
         'gross_income', 'total_purchases', 'total_wages',
-        'income_tax_rate', 'labor_tax_rate', 'social_security_rate', 'sales_tax_rate',
+        'use_progressive_is', 'income_tax_rate',
+        'labor_tax_rate', 'social_security_rate',
+        'sales_tax_rate', 'territorial_tax_rate',
     )
     def _compute_taxes(self):
         for rec in self:
             net = max(rec.gross_income - rec.total_purchases, 0.0)
             rec.net_income = net
-            rec.income_tax = net * rec.income_tax_rate / 100.0
+            if rec.use_progressive_is:
+                rec.income_tax = rec._get_monthly_is_progressive(net)
+            else:
+                rec.income_tax = net * rec.income_tax_rate / 100.0
             rec.labor_tax = rec.total_wages * rec.labor_tax_rate / 100.0
             rec.social_security = rec.total_wages * rec.social_security_rate / 100.0
             rec.sales_tax = rec.gross_income * rec.sales_tax_rate / 100.0
+            rec.territorial_tax = rec.gross_income * rec.territorial_tax_rate / 100.0
             rec.total_to_pay = (
-                rec.income_tax + rec.labor_tax + rec.social_security + rec.sales_tax
+                rec.income_tax + rec.labor_tax + rec.social_security
+                + rec.sales_tax + rec.territorial_tax
             )
+
+    def _get_monthly_is_progressive(self, monthly_net):
+        """Calcula el IS mensual anualizando y aplicando la escala progresiva cubana.
+
+        Método: (ingreso neto mensual × 12) → IS anual por tramos → IS anual / 12.
+        Esto genera el anticipo mensual. La DJ Anual concilia el total real.
+        """
+        annual_net = monthly_net * 12
+        if annual_net <= 0:
+            return 0.0
+        brackets = self.env['sweet.tax.bracket'].search(
+            [('tax_type', '=', 'is_income'), ('active', '=', True)],
+            order='limit_from',
+        )
+        if not brackets:
+            # Fallback a tasa plana si no hay tramos configurados
+            return monthly_net * self.income_tax_rate / 100.0
+        annual_tax = 0.0
+        for bracket in brackets:
+            limit_from = bracket.limit_from
+            limit_to = bracket.limit_to if bracket.limit_to > 0 else float('inf')
+            if annual_net <= limit_from:
+                break
+            taxable = min(annual_net, limit_to) - limit_from
+            if taxable > 0:
+                annual_tax += taxable * bracket.rate / 100.0
+        return annual_tax / 12.0
 
     # ── Auto-compute from accounting ─────────────
     def action_compute_from_accounting(self):
@@ -198,10 +261,48 @@ class SweetOnatReport(models.Model):
             if rec.state != 'computed':
                 raise ValidationError(_('Calcula primero los montos antes de presentar.'))
             rec.state = 'submitted'
-            rec.message_post(body=_('Declaración marcada como presentada a la ONAT.'))
+            rec.message_post(body=_(  
+                'Declaración presentada a la ONAT. Total a pagar: %s CUP'
+            ) % '{:,.2f}'.format(rec.total_to_pay))
 
     def action_draft(self):
+        """Regresa a borrador. Las declaraciones presentadas requieren permiso de admin."""
+        for rec in self:
+            if rec.state == 'submitted' and not self.env.user.has_group(
+                'sweet_cafe_management.sweet_group_admin'
+            ):
+                raise UserError(_(
+                    'Solo el administrador puede revertir una declaración ya presentada.'
+                ))
         self.state = 'draft'
+
+    # ── ORM overrides (protección integridad fiscal) ──
+
+    _LOCKED_FIELDS = frozenset({
+        'year', 'month', 'company_id',
+        'gross_income', 'total_purchases', 'total_wages',
+        'income_tax_rate', 'labor_tax_rate', 'social_security_rate',
+        'sales_tax_rate', 'territorial_tax_rate', 'use_progressive_is',
+    })
+
+    def write(self, vals):
+        submitted = self.filtered(lambda r: r.state == 'submitted')
+        if submitted:
+            forbidden = set(vals.keys()) & self._LOCKED_FIELDS
+            if forbidden:
+                raise UserError(_(
+                    'No puede modificar una declaración ya presentada a la ONAT. '
+                    'Campos bloqueados: %s'
+                ) % ', '.join(sorted(forbidden)))
+        return super().write(vals)
+
+    def unlink(self):
+        if any(r.state == 'submitted' for r in self):
+            raise UserError(_(
+                'No puede eliminar una declaración ONAT ya presentada. '
+                'Los registros fiscales deben conservarse mínimo 5 años (Ley 113).'
+            ))
+        return super().unlink()
 
     @api.constrains('year', 'month', 'company_id')
     def _check_unique(self):

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Agrega la pestaña "Fiscal Cuba (ONAT)" al formulario de empresa
+        con todos los campos de identificación legal, inscripción ONAT
+        y cuenta bancaria fiscal exigidos por la Ley 113.
+    -->
+    <record id="view_company_form_sweet_fiscal" model="ir.ui.view">
+        <field name="name">res.company.form.sweet.fiscal</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Fiscal Cuba (ONAT)" name="sweet_fiscal">
+
+                    <group string="Identificación Legal">
+                        <group>
+                            <field name="nit"
+                                   placeholder="Ej: 123456789"
+                                   help="NIT asignado por la ONAT — aparece en facturas y declaraciones"/>
+                            <field name="legal_type"/>
+                            <field name="constitution_resolution_number"
+                                   placeholder="Ej: RES/2023/0042"/>
+                        </group>
+                        <group>
+                            <field name="economic_activity"
+                                   placeholder="Ej: Gastronomía — Cafetería y dulcería"/>
+                            <field name="economic_activity_code"
+                                   placeholder="Ej: 5610"/>
+                        </group>
+                    </group>
+
+                    <group string="Inscripción en la ONAT">
+                        <group>
+                            <field name="onat_registration_number"
+                                   placeholder="Ej: ONAT-HB-2023-001"/>
+                            <field name="onat_office"
+                                   placeholder="Ej: ONAT Municipal Plaza de la Revolución"/>
+                            <field name="onat_registration_date"/>
+                        </group>
+                        <group>
+                            <field name="fiscal_bank_account_id"
+                                   help="Cuenta obligatoria para operaciones y pagos a la ONAT (Ley 113)"/>
+                        </group>
+                    </group>
+
+                    <div class="alert alert-info mt-2" role="alert">
+                        <i class="fa fa-info-circle me-1"/>
+                        <strong>Recordatorio:</strong> El NIT debe aparecer en todas las
+                        facturas emitidas. La cuenta bancaria fiscal registrada en la ONAT
+                        es la única cuenta válida para recibir ingresos y pagar impuestos
+                        (Ley 113 del Sistema Tributario Cubano).
+                    </div>
+
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

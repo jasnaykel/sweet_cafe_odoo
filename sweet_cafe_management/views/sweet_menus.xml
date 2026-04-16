@@ -144,4 +144,14 @@
         action="action_sweet_scrap_reason"
         groups="sweet_cafe_management.sweet_group_admin"
     />
+
+    <!-- Tramos IS Progresivo bajo Configuración -->
+    <menuitem
+        id="sweet_menu_tax_brackets"
+        name="Tramos IS Progresivo (Cuba)"
+        parent="sweet_menu_config"
+        sequence="30"
+        action="sweet_tax_bracket_views.action_sweet_tax_bracket"
+        groups="sweet_cafe_management.sweet_group_admin"
+    />
 </odoo>

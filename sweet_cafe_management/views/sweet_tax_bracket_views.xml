@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ Form ════════════════════════════════════════════════════════ -->
+    <record id="view_sweet_tax_bracket_form" model="ir.ui.view">
+        <field name="name">sweet.tax.bracket.form</field>
+        <field name="model">sweet.tax.bracket</field>
+        <field name="arch" type="xml">
+            <form string="Tramo Impositivo">
+                <sheet>
+                    <group>
+                        <group string="Identificación">
+                            <field name="name"/>
+                            <field name="tax_type"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Límites del Tramo (CUP/año)">
+                            <field name="limit_from" widget="monetary"
+                                   options="{'no_symbol': True}"/>
+                            <field name="limit_to" widget="monetary"
+                                   options="{'no_symbol': True}"
+                                   help="Deja en 0 para indicar sin límite superior"/>
+                            <field name="rate"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note" placeholder="Ej: Decreto 308/2012, Art. 15"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ List ════════════════════════════════════════════════════════ -->
+    <record id="view_sweet_tax_bracket_list" model="ir.ui.view">
+        <field name="name">sweet.tax.bracket.list</field>
+        <field name="model">sweet.tax.bracket</field>
+        <field name="arch" type="xml">
+            <list string="Tramos Impositivos Progresivos (Cuba)" editable="top">
+                <field name="name"/>
+                <field name="tax_type"/>
+                <field name="limit_from" string="Desde (CUP/año)"
+                       widget="monetary" options="{'no_symbol': True}"/>
+                <field name="limit_to" string="Hasta (CUP/año)"
+                       widget="monetary" options="{'no_symbol': True}"/>
+                <field name="rate" string="Tasa (%)"/>
+                <field name="note" optional="show"/>
+                <field name="active" widget="boolean_toggle" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ══ Action ══════════════════════════════════════════════════════ -->
+    <record id="action_sweet_tax_bracket" model="ir.actions.act_window">
+        <field name="name">Tramos IS Progresivo (Cuba)</field>
+        <field name="res_model">sweet.tax.bracket</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configura los tramos del Impuesto sobre los Ingresos
+            </p>
+            <p>
+                Define la escala progresiva del IS conforme al Decreto 308/2012
+                y resoluciones vigentes del MFP/ONAT. Los valores se expresan
+                en CUP anuales.
+            </p>
+        </field>
+    </record>
+
+</odoo>

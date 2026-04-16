@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ Form ════════════════════════════════════════════════════════ -->
+    <record id="view_sweet_libro_igi_form" model="ir.ui.view">
+        <field name="name">sweet.libro.igi.form</field>
+        <field name="model">sweet.libro.igi</field>
+        <field name="arch" type="xml">
+            <form string="Libro de Ingresos y Gastos">
+                <header>
+                    <button name="action_populate_from_accounting"
+                            string="Importar desde Contabilidad"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state == 'closed'"
+                            help="Importa facturas y compras contabilizadas del período"/>
+                    <button name="action_close"
+                            string="Cerrar Libro"
+                            type="object"
+                            class="btn-success"
+                            invisible="state == 'closed'"
+                            confirm="¿Confirma que desea cerrar el Libro IGI de este período? Una vez cerrado requerirá permiso especial para editarlo."/>
+                    <button name="action_reopen"
+                            string="Reabrir"
+                            type="object"
+                            invisible="state == 'open'"
+                            groups="sweet_cafe_management.sweet_group_admin"/>
+                    <field name="state" widget="statusbar" statusbar_visible="open,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name" readonly="1"/></h1>
+                    </div>
+                    <group col="4">
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="company_id" readonly="1"/>
+                        <field name="branch_id"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+
+                    <!-- Resumen de totales -->
+                    <group string="Resumen del Período" col="6">
+                        <field name="total_income" widget="monetary"
+                               class="text-success fw-bold"/>
+                        <field name="total_expense" widget="monetary"
+                               class="text-danger fw-bold"/>
+                        <field name="balance" widget="monetary"
+                               class="fw-bold"/>
+                        <field name="total_cash" widget="monetary" optional="show"/>
+                        <field name="total_transfer" widget="monetary" optional="show"/>
+                        <field name="total_qr" widget="monetary" optional="show"/>
+                    </group>
+
+                    <!-- Líneas del libro -->
+                    <field name="line_ids" widget="one2many_list"
+                           readonly="state == 'closed'">
+                        <list editable="bottom" decoration-success="move_type == 'income'"
+                              decoration-danger="move_type == 'expense'">
+                            <field name="date"/>
+                            <field name="description"/>
+                            <field name="move_type" widget="badge"
+                                   decoration-success="move_type == 'income'"
+                                   decoration-danger="move_type == 'expense'"/>
+                            <field name="payment_method"/>
+                            <field name="document_type"/>
+                            <field name="document_ref" optional="show"/>
+                            <field name="amount" widget="monetary" sum="Total"/>
+                            <field name="account_move_id" optional="show"/>
+                            <field name="notes" optional="show"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+
+                    <group>
+                        <field name="notes" widget="text"
+                               placeholder="Observaciones para la ONAT..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ List ════════════════════════════════════════════════════════ -->
+    <record id="view_sweet_libro_igi_list" model="ir.ui.view">
+        <field name="name">sweet.libro.igi.list</field>
+        <field name="model">sweet.libro.igi</field>
+        <field name="arch" type="xml">
+            <list string="Libros IGI" decoration-muted="state == 'closed'">
+                <field name="display_name" string="Período"/>
+                <field name="year" optional="hide"/>
+                <field name="month" optional="hide"/>
+                <field name="company_id"/>
+                <field name="branch_id" optional="show"/>
+                <field name="total_income" widget="monetary" sum="Total"/>
+                <field name="total_expense" widget="monetary" sum="Total"/>
+                <field name="balance" widget="monetary" sum="Balance"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-warning="state == 'open'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ══ Search ══════════════════════════════════════════════════════ -->
+    <record id="view_sweet_libro_igi_search" model="ir.ui.view">
+        <field name="name">sweet.libro.igi.search</field>
+        <field name="model">sweet.libro.igi</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="year"/>
+                <field name="month"/>
+                <field name="company_id"/>
+                <field name="branch_id"/>
+                <filter name="open" string="Abiertos" domain="[('state','=','open')]"/>
+                <filter name="closed" string="Cerrados" domain="[('state','=','closed')]"/>
+                <separator/>
+                <filter name="this_year" string="Este año"
+                        domain="[('year','=', context_today().year)]"/>
+                <group>
+                    <filter name="group_year" string="Año"
+                            context="{'group_by': 'year'}"/>
+                    <filter name="group_company" string="Empresa"
+                            context="{'group_by': 'company_id'}"/>
+                    <filter name="group_branch" string="Sucursal"
+                            context="{'group_by': 'branch_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══ Action ══════════════════════════════════════════════════════ -->
+    <record id="action_sweet_libro_igi" model="ir.actions.act_window">
+        <field name="name">Libro de Ingresos y Gastos (IGI)</field>
+        <field name="res_model">sweet.libro.igi</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sweet_libro_igi_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay libros IGI creados aún.
+            </p>
+            <p>
+                El Libro de Ingresos y Gastos registra diariamente todos los
+                movimientos del negocio en el formato exigido por la ONAT para
+                TCP y MIPYME. Créalo mensualmente y ciérralo al final del período.
+            </p>
+        </field>
+    </record>
+
+</odoo>
