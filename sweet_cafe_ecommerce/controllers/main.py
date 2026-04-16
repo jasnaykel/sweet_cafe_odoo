@@ -147,3 +147,27 @@ class SweetCafeController(http.Controller):
                 'available': stock_qty > 0,
             })
         return products
+
+    # ─────────────────────────────────────────────
+    # Add to cart (HTTP wrapper — /shop/cart/update is jsonrpc in Odoo 17+)
+    # ─────────────────────────────────────────────
+
+    @http.route('/sweet/cart/add', type='http', auth='public', website=True,
+                methods=['POST'], csrf=True)
+    def sweet_cart_add(self, product_id=None, add_qty=1, **kwargs):
+        """Accepts a plain form POST and adds the product to the cart.
+
+        This wrapper exists because /shop/cart/update changed to type='jsonrpc'
+        in Odoo 17, making traditional HTML form submissions incompatible.
+        """
+        if not product_id:
+            return request.redirect('/shop')
+        try:
+            product_id = int(product_id)
+            add_qty = float(add_qty) if add_qty else 1.0
+        except (ValueError, TypeError):
+            return request.redirect('/shop')
+
+        order = request.website.sale_get_order(force_create=True)
+        order._cart_update(product_id=product_id, add_qty=add_qty)
+        return request.redirect('/shop/cart')
