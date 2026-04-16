@@ -2,54 +2,59 @@
 // Sweet Café Backend Branding
 // Customizes the Odoo administrative interface to match the bakery identity.
 
-$o-brand-odoo: #8B4513 !default;
-$o-brand-primary: #8B4513 !default;
+$o-brand-odoo: #8b4513 !default;
+$o-brand-primary: #8b4513 !default;
 
 // Override CSS variables for Odoo 19 web client
 :root {
-    --primary: #8B4513;
-    --primary-rgb: 139, 69, 19;
-    --o-navbar-background-color: #5D2E46; // Darker cocoa for navbar
+  --primary: #8b4513;
+  --primary-rgb: 139, 69, 19;
+  --o-navbar-background-color: #5d2e46; // Darker cocoa for navbar
 }
 
 // Global Navbar Overrides
 .o_main_navbar {
-    background-color: var(--o-navbar-background-color) !important;
-    border-bottom: 2px solid #D4AF37 !important; // Gold line
+  background-color: var(--o-navbar-background-color) !important;
 
-    // Resetting blue/purple backgrounds for active/hover states
-    .o_nav_entry, .dropdown-toggle, .o_menu_sections > li > a {
-        background-color: transparent !important;
-        transition: background-color 0.2s ease;
+  // Resetting blue/purple backgrounds for active/hover states
+  .o_nav_entry,
+  .dropdown-toggle,
+  .o_menu_sections > li > a {
+    background-color: transparent !important;
+    transition: background-color 0.2s ease;
 
-        &:hover, &:focus, &:active, &.active, &.show {
-            background-color: #8B4513 !important; // Chocolate brown highlight
-            color: #F5F5DC !important; // Cream text
-        }
+    &:hover,
+    &:focus,
+    &:active,
+    &.active,
+    &.show {
+      background-color: #8b4513 !important; // Chocolate brown highlight
+      color: #f5f5dc !important; // Cream text
     }
+  }
 
-    .o_menu_brand {
-        font-weight: bold;
-        color: #F5F5DC !important; // Cream text
-        &:hover {
-            background-color: transparent !important;
-        }
+  .o_menu_brand {
+    font-weight: bold;
+    color: #f5f5dc !important; // Cream text
+    &:hover {
+      background-color: transparent !important;
     }
+  }
 }
 
 .btn-primary {
-    background-color: #8B4513 !important;
-    border-color: #8B4513 !important;
-    &:hover {
-        background-color: #5D2E46 !important;
-    }
+  background-color: #8b4513 !important;
+  border-color: #8b4513 !important;
+  &:hover {
+    background-color: #5d2e46 !important;
+  }
 }
 
 // Side menu and active states (Notebooks, Settings sidebars)
-.o_nav_entry.active, .o_nav_entry:hover {
-    &:not(.o_main_navbar *) {
-        border-right-color: #8B4513 !important;
-        background-color: rgba(139, 69, 19, 0.05) !important;
-    }
+.o_nav_entry.active,
+.o_nav_entry:hover {
+  &:not(.o_main_navbar *) {
+    border-right-color: #8b4513 !important;
+    background-color: rgba(139, 69, 19, 0.05) !important;
+  }
 }
-

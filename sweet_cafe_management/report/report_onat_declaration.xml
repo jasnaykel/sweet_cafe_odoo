@@ -33,7 +33,7 @@
                                     </t>
                                 </h4>
                                 <p class="text-muted mb-0">
-                                    PerÃ­odo:
+                                    Período:
                                     <strong>
                                         <t t-esc="dict(o._fields['month'].selection)[o.month]"/>
                                         /
@@ -81,15 +81,11 @@
                             <div class="col-6">
                                 <table class="table table-sm table-bordered">
                                     <thead class="table-primary">
-                                        <tr><th colspan="2">Sucursal / PerÃ­odo</th></tr>
+                                        <tr><th colspan="2">Per&#237;odo</th></tr>
                                     </thead>
                                     <tbody>
-                                        <tr t-if="o.branch_id">
-                                            <td class="fw-bold">Sucursal</td>
-                                            <td><t t-esc="o.branch_id.name"/></td>
-                                        </tr>
                                         <tr>
-                                            <td class="fw-bold">AÃ±o</td>
+                                            <td class="fw-bold">Año</td>
                                             <td><t t-esc="o.year"/></td>
                                         </tr>
                                         <tr>

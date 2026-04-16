@@ -131,7 +131,7 @@ class SweetCafeController(http.Controller):
         products = []
         for r in result:
             tmpl = request.env['product.template'].sudo().browse(r['product_tmpl_id'][0])
-            if not tmpl.exists() or not tmpl.website_published:
+            if not tmpl.exists() or not tmpl.active:
                 continue
             stock_qty = sum(
                 tmpl.product_variant_ids.mapped('qty_available')
