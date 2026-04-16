@@ -319,7 +319,7 @@ class SweetOnatReport(models.Model):
                 )
 
     def action_open_export_wizard(self):
-        """Abre el wizard de exportación CSV."""
+        """Abre el wizard de exportación (Excel / CSV / PDF)."""
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
@@ -329,6 +329,13 @@ class SweetOnatReport(models.Model):
             'target': 'new',
             'context': {'default_report_id': self.id},
         }
+
+    def action_print_pdf(self):
+        """Genera y descarga el PDF de la declaración ONAT directamente."""
+        self.ensure_one()
+        return self.env.ref(
+            'sweet_cafe_management.action_report_onat_declaration'
+        ).report_action(self)
 
     def action_open_import_wizard(self):
         """Abre el wizard de importación CSV."""

@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Homepage Custom Templates -->
-    <template id="header_sc_contact" inherit_id="website.layout" priority="10">
+    <!--
+        sc-top-bar: barra de contacto que aparece en TODAS las páginas del sitio web.
+        Hereda website.layout (plantilla base global de Odoo web) → es el comportamiento correcto.
+        Para ocultarla: Sitio web → Editor → desactivar "Barra de contacto Sweet Café".
+        Para eliminarla permanentemente: borrar este template.
+    -->
+    <template id="header_sc_contact" inherit_id="website.layout" priority="10"
+              customize_show="True" name="Barra de contacto Sweet Café">
         <xpath expr="//header" position="before">
-            <div class="sc-top-bar py-1 d-none d-lg-block text-white" style="background-color: #8B4513;">
+            <div class="sc-top-bar py-1 d-none d-lg-block text-white"
+                 style="background-color: #8B4513;">
                 <div class="container d-flex justify-content-between small">
-                    <span><i class="fa fa-phone me-1"/> +(53) 7 830-XXXX</span>
-                    <span><i class="fa fa-map-marker me-1"/> Encuentra tu sucursal más cercana</span>
+                    <span>
+                        <i class="fa fa-phone me-1" title="Teléfono"/>
+                        +(53) 7 830-XXXX
+                    </span>
+                    <span>
+                        <i class="fa fa-map-marker me-1" title="Ubicación"/>
+                        Encuentra tu sucursal más cercana
+                    </span>
                 </div>
             </div>
         </xpath>

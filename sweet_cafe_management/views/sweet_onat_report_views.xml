@@ -19,8 +19,13 @@
                             class="btn-secondary"
                             invisible="state == 'draft'"/>
                     <button name="action_open_export_wizard"
-                            string="Exportar CSV"
+                            string="Exportar (Excel / CSV / PDF)"
                             type="object"
+                            invisible="state == 'draft'"/>
+                    <button name="action_print_pdf"
+                            string="Imprimir PDF"
+                            type="object"
+                            class="btn-secondary"
                             invisible="state == 'draft'"/>
                     <button name="action_mark_submitted"
                             string="Marcar como Presentada"
