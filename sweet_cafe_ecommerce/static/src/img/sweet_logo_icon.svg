@@ -1,0 +1,21 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="swGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#D4A574"/>
+      <stop offset="50%"  stop-color="#E8A0BF"/>
+      <stop offset="100%" stop-color="#F5E6D3"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer ring -->
+  <circle cx="50" cy="50" r="45" stroke="url(#swGrad)" stroke-width="2" fill="none"/>
+  <!-- Soft fill background -->
+  <path d="M50 20 C30 20 20 35 20 50 C20 70 35 80 50 80 C65 80 80 70 80 50 C80 35 70 20 50 20"
+        fill="url(#swGrad)" opacity="0.2"/>
+  <!-- Heart / petal shape -->
+  <path d="M35 45 Q50 25 65 45 Q65 55 50 65 Q35 55 35 45" fill="url(#swGrad)"/>
+  <!-- Eyes -->
+  <circle cx="42" cy="40" r="3" fill="white" opacity="0.8"/>
+  <circle cx="58" cy="40" r="3" fill="white" opacity="0.8"/>
+  <!-- Smile -->
+  <path d="M45 50 Q50 55 55 50" stroke="white" stroke-width="2" fill="none" opacity="0.8"/>
+</svg>

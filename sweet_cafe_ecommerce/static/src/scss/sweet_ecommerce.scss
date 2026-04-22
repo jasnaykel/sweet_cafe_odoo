@@ -101,6 +101,36 @@ h6 {
   }
 }
 
+// Demo-matching animations
+@keyframes sw-logo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes sw-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sw-hero-levitate {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-20px);
+  }
+}
+
 @keyframes sw-pulse-badge {
   0%,
   100% {
@@ -172,19 +202,61 @@ h6 {
   border-bottom: 1px solid $sw-glass-border;
   transition: box-shadow 0.3s ease;
 
-  .navbar-brand {
-    font-family: "Playfair Display", serif;
-    font-size: 1.6rem;
+  // Logo wrapper
+  .navbar-brand.logo {
+    text-decoration: none !important;
+    padding: 0;
+  }
+
+  .sw-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sw-logo-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      animation: sw-logo-float 3s ease-in-out infinite;
+      filter: drop-shadow(0 2px 8px rgba($sw-rose, 0.35));
+    }
+  }
+
+  .sw-logo-text-wrap {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .sw-logo-text {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.8rem;
     font-weight: 700;
     background: linear-gradient(
       135deg,
       $sw-gold 0%,
-      $sw-rose 60%,
+      $sw-rose 50%,
       $sw-cream-dark 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: -0.5px;
+  }
+
+  .sw-logo-sub {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: $sw-text-light;
+    margin-top: 1px;
   }
 
   .nav-link {
@@ -347,52 +419,59 @@ h6 {
     justify-content: center;
   }
 
-  // Animated circle visual (like demo)
+  // Animated circle visual — matches demo exactly
   .sw-hero-circle-wrap {
     position: relative;
-    width: 420px;
-    height: 420px;
+    width: 500px;
+    height: 500px;
     max-width: 100%;
     margin: 0 auto;
   }
 
+  // Outer ring — continuous rotation like demo
   .sw-hero-circle-outer {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: radial-gradient(
-      circle at 40% 40%,
-      rgba($sw-rose, 0.25) 0%,
-      rgba($sw-gold, 0.12) 50%,
-      transparent 100%
+    background: linear-gradient(
+      135deg,
+      $sw-gold 0%,
+      $sw-rose 50%,
+      $sw-cream-dark 100%
     );
-    animation: sw-float 8s ease-in-out infinite;
+    opacity: 0.1;
+    animation: sw-rotate 30s linear infinite;
   }
 
+  // Inner glassmorphism circle — centered with translate, levitates
   .sw-hero-circle-inner {
     position: absolute;
-    top: 8%;
-    left: 8%;
-    right: 8%;
-    bottom: 8%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 78%;
+    height: 78%;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba($sw-gold, 0.22);
-    box-shadow:
-      0 24px 60px rgba($sw-brown, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba($sw-gold, 0.3);
+    box-shadow: 0 30px 60px rgba($sw-brown, 0.1);
   }
 
+  // Emoji — centered with translate, levitates
   .sw-hero-product {
     position: absolute;
-    inset: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 78%;
+    height: 78%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 8rem;
-    animation: sw-levitate 4s ease-in-out infinite;
+    animation: sw-hero-levitate 6s ease-in-out infinite;
     user-select: none;
     pointer-events: none;
     line-height: 1;

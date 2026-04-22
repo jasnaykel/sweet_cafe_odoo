@@ -15,10 +15,16 @@
     <template id="sweet_logo_override" inherit_id="website.option_header_brand_logo" priority="20"
               name="Sweet Caf&#233; Logo">
         <xpath expr="//span[@t-field='website.logo']" position="replace">
-            <img src="/sweet_cafe_ecommerce/static/src/img/sweet_logo.svg"
-                 alt="Sweet Caf&#233;"
-                 role="img"
-                 style="height: 46px; width: auto;"/>
+            <div class="sw-logo-wrap">
+                <div class="sw-logo-icon">
+                    <img src="/sweet_cafe_ecommerce/static/src/img/sweet_logo_icon.svg"
+                         alt="" aria-hidden="true" width="44" height="44"/>
+                </div>
+                <div class="sw-logo-text-wrap">
+                    <div class="sw-logo-text">Sweet Caf&#233;</div>
+                    <div class="sw-logo-sub">Dulcer&#237;a Artesanal</div>
+                </div>
+            </div>
         </xpath>
     </template>
 
