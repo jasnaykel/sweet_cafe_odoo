@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_sweet_hero" name="Sweet Hero Section">
-        <section class="s_sweet_hero position-relative overflow-hidden" style="min-height: 92vh; background: linear-gradient(160deg, #FDF6EC 0%, #F5E6D3 100%); padding-top: 100px;">
+        <section class="s_sweet_hero">
 
             <!-- Aurora blobs rendered via CSS, no JS needed -->
             <div class="sw-aurora-bg d-none d-md-block" aria-hidden="true">
@@ -20,7 +20,7 @@
                                 &#10022; Sabor Aut&#233;ntico Cubano
                             </div>
                             <h1 class="sw-hero-title mb-3">
-                                Momentos <span>Dulces</span><br/>que Perduran
+                                Momentos <em>Dulces</em><br/>que Perduran
                             </h1>
                             <p class="sw-hero-subtitle">
                                 Los mejores pasteles y dulces artesanales elaborados con ingredientes
@@ -39,12 +39,9 @@
 
                     <!-- Visual side -->
                     <div class="col-lg-6 d-none d-lg-block">
-                        <div class="sw-hero-visual text-center">
-                            <div class="sw-hero-circle-wrap">
-                                <div class="sw-hero-circle-outer"></div>
-                                <div class="sw-hero-circle-inner"></div>
-                                <div class="sw-hero-product">&#127874;</div>
-                            </div>
+                        <div class="sw-hero-visual">
+                            <div class="sw-hero-ring"></div>
+                            <div class="sw-hero-glass">&#127874;</div>
                         </div>
                     </div>
 

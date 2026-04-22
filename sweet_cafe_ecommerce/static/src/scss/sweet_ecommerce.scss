@@ -36,12 +36,64 @@ $sw-radius-xl: 32px;
   box-shadow: 0 10px 40px $sw-shadow;
 }
 
-// CSS custom properties
+// CSS custom properties — full light / dark token system
 :root {
+  --bg-page: #{$sw-cream};
+  --bg-surface: #ffffff;
+  --bg-elevated: #fffdf9;
+  --bg-overlay: rgba(255, 253, 249, 0.85);
+  --text-primary: #1e120e;
+  --text-secondary: #{$sw-text-light};
+  --text-muted: #8c7b6f;
+  --text-inverse: #{$sw-cream};
+  --accent-gold: #{$sw-gold};
+  --accent-gold-light: #{$sw-gold-light};
+  --accent-gold-dark: #a67b52;
+  --accent-rose: #{$sw-rose};
+  --accent-rose-light: #f0b8d4;
+  --accent-cream: #{$sw-cream-dark};
+  --accent-chocolate: #{$sw-brown};
+  --accent-chocolate-light: #{$sw-brown-light};
+  --border-subtle: rgba(92, 61, 46, 0.08);
+  --border-medium: rgba(92, 61, 46, 0.15);
+  --sw-shadow-sm: 0 2px 8px rgba(30, 18, 14, 0.04);
+  --sw-shadow-md: 0 8px 24px rgba(30, 18, 14, 0.08);
+  --sw-shadow-lg: 0 16px 48px rgba(30, 18, 14, 0.12);
+  --sw-shadow-xl: 0 24px 64px rgba(30, 18, 14, 0.16);
+  --radius-full: 9999px;
+  --transition-base: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  // legacy SCSS var aliases
   --sw-cream: #{$sw-cream};
   --sw-gold: #{$sw-gold};
   --sw-brown: #{$sw-brown};
   --sw-rose: #{$sw-rose};
+}
+
+// Dark mode token overrides — auto-applied when data-bs-theme="dark"
+[data-bs-theme="dark"] {
+  --bg-page: #121018;
+  --bg-surface: #1a1823;
+  --bg-elevated: #252336;
+  --bg-overlay: rgba(26, 24, 35, 0.88);
+  --text-primary: #f0e6d8;
+  --text-secondary: #b8a99a;
+  --text-muted: #7a6e63;
+  --text-inverse: #1a1823;
+  --accent-gold: #e8c9a0;
+  --accent-gold-light: #f5e6d3;
+  --accent-gold-dark: #c8956c;
+  --accent-rose: #e8a0bf;
+  --accent-rose-light: #f0b8d4;
+  --accent-cream: #2a2638;
+  --accent-chocolate: #e8c9a0;
+  --accent-chocolate-light: #f5e6d3;
+  --border-subtle: rgba(232, 201, 160, 0.08);
+  --border-medium: rgba(232, 201, 160, 0.14);
+  --sw-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --sw-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --sw-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+  --sw-shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.6);
 }
 
 // Base
@@ -51,9 +103,12 @@ body {
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  background-color: $sw-cream;
-  color: $sw-text;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
   overflow-x: hidden;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
 }
 
 h1,
@@ -381,6 +436,12 @@ h6 {
   display: flex;
   align-items: center;
   padding-top: 120px;
+  background: linear-gradient(
+    160deg,
+    var(--bg-page) 0%,
+    var(--accent-cream) 100%
+  );
+  transition: background var(--transition-base);
 
   .sw-hero-card {
     @include glass-panel;
@@ -411,10 +472,18 @@ h6 {
     font-weight: 700;
     line-height: 1.12;
     letter-spacing: -0.5px;
-    color: $sw-brown;
+    color: var(--text-primary);
+    transition: color var(--transition-base);
 
-    span {
-      background: linear-gradient(135deg, $sw-gold 0%, $sw-rose 60%);
+    span,
+    em {
+      font-style: italic;
+      background: linear-gradient(
+        135deg,
+        var(--accent-gold) 0%,
+        var(--accent-rose) 50%,
+        var(--accent-gold-light) 100%
+      );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -440,9 +509,46 @@ h6 {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 420px;
   }
 
-  // Animated circle visual — matches demo exactly
+  // New ring + glass structure (recommendation design)
+  .sw-hero-ring {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      var(--accent-gold),
+      var(--accent-rose),
+      var(--accent-cream),
+      var(--accent-gold)
+    );
+    opacity: 0.15;
+    animation: sw-rotate 30s linear infinite;
+    transition: opacity var(--transition-base);
+  }
+
+  .sw-hero-glass {
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    position: relative;
+    background: var(--bg-overlay);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-medium);
+    box-shadow: var(--sw-shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    animation: sw-hero-levitate 6s ease-in-out infinite;
+    transition: all var(--transition-base);
+  }
+
+  // Legacy circle visual (kept for backward compat)
   .sw-hero-circle-wrap {
     position: relative;
     width: 500px;
@@ -720,9 +826,79 @@ h6 {
   }
 }
 
-// Feature cards
+// Features section background (adapts to dark mode via CSS vars)
+.s_sweet_features {
+  background: linear-gradient(
+    135deg,
+    var(--bg-page) 0%,
+    var(--bg-elevated) 100%
+  );
+  transition: background var(--transition-base);
+}
+
+// Feature card — CSS-var-aware dark mode (recommendation design)
+.sw-feature {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: $sw-radius-lg;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle,
+      rgba(200, 149, 108, 0.06),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sw-shadow-lg);
+    border-color: var(--border-medium);
+  }
+
+  .sw-feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    transition: color var(--transition-base);
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 0;
+    transition: color var(--transition-base);
+  }
+}
+
+// Feature cards (legacy class)
 .sw-feature-card {
-  @include glass-panel;
   border-radius: $sw-radius-lg;
   padding: 2.5rem 2rem;
   transition:
@@ -899,8 +1075,143 @@ h6 {
   }
 }
 
-// Footer
-footer,
+// Footer — premium CSS-var-aware design
+.sw-footer {
+  background: linear-gradient(
+    160deg,
+    var(--bg-elevated) 0%,
+    var(--bg-surface) 100%
+  );
+  border-top: 1px solid var(--border-subtle);
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base);
+
+  .sw-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding: 4rem 0 2.5rem;
+
+    @media (max-width: 991px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 575px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sw-footer-brand {
+    .sw-footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+
+      .sw-footer-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--accent-gold);
+        transition: color var(--transition-base);
+      }
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      transition: color var(--transition-base);
+    }
+
+    .sw-footer-social {
+      display: flex;
+      gap: 0.75rem;
+
+      .sw-footer-social-link {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-subtle);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        transition: all var(--transition-fast);
+        text-decoration: none;
+
+        &:hover {
+          background: var(--accent-gold);
+          color: var(--text-inverse);
+          border-color: var(--accent-gold);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .sw-footer-col {
+    h4 {
+      font-family: "Playfair Display", serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.25rem;
+      transition: color var(--transition-base);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: 0.6rem;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        transition: color var(--transition-base);
+
+        a {
+          color: var(--text-muted);
+          text-decoration: none;
+          transition: color var(--transition-fast);
+
+          &:hover {
+            color: var(--accent-gold);
+          }
+        }
+
+        i {
+          color: var(--accent-gold);
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+}
+
+.sw-footer-bottom {
+  border-top: 1px solid var(--border-subtle);
+  padding: 1.25rem 0;
+  text-align: center;
+  transition: border-color var(--transition-base);
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    transition: color var(--transition-base);
+  }
+}
+
+// Legacy footer override (keep for fallback)
+footer:not(.sw-footer),
 .bg-chocolate {
   background: linear-gradient(160deg, #1a0d05 0%, #3d1e0a 100%) !important;
 
@@ -1236,21 +1547,18 @@ footer,
   }
 }
 
-// Dark Mode overrides (Bootstrap 5.3 data-bs-theme="dark")
+// Dark Mode component overrides (Bootstrap 5.3 data-bs-theme="dark")
+// Note: body bg/color + border tokens auto-switch via CSS vars defined above.
 [data-bs-theme="dark"] {
-  --sw-cream: #1c0d06;
-  --sw-brown: #e8c9a0;
-
   body,
   #wrapwrap {
-    background-color: #1c0d06 !important;
-    color: #f5e6d3 !important;
+    background-color: var(--bg-page) !important;
+    color: var(--text-primary) !important;
   }
 
-  .s_sweet_hero,
   .s_sweet_product_carousel,
   .s_sweet_flavors {
-    background: linear-gradient(160deg, #1c0d06 0%, #2e1508 100%) !important;
+    background: linear-gradient(160deg, #1a1823 0%, #252336 100%) !important;
   }
 
   .sw-hero-card,

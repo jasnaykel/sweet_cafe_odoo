@@ -48,48 +48,54 @@
         </xpath>
     </template>
 
-    <!-- Custom Bakery Footer -->
-    <template id="sc_footer" inherit_id="website.footer_custom" name="Sweet Café Footer">
+    <!-- Premium footer matching recommendation design -->
+    <template id="sc_footer" inherit_id="website.footer_custom" name="Sweet Caf&#233; Footer">
         <xpath expr="//div[@id='footer']" position="replace">
-            <footer class="bg-chocolate text-white pt-5 pb-3" style="background-color: #3d1e0a;">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 mb-4">
-                            <h4 class="mb-4" style="color: #F5F5DC;">Sweet Café</h4>
-                            <p class="text-white-75">La excelencia en repostería tradicional y moderna. Visitamos y descubre el verdadero sabor artesanal.</p>
-                            <div class="d-flex gap-3 fs-4 mt-3">
-                                <a href="#" class="text-white-50 hover-white"><i class="fa fa-facebook-official"/></a>
-                                <a href="#" class="text-white-50 hover-white"><i class="fa fa-instagram"/></a>
-                                <a href="#" class="text-white-50 hover-white"><i class="fa fa-whatsapp"/></a>
-                            </div>
+            <footer class="sw-footer">
+                <div class="sw-footer-grid container">
+                    <div class="sw-footer-brand">
+                        <div class="sw-footer-logo">
+                            <img src="/sweet_cafe_ecommerce/static/src/img/sweet_logo_icon.svg"
+                                 alt="Sweet Caf&#233;" width="40" height="40"
+                                 style="filter: drop-shadow(0 2px 6px rgba(200,149,108,0.35));"/>
+                            <span class="sw-footer-name">Sweet Caf&#233;</span>
                         </div>
-                        <div class="col-lg-2 mb-4">
-                            <h5 class="mb-4">Enlaces</h5>
-                            <ul class="list-unstyled text-white-50">
-                                <li><a href="/shop" class="text-reset">Catálogo</a></li>
-                                <li><a href="/contactus" class="text-reset">Sucursales</a></li>
-                                <li><a href="#" class="text-reset">Pasteles a Medida</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-3 mb-4">
-                            <h5 class="mb-4">Contacto</h5>
-                            <p class="text-white-50 small">
-                                <i class="fa fa-envelope me-2"/> pedidos@sweetcafe.cu<br/>
-                                <i class="fa fa-phone me-2"/> +(53) 7 830-XXXX
-                            </p>
-                        </div>
-                        <div class="col-lg-3 mb-4">
-                            <h5 class="mb-4">Suscríbete</h5>
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-transparent border-white-25 text-white" placeholder="Tu Email"/>
-                                <button class="btn btn-primary" type="button"><i class="fa fa-paper-plane"/></button>
-                            </div>
+                        <p>Endulzando momentos especiales desde 2020. Reposter&#237;a artesanal cubana con tradici&#243;n, calidad y mucho amor en cada creaci&#243;n.</p>
+                        <div class="sw-footer-social">
+                            <a href="#" class="sw-footer-social-link" aria-label="Facebook"><i class="fa fa-facebook"/></a>
+                            <a href="#" class="sw-footer-social-link" aria-label="Instagram"><i class="fa fa-instagram"/></a>
+                            <a href="#" class="sw-footer-social-link" aria-label="WhatsApp"><i class="fa fa-whatsapp"/></a>
                         </div>
                     </div>
-                    <hr class="border-white-10 my-4"/>
-                    <div class="text-center small text-white-50">
-                        <p>© 2024 Sweet Café Cuba. Todos los derechos reservados.</p>
+                    <div class="sw-footer-col">
+                        <h4>Productos</h4>
+                        <ul>
+                            <li><a href="/shop">Tartas y Cakes</a></li>
+                            <li><a href="/shop">Cupcakes</a></li>
+                            <li><a href="/shop">Galletas</a></li>
+                            <li><a href="/shop">Chocolates</a></li>
+                        </ul>
                     </div>
+                    <div class="sw-footer-col">
+                        <h4>Empresa</h4>
+                        <ul>
+                            <li><a href="/">Sobre Nosotros</a></li>
+                            <li><a href="/contactus">Sucursales</a></li>
+                            <li><a href="/reservar">Reservas</a></li>
+                            <li><a href="/contactus">Contacto</a></li>
+                        </ul>
+                    </div>
+                    <div class="sw-footer-col">
+                        <h4>Contacto</h4>
+                        <ul>
+                            <li><i class="fa fa-phone me-2"/>+(53) 7 830-XXXX</li>
+                            <li><i class="fa fa-envelope me-2"/>pedidos@sweetcafe.cu</li>
+                            <li><i class="fa fa-clock me-2"/>Lun&#8211;Sab 8:00&#8211;20:00</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sw-footer-bottom">
+                    <p>&#169; 2026 Sweet Caf&#233; Cuba. Todos los derechos reservados. Hecho con &#10084;&#65039; en Cuba.</p>
                 </div>
             </footer>
         </xpath>

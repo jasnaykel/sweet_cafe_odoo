@@ -11,40 +11,39 @@
         </xpath>
     </template>
 
-    <!-- Hide Inicio nav link, add Reservar CTA button in header -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         HEADER PREMIUM REORGANIZADO
+         Estructura: Logo | [Reservar] Tienda Productos Contacto | 🛒 🔍 🌐 ☀️ 👤
+    ═══════════════════════════════════════════════════════════════ -->
     <template id="sweet_header_reservar" inherit_id="website.layout" priority="10"
-              name="Sweet Caf&#233; Header Reservar">
+              name="Sweet Caf&#233; Header Premium">
         <xpath expr="//head" position="inside">
             <style>
-            .sw-nav-reservar-btn {
-                display: inline-flex !important;
-                align-items: center;
-                gap: 7px;
-                padding: 8px 20px !important;
-                background: linear-gradient(135deg, #5C3D2E 0%, #8B4513 100%);
-                color: #fff !important;
-                border: none;
-                border-radius: 50px;
-                font-weight: 600;
-                font-size: 0.88rem;
-                letter-spacing: 0.3px;
-                text-decoration: none !important;
-                transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-                white-space: nowrap;
-            }
-            .sw-nav-reservar-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 24px rgba(92,61,46,0.35);
-                background: linear-gradient(135deg, #8B4513 0%, #5C3D2E 100%);
-                color: #fff !important;
-            }
-            .sw-nav-reservar-btn:active { transform: translateY(0); }
-            /* Hide the Inicio / Home menu link */
+            /* Ocultar link Inicio del men&#250; principal */
             .o_header_standard .nav-item > a.nav-link[href="/"],
             #wrapwrap > header .nav-item > a.nav-link[href="/"] {
                 display: none !important;
             }
             </style>
+        </xpath>
+    </template>
+
+    <!-- Bot&#243;n Reservar DELANTE de Tienda en el men&#250; principal -->
+    <template id="sweet_nav_reservar" inherit_id="website.navbar_nav" priority="15"
+              name="Sweet Caf&#233; Nav Reservar">
+        <xpath expr="//t[@t-out='0']" position="before">
+            <li class="nav-item d-none d-lg-flex align-items-center me-2">
+                <a href="/reservar" class="sw-nav-reservar-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Reservar
+                </a>
+            </li>
         </xpath>
     </template>
 
@@ -69,18 +68,6 @@
     <template id="sweet_dark_toggle" inherit_id="portal.user_dropdown" priority="5"
               name="Sweet Caf&#233; Dark Mode Toggle">
         <xpath expr="//t[@t-set='is_connected']" position="after">
-            <li class="nav-item d-flex align-items-center me-2">
-                <a href="/reservar" class="sw-nav-reservar-btn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                    </svg>
-                    Reservar
-                </a>
-            </li>
             <li class="nav-item d-flex align-items-center">
                 <button id="sw-theme-toggle" type="button" class="sw-theme-nav-btn"
                         aria-label="Cambiar tema claro / oscuro"
