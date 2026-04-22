@@ -35,7 +35,8 @@ class SweetCafeController(http.Controller):
         name = post.get('name', '').strip()
         email = post.get('email', '').strip()
         phone = post.get('phone', '').strip()
-        branch_id = int(post.get('branch_id', 0))
+        _branch_raw = post.get('branch_id', '').strip()
+        branch_id = int(_branch_raw) if _branch_raw and _branch_raw.isdigit() else 0
         delivery_date = post.get('delivery_date', '')
         delivery_time = post.get('delivery_time', '').strip()
         customer_notes = post.get('customer_notes', '').strip()

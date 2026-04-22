@@ -290,23 +290,46 @@ h6 {
     }
   }
 
-  // Language selector button — no border, no underline
-  .js_language_selector button {
-    background: transparent !important;
-    border: none !important;
-    color: $sw-text-light !important;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
-    &:hover {
-      color: $sw-brown !important;
+  // Language selector — elegant pill hover
+  .js_language_selector {
+    button {
+      background: transparent !important;
+      border: none !important;
+      color: $sw-text-light !important;
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 6px 10px;
+      border-radius: $sw-radius-sm;
+      transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+
+      &:hover {
+        color: $sw-brown !important;
+        background: rgba($sw-gold, 0.12) !important;
+        box-shadow: inset 0 0 0 1px rgba($sw-gold, 0.3);
+      }
     }
   }
 
-  // User avatar circle
-  .o_no_autohide_item .nav-link {
-    &::after {
-      display: none !important;
+  // User avatar nav item — glow ring on hover
+  .o_no_autohide_item {
+    .nav-link {
+      &::after {
+        display: none !important;
+      }
+      padding: 4px 8px;
+      border-radius: $sw-radius-sm;
+      transition:
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+
+      &:hover {
+        background: rgba($sw-gold, 0.1) !important;
+        box-shadow: inset 0 0 0 1px rgba($sw-gold, 0.25);
+        color: $sw-brown !important;
+      }
     }
   }
 }
@@ -1085,6 +1108,7 @@ footer,
     color: #f59e0b;
     transform: rotate(0deg) scale(1);
     opacity: 1;
+    animation: sw-logo-float 3s ease-in-out infinite;
 
     .sw-sun-rays {
       animation: sw-sun-pulse 3s ease-in-out infinite;
@@ -1128,6 +1152,7 @@ footer,
     color: #e2e8f0;
     transform: rotate(0deg) scale(1);
     opacity: 1;
+    animation: sw-logo-float 3s ease-in-out infinite;
   }
 }
 
