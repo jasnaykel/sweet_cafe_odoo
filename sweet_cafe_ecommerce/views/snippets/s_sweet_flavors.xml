@@ -2,32 +2,37 @@
 <odoo>
     <template id="s_sweet_flavors" name="Sweet Flavors Grid">
         <section class="s_sweet_flavors py-5"
-                 style="background: linear-gradient(135deg, #FDF6EC 0%, #F5E6D3 100%);">
-            <div class="container">
-                <div class="sw-section-header text-center mb-5 sw-reveal">
-                    <h2>Nuestros Sabores Estrella</h2>
-                    <p class="mt-2">Ingredientes de primera calidad en cada elaboración artesanal.</p>
+                 style="background: linear-gradient(135deg, #5C3D2E 0%, #8B4513 50%, #3E1F0D 100%); position: relative; overflow: hidden;">
+            <!-- decorative circles -->
+            <div aria-hidden="true"
+                 style="position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:rgba(212,165,116,0.1);pointer-events:none;"/>
+            <div aria-hidden="true"
+                 style="position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;border-radius:50%;background:rgba(232,160,191,0.08);pointer-events:none;"/>
+            <div class="container position-relative" style="z-index:1;">
+                <div class="sw-section-header text-center mb-5">
+                    <h2 style="color:#F5E6D3 !important;">&#127850; Nuestros Sabores Estrella</h2>
+                    <p class="mt-2" style="color:#E8C9A0;">Ingredientes de primera calidad en cada elaboraci&#243;n artesanal.</p>
                 </div>
-                <div class="row g-4">
+                <div class="row g-4 justify-content-center">
                     <div class="col-md-4 sw-reveal">
-                        <div class="sw-feature-card text-center">
-                            <span class="sw-feature-icon">🍫</span>
+                        <div class="sw-flavor-card text-center">
+                            <span class="sw-flavor-icon">&#127851;</span>
                             <h3>Chocolate Antillano</h3>
-                            <p>Cacao de exportación con la receta clásica de la casa, intenso y cremoso.</p>
+                            <p>Cacao de exportaci&#243;n con la receta cl&#225;sica de la casa, intenso y cremoso.</p>
                         </div>
                     </div>
                     <div class="col-md-4 sw-reveal">
-                        <div class="sw-feature-card text-center">
-                            <span class="sw-feature-icon">🥥</span>
+                        <div class="sw-flavor-card text-center">
+                            <span class="sw-flavor-icon">&#127829;</span>
                             <h3>Coco Fresco</h3>
-                            <p>Ralladura natural de coco caribeño para un sabor tropical irresistible.</p>
+                            <p>Ralladura natural de coco caribe&#241;o para un sabor tropical irresistible.</p>
                         </div>
                     </div>
                     <div class="col-md-4 sw-reveal">
-                        <div class="sw-feature-card text-center">
-                            <span class="sw-feature-icon">🍓</span>
+                        <div class="sw-flavor-card text-center">
+                            <span class="sw-flavor-icon">&#127827;</span>
                             <h3>Guayaba Seleccionada</h3>
-                            <p>La mermelada cubana más pura envuelta en masa hojaldrada dorada.</p>
+                            <p>La mermelada cubana m&#225;s pura envuelta en masa hojaldrada dorada.</p>
                         </div>
                     </div>
                 </div>
