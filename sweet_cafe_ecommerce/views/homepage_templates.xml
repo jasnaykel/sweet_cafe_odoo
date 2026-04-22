@@ -24,6 +24,12 @@
             #wrapwrap > header .nav-item > a.nav-link[href="/"] {
                 display: none !important;
             }
+            /* Ocultar bot&#243;n CTA "Contact Us" nativo de Odoo (duplicado con men&#250; Contactar) */
+            #wrapwrap > header .btn_cta,
+            .o_header_standard .btn_cta,
+            #wrapwrap > header .oe_structure_solo {
+                display: none !important;
+            }
             </style>
         </xpath>
     </template>
@@ -177,12 +183,12 @@
          Best Sellers Section (dynamic, from sale data)
     ══════════════════════════════════════════════ -->
     <template id="s_sweet_best_sellers" name="Sweet Café — Más Vendidos">
-        <section class="sc-best-sellers py-5" style="background: linear-gradient(160deg, #2C1501 0%, #5C3D2E 100%); position: relative; overflow: hidden;">
+        <section class="sc-best-sellers py-5" style="position: relative; overflow: hidden;">
             <div class="container position-relative" style="z-index: 1;">
 
                 <div class="sw-section-header text-center mb-5">
-                    <h2 style="color: #F5E6D3 !important;">⭐ Los Más Vendidos</h2>
-                    <p style="color: #E8C9A0;">Los favoritos de nuestros clientes, siempre disponibles.</p>
+                    <h2 class="sw-best-title">&#11088; Los M&#225;s Vendidos</h2>
+                    <p class="sw-best-subtitle">Los favoritos de nuestros clientes, siempre disponibles.</p>
                 </div>
 
                 <!-- Server-side best-sellers carousel -->
@@ -225,7 +231,7 @@
                                                                         onclick="var i=this.parentNode.querySelector('input[name=add_qty]');i.value=Math.max(1,parseInt(i.value)-1)">−</button>
                                                                 <input type="number" name="add_qty" value="1" min="1"
                                                                        class="sw-qty-val form-control border-0 bg-transparent p-0"
-                                                                       style="width:36px;text-align:center;font-weight:600;color:#5C3D2E;"/>
+                                                                       style="width:36px;text-align:center;font-weight:600;"/>
                                                                 <button type="button" class="sw-qty-btn"
                                                                         onclick="var i=this.parentNode.querySelector('input[name=add_qty]');i.value=parseInt(i.value)+1">+</button>
                                                             </div>
