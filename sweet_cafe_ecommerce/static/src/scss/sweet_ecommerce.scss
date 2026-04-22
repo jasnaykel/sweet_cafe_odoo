@@ -441,10 +441,10 @@ h6 {
 
 // Reservar CTA button in navbar
 .sw-nav-reservar-btn {
-  display: inline-flex;
-  align-items: center;
+  display: inline-flex !important;
+  align-items: center !important;
   gap: 7px;
-  padding: 9px 22px;
+  padding: 9px 22px !important;
   background: linear-gradient(
     135deg,
     var(--accent-chocolate) 0%,
@@ -452,18 +452,24 @@ h6 {
   ) !important;
   color: #fff !important;
   border: none !important;
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 0.88rem;
+  border-radius: var(--radius-full) !important;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
   letter-spacing: 0.3px;
   text-decoration: none !important;
   transition: all var(--transition-fast);
   box-shadow: 0 4px 16px rgba(92, 61, 46, 0.2);
+  position: relative;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(92, 61, 46, 0.35);
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(92, 61, 46, 0.35) !important;
     color: #fff !important;
+    background: linear-gradient(
+      135deg,
+      var(--accent-chocolate) 0%,
+      var(--accent-chocolate-light) 100%
+    ) !important;
   }
 
   &::after {
@@ -944,7 +950,7 @@ h6 {
   background: linear-gradient(
     135deg,
     var(--bg-page) 0%,
-    var(--bg-elevated) 100%
+    var(--accent-cream) 100%
   );
   transition: background var(--transition-base);
 }
@@ -1133,24 +1139,46 @@ h6 {
   }
 }
 
-// Feature cards (legacy class)
+// Feature cards — CSS-var-aware (matches Kimi .sw-feature)
 .sw-feature-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: $sw-radius-lg;
   padding: 2.5rem 2rem;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  box-shadow: var(--sw-shadow-sm);
+  transition: all var(--transition-fast);
   position: relative;
   overflow: hidden;
 
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle,
+      rgba(200, 149, 108, 0.06),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
   &:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 50px $sw-shadow-lg;
+    box-shadow: var(--sw-shadow-lg);
+    border-color: var(--border-medium);
   }
 
   .sw-feature-icon {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     display: block;
   }
 
@@ -1158,15 +1186,17 @@ h6 {
     font-family: "Playfair Display", serif;
     font-size: 1.15rem;
     font-weight: 600;
-    color: $sw-brown;
-    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    transition: color var(--transition-base);
   }
 
   p {
     font-size: 0.9rem;
-    color: $sw-text-light;
+    color: var(--text-muted);
     line-height: 1.6;
     margin-bottom: 0;
+    transition: color var(--transition-base);
   }
 }
 
@@ -1817,8 +1847,14 @@ footer:not(.sw-footer),
 
   // Header: explicit !important to beat Odoo's o_colored_level o_cc class overrides
   .o_header_standard,
-  #wrapwrap > header {
+  #wrapwrap > header,
+  #wrapwrap > header nav,
+  #wrapwrap > header .navbar,
+  #wrapwrap > header .o_colored_level,
+  #wrapwrap > header .o_cc {
     background: rgba(26, 24, 35, 0.92) !important;
+    background-color: rgba(26, 24, 35, 0.92) !important;
+    background-image: none !important;
     backdrop-filter: blur(24px) saturate(1.4) !important;
     -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
     border-bottom-color: rgba(232, 201, 160, 0.1) !important;
@@ -2017,8 +2053,60 @@ footer:not(.sw-footer),
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
 
     &:hover {
+      transform: translateY(-2px) !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
       color: var(--text-inverse) !important;
     }
+  }
+
+  // Features section dark
+  .s_sweet_features {
+    background: linear-gradient(
+      135deg,
+      var(--bg-page) 0%,
+      var(--bg-elevated) 100%
+    ) !important;
+  }
+
+  .sw-feature-card {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+
+    h3 {
+      color: var(--text-primary) !important;
+    }
+
+    p {
+      color: var(--text-muted) !important;
+    }
+  }
+
+  // Card title links (carousel, shop)
+  .sw-card-title-link,
+  .sw-qty-val {
+    color: var(--text-primary) !important;
+  }
+
+  // Footer copyright — override o_colored_level o_cc warm-brown
+  .o_footer_copyright,
+  .o_footer_copyright.o_colored_level,
+  .o_footer_copyright.o_cc {
+    background-color: var(--bg-page) !important;
+    background-image: none !important;
+    color: var(--text-muted) !important;
+
+    .o_footer_copyright_name,
+    .o_brand_promotion,
+    .o_brand_promotion a,
+    .js_language_selector a {
+      color: var(--text-muted) !important;
+    }
+  }
+
+  // Any remaining o_colored_level in footer area
+  .o_footer_columns .o_colored_level,
+  #footer .o_colored_level {
+    background-color: transparent !important;
+    background-image: none !important;
   }
 }

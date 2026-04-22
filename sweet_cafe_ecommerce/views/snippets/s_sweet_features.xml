@@ -2,7 +2,7 @@
 <odoo>
     <template id="s_sweet_features" name="Sweet Café — Por qué elegirnos">
         <section class="s_sweet_features py-5"
-                 style="background: linear-gradient(135deg, #FDF6EC 0%, #F5E6D3 100%);">
+                 style="position: relative; overflow: hidden;">
             <div class="container">
                 <div class="sw-section-header text-center mb-5 sw-reveal">
                     <h2>Por qué elegirnos</h2>

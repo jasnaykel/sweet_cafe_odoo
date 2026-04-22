@@ -119,12 +119,54 @@
             <script>
             //<![CDATA[
             (function(){
-                try {
-                    var t = localStorage.getItem('sw-theme');
-                    if (t) {
-                        document.documentElement.setAttribute('data-bs-theme', t);
-                    }
-                } catch(e) {}
+                // Apply saved theme immediately (before paint)
+                var swTheme;
+                try { swTheme = localStorage.getItem('sw-theme'); } catch(e){}
+                if(swTheme) document.documentElement.setAttribute('data-bs-theme', swTheme);
+
+                // Force header + footer backgrounds — beats Odoo o_colored_level o_cc
+                function swForceTheme(theme){
+                    var dark = theme === 'dark';
+
+                    // Header — override o_colored_level/o_cc that blocks CSS dark mode
+                    document.querySelectorAll(
+                        '.o_header_standard,#wrapwrap>header>nav,#wrapwrap>header .navbar'
+                    ).forEach(function(el){
+                        if(dark){
+                            el.style.setProperty('background','rgba(26,24,35,0.92)','important');
+                            el.style.setProperty('background-color','rgba(26,24,35,0.92)','important');
+                            el.style.setProperty('background-image','none','important');
+                            el.style.setProperty('border-bottom-color','rgba(232,201,160,0.1)','important');
+                        } else {
+                            el.style.setProperty('background','rgba(255,253,249,0.85)','important');
+                            el.style.setProperty('background-color','rgba(255,253,249,0.85)','important');
+                            el.style.setProperty('background-image','none','important');
+                            el.style.setProperty('border-bottom-color','rgba(92,61,46,0.08)','important');
+                        }
+                    });
+
+                    // Footer copyright — o_colored_level stays caramel without this
+                    document.querySelectorAll('.o_footer_copyright').forEach(function(el){
+                        if(dark){
+                            el.style.setProperty('background-color','#121018','important');
+                            el.style.setProperty('background-image','none','important');
+                        } else {
+                            el.style.removeProperty('background-color');
+                            el.style.removeProperty('background-image');
+                        }
+                    });
+                }
+
+                document.addEventListener('DOMContentLoaded', function(){
+                    swForceTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
+                    // Watch for theme changes (toggle button)
+                    new MutationObserver(function(ms){
+                        ms.forEach(function(m){
+                            if(m.attributeName === 'data-bs-theme')
+                                swForceTheme(document.documentElement.getAttribute('data-bs-theme') || 'light');
+                        });
+                    }).observe(document.documentElement, {attributes:true});
+                });
             })();
             //]]>
             </script>

@@ -38,7 +38,7 @@
                                                 <div class="card-body d-flex flex-column">
                                                     <h5 class="card-title text-truncate">
                                                         <a t-attf-href="/shop/product/#{product.id}"
-                                                           class="text-decoration-none text-chocolate"
+                                                           class="text-decoration-none sw-card-title-link"
                                                            t-field="product.name"/>
                                                     </h5>
                                                     <p class="card-text small" t-if="product.description_sale">
@@ -58,7 +58,7 @@
                                                                         onclick="var i=this.parentNode.querySelector('input[name=add_qty]');i.value=Math.max(1,parseInt(i.value)-1)">&#8722;</button>
                                                                 <input type="number" name="add_qty" value="1" min="1"
                                                                        class="sw-qty-val form-control border-0 bg-transparent p-0"
-                                                                       style="width:36px;text-align:center;font-weight:600;color:#5C3D2E;"/>
+                                                                       style="width:36px;text-align:center;font-weight:600;"/>
                                                                 <button type="button" class="sw-qty-btn"
                                                                         onclick="var i=this.parentNode.querySelector('input[name=add_qty]');i.value=parseInt(i.value)+1">+</button>
                                                             </div>
