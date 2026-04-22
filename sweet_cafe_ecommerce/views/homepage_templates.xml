@@ -117,19 +117,20 @@
     <template id="homepage" inherit_id="website.homepage" name="Sweet Café Homepage">
         <xpath expr="//div[@id='wrap']" position="inside">
             <div class="oe_structure">
-                <!-- Pre-populated snippets for a ready-to-use look -->
+                <!-- 1. Hero -->
                 <t t-call="sweet_cafe_ecommerce.s_sweet_hero"/>
-                <t t-call="sweet_cafe_ecommerce.s_sweet_product_carousel"/>
-                <!-- Sabores estrella before best sellers -->
-                <t t-call="sweet_cafe_ecommerce.s_sweet_flavors"/>
-                <!-- Best Sellers -->
-                <t t-call="sweet_cafe_ecommerce.s_sweet_best_sellers"/>
-                <t t-call="sweet_cafe_ecommerce.s_sweet_about_us"/>
-                <!-- Por qué elegirnos -->
+                <!-- 2. Por qué elegirnos -->
                 <t t-call="sweet_cafe_ecommerce.s_sweet_features"/>
+                <!-- 3. Carrusel de productos especiales -->
+                <t t-call="sweet_cafe_ecommerce.s_sweet_product_carousel"/>
+                <!-- 4. Sabores Estrella -->
+                <t t-call="sweet_cafe_ecommerce.s_sweet_flavors"/>
+                <!-- 5. Más Vendidos -->
+                <t t-call="sweet_cafe_ecommerce.s_sweet_best_sellers"/>
+                <!-- 6-onwards -->
+                <t t-call="sweet_cafe_ecommerce.s_sweet_about_us"/>
                 <t t-call="sweet_cafe_ecommerce.s_sweet_branches"/>
                 <t t-call="sweet_cafe_ecommerce.s_sweet_custom_order"/>
-                <!-- Reserve CTA -->
                 <t t-call="sweet_cafe_ecommerce.s_sweet_reservation_cta"/>
             </div>
             <div class="oe_structure"/>
