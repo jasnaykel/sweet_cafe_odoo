@@ -24,6 +24,7 @@ Incluye:
         'views/snippets/s_sweet_hero.xml',
         'views/snippets/s_sweet_flavors.xml',
         'views/snippets/s_sweet_about_us.xml',
+        'views/snippets/s_sweet_features.xml',
         'views/snippets/s_sweet_branches.xml',
         'views/snippets/s_sweet_custom_order.xml',
         'views/snippets/s_sweet_product_carousel.xml',

@@ -15,7 +15,6 @@ class SweetCafeController(http.Controller):
         """Public reservation form."""
         products = request.env['product.template'].sudo().search([
             ('sale_ok', '=', True),
-            ('website_published', '=', True),
         ], order='name asc')
         branches = request.env['sweet.branch'].sudo().search([('active', '=', True)])
         min_date = (date.today() + timedelta(days=1)).strftime('%Y-%m-%d')

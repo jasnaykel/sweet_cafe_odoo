@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_sweet_features" name="Sweet Café — Por qué elegirnos">
+        <section class="s_sweet_features py-5"
+                 style="background: linear-gradient(135deg, #FDF6EC 0%, #F5E6D3 100%);">
+            <div class="container">
+                <div class="sw-section-header text-center mb-5 sw-reveal">
+                    <h2>Por qué elegirnos</h2>
+                    <p class="mt-2">Comprometidos con la excelencia en cada detalle de nuestros productos y servicios.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-sm-6 col-lg-3 sw-reveal">
+                        <div class="sw-feature-card text-center">
+                            <span class="sw-feature-icon">🥐</span>
+                            <h3>Artesanal 100%</h3>
+                            <p>Elaborados diariamente con técnicas tradicionales y recetas familiares transmitidas por generaciones.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 sw-reveal">
+                        <div class="sw-feature-card text-center">
+                            <span class="sw-feature-icon">🌿</span>
+                            <h3>Ingredientes Selectos</h3>
+                            <p>Utilizamos solo ingredientes frescos y de la más alta calidad, sin conservantes artificiales.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 sw-reveal">
+                        <div class="sw-feature-card text-center">
+                            <span class="sw-feature-icon">🚚</span>
+                            <h3>Entrega Rápida</h3>
+                            <p>Servicio de entrega express en todas nuestras sucursales para que disfrutes siempre fresco.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 sw-reveal">
+                        <div class="sw-feature-card text-center">
+                            <span class="sw-feature-icon">💝</span>
+                            <h3>Personalización</h3>
+                            <p>Creamos diseños únicos para tus eventos especiales, desde bodas hasta cumpleaños.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

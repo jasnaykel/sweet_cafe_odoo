@@ -237,8 +237,8 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <p><strong>Estado:</strong>
-                                            <span class="badge ms-2"
-                                                  t-attf-class="#{{'draft':'text-bg-secondary','confirmed':'text-bg-primary','ready':'text-bg-warning','done':'text-bg-success','cancelled':'text-bg-danger'}[reservation.state]}">
+                                            <t t-set="state_badges" t-value="{'draft':'text-bg-secondary','confirmed':'text-bg-primary','ready':'text-bg-warning','done':'text-bg-success','cancelled':'text-bg-danger'}"/>
+                                            <span t-att-class="'badge ms-2 ' + state_badges.get(reservation.state, 'text-bg-secondary')">
                                                 <t t-out="dict(reservation._fields['state'].selection)[reservation.state]"/>
                                             </span>
                                         </p>
