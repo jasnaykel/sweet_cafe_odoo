@@ -14,21 +14,21 @@
                     <p class="mt-2" style="color:#E8C9A0;">Ingredientes de primera calidad en cada elaboraci&#243;n artesanal.</p>
                 </div>
                 <div class="row g-4 justify-content-center">
-                    <div class="col-md-4 sw-reveal">
+                    <div class="col-md-4">
                         <div class="sw-flavor-card text-center">
                             <span class="sw-flavor-icon">&#127851;</span>
                             <h3>Chocolate Antillano</h3>
                             <p>Cacao de exportaci&#243;n con la receta cl&#225;sica de la casa, intenso y cremoso.</p>
                         </div>
                     </div>
-                    <div class="col-md-4 sw-reveal">
+                    <div class="col-md-4">
                         <div class="sw-flavor-card text-center">
                             <span class="sw-flavor-icon">&#127829;</span>
                             <h3>Coco Fresco</h3>
                             <p>Ralladura natural de coco caribe&#241;o para un sabor tropical irresistible.</p>
                         </div>
                     </div>
-                    <div class="col-md-4 sw-reveal">
+                    <div class="col-md-4">
                         <div class="sw-flavor-card text-center">
                             <span class="sw-flavor-icon">&#127827;</span>
                             <h3>Guayaba Seleccionada</h3>

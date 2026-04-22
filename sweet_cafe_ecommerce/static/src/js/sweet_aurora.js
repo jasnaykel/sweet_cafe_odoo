@@ -61,9 +61,16 @@ publicWidget.registry.SweetAuroraWidget = publicWidget.Widget.extend({
           }
         });
       },
-      { threshold: 0.12 },
+      { threshold: 0, rootMargin: "0px 0px 60px 0px" },
     );
     document.querySelectorAll(".sw-reveal").forEach((el) => io.observe(el));
+    // Activate immediately any element already in viewport
+    document.querySelectorAll(".sw-reveal").forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 60) {
+        el.classList.add("sw-active");
+      }
+    });
   },
 
   // ── Navbar glass shadow on scroll ────────────────────────────────────
