@@ -987,28 +987,116 @@ footer,
   display: none !important;
 }
 
-// Dark Mode Toggle — injected into navbar by JS
+// Dark Mode Toggle — premium morphing sun/moon design
 .sw-theme-nav-btn {
-  width: 34px;
-  height: 34px;
+  position: relative;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1px solid $sw-glass-border;
-  background: rgba($sw-gold, 0.1);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba($sw-glass-border, 0.5);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   padding: 0;
-  transition: all 0.2s ease;
-  color: $sw-brown;
-  font-size: 1rem;
-  line-height: 1;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($sw-gold, 0.18) 0%,
+      transparent 70%
+    );
+    opacity: 1;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+  }
 
   &:hover {
-    background: rgba($sw-gold, 0.25);
-    border-color: $sw-gold;
-    transform: scale(1.1);
+    transform: translateY(-1px);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.08),
+      0 0 0 4px rgba($sw-gold, 0.15);
+    border-color: rgba($sw-gold, 0.6);
+  }
+
+  &:active {
+    transform: scale(0.95) translateY(0);
+  }
+
+  .sw-toggle-icon {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sw-icon-sun {
+    color: #f59e0b;
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+
+    .sw-sun-rays {
+      animation: sw-sun-pulse 3s ease-in-out infinite;
+    }
+  }
+
+  .sw-icon-moon {
+    color: #94a3b8;
+    transform: rotate(-90deg) scale(0);
+    opacity: 0;
+  }
+}
+
+[data-bs-theme="dark"] .sw-theme-nav-btn {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+
+  &::before {
+    background: radial-gradient(
+      circle,
+      rgba(148, 163, 184, 0.12) 0%,
+      transparent 70%
+    );
+  }
+
+  &:hover {
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      0 0 0 4px rgba(159, 126, 174, 0.2);
+    border-color: rgba(196, 181, 212, 0.5);
+  }
+
+  .sw-icon-sun {
+    color: #64748b;
+    transform: rotate(90deg) scale(0);
+    opacity: 0;
+  }
+
+  .sw-icon-moon {
+    color: #e2e8f0;
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sw-sun-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
   }
 }
 
