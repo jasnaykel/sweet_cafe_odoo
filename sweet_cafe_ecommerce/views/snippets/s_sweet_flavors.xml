@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_sweet_flavors" name="Sweet Flavors Grid">
-        <section class="s_sweet_flavors py-5"
-                 style="background: linear-gradient(135deg, #5C3D2E 0%, #8B4513 50%, #3E1F0D 100%); position: relative; overflow: hidden;">
+        <section class="s_sweet_flavors py-5" style="position: relative; overflow: hidden;">
             <!-- decorative circles -->
             <div aria-hidden="true"
                  style="position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:rgba(212,165,116,0.1);pointer-events:none;"/>
@@ -10,8 +9,8 @@
                  style="position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;border-radius:50%;background:rgba(232,160,191,0.08);pointer-events:none;"/>
             <div class="container position-relative" style="z-index:1;">
                 <div class="sw-section-header text-center mb-5">
-                    <h2 style="color:#F5E6D3 !important;">&#127850; Nuestros Sabores Estrella</h2>
-                    <p class="mt-2" style="color:#E8C9A0;">Ingredientes de primera calidad en cada elaboraci&#243;n artesanal.</p>
+                    <h2 class="sw-flavors-title">&#127850; Nuestros Sabores Estrella</h2>
+                    <p class="mt-2 sw-flavors-subtitle">Ingredientes de primera calidad en cada elaboraci&#243;n artesanal.</p>
                 </div>
                 <div class="row g-4 justify-content-center">
                     <div class="col-md-4">

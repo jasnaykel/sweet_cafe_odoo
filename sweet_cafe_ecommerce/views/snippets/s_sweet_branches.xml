@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_sweet_branches" name="Sweet Branch List">
-        <section class="s_sweet_branches py-5 bg-white">
+        <section class="s_sweet_branches py-5">
             <div class="container">
                 <div class="text-center mb-5">
                     <h2 class="display-4 text-chocolate">Nuestras Sucursales</h2>
@@ -14,8 +14,8 @@
                             <div class="card h-100 border-0 shadow-sm hover-elevate transition-base" style="border-radius: 15px; overflow: hidden;">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
-                                        <div class="rounded-circle bg-cream p-3 me-3" style="background-color: #FDF5E6;">
-                                            <i class="fa fa-map-marker fa-2x" style="color: #8B4513;"></i>
+                                        <div class="rounded-circle sw-branch-icon-wrap p-3 me-3">
+                                            <i class="fa fa-map-marker fa-2x sw-branch-icon"></i>
                                         </div>
                                         <h4 class="card-title mb-0" t-field="branch.name"/>
                                     </div>

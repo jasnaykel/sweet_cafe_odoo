@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_sweet_about_us" name="Sweet About Us">
-        <section class="s_sweet_about_us py-5" style="background-color: #FFF8DC;">
+        <section class="s_sweet_about_us py-5">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 mb-4 mb-lg-0">
                         <div class="position-relative">
-                            <i class="fa fa-quote-left position-absolute top-0 start-0 opacity-25 fa-5x text-chocolate" style="margin-top: -30px; margin-left: -20px;"></i>
-                            <h2 class="display-4 text-chocolate mb-4">Nuestra Pasión</h2>
-                            <p class="lead">En Sweet Café, no solo hacemos pasteles; creamos memorias. Cada ingrediente es seleccionado con rigor para garantizar la calidad que tu familia merece.</p>
-                            <p>Desde nuestra fundación, nos hemos dedicado a preservar las recetas tradicionales cubanas infundiéndoles un toque moderno y artístico. Creemos en el comercio local y en la dulzura de la vida.</p>
+                            <i class="fa fa-quote-left position-absolute top-0 start-0 opacity-25 fa-5x sw-about-quote" style="margin-top: -30px; margin-left: -20px;"></i>
+                            <h2 class="display-4 sw-about-title mb-4">Nuestra Pasión</h2>
+                            <p class="lead sw-about-text">En Sweet Café, no solo hacemos pasteles; creamos memorias. Cada ingrediente es seleccionado con rigor para garantizar la calidad que tu familia merece.</p>
+                            <p class="sw-about-text">Desde nuestra fundación, nos hemos dedicado a preservar las recetas tradicionales cubanas infundiéndoles un toque moderno y artístico. Creemos en el comercio local y en la dulzura de la vida.</p>
                             <div class="mt-4">
-                                <span class="fw-bold fs-5" style="font-family: 'Playfair Display'; color: #8B4513;">— El Maestro Pastelero</span>
+                                <span class="fw-bold fs-5 sw-about-signature" style="font-family: 'Playfair Display';">— El Maestro Pastelero</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="row g-3">
                             <div class="col-6 mt-5">
-                                <div class="bg-white p-4 text-center rounded shadow-sm border-bottom border-chocolate border-3">
-                                    <h3 class="h1 text-chocolate mb-0">100%</h3>
+                                <div class="sw-stat-card p-4 text-center rounded">
+                                    <h3 class="h1 sw-stat-num-choc mb-0">100%</h3>
                                     <p class="small text-muted mb-0">Artesanal</p>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="bg-white p-4 text-center rounded shadow-sm border-bottom border-gold border-3">
-                                    <h3 class="h1 text-gold mb-0">15+</h3>
+                                <div class="sw-stat-card sw-stat-card-gold p-4 text-center rounded">
+                                    <h3 class="h1 sw-stat-num-gold mb-0">15+</h3>
                                     <p class="small text-muted mb-0">Años de Sabor</p>
                                 </div>
                             </div>

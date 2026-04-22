@@ -2,7 +2,7 @@
 <odoo>
     <template id="s_sweet_product_carousel" name="Sweet Product Carousel">
         <section class="s_sweet_product_carousel py-5"
-                 style="background: linear-gradient(160deg, #FDF6EC 0%, #F5E6D3 100%); position: relative; overflow: hidden;">
+                 style="position: relative; overflow: hidden;">
             <div class="container position-relative" style="z-index: 1;">
 
                 <div class="sw-section-header text-center mb-5 sw-reveal">

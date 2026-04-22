@@ -374,47 +374,70 @@ h6 {
     }
   }
 
-  // Language selector
+  // Language selector — pill style matching demo
   .js_language_selector {
-    button {
+    button,
+    .dropdown-toggle,
+    a.nav-link {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 5px;
       background: transparent !important;
       border: none !important;
       color: var(--text-secondary) !important;
       font-weight: 500;
-      font-size: 0.9rem;
-      padding: 6px 10px;
-      border-radius: $sw-radius-sm;
-      transition:
-        color var(--transition-fast),
-        background var(--transition-fast);
+      font-size: 0.88rem;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      transition: all var(--transition-fast);
+
+      &::after {
+        display: none !important;
+      }
 
       &:hover {
-        color: var(--accent-gold) !important;
         background: rgba(200, 149, 108, 0.1) !important;
+        color: var(--accent-gold) !important;
       }
     }
   }
 
-  // User avatar nav item
+  // User avatar nav item — pill with border matching demo
   .o_no_autohide_item {
     .nav-link {
       &::after {
         display: none !important;
       }
-      padding: 4px 8px;
-      border-radius: $sw-radius-sm;
-      transition:
-        background var(--transition-fast),
-        box-shadow var(--transition-fast);
+
+      display: inline-flex !important;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px 5px 5px !important;
+      border-radius: var(--radius-full) !important;
+      background: var(--bg-page) !important;
+      border: 1px solid var(--border-subtle) !important;
+      color: var(--text-secondary) !important;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+
+      img,
+      .o_avatar {
+        width: 26px !important;
+        height: 26px !important;
+        border-radius: 50% !important;
+        object-fit: cover;
+      }
 
       &:hover {
-        background: rgba(200, 149, 108, 0.1) !important;
-        box-shadow: inset 0 0 0 1px rgba(200, 149, 108, 0.25);
-        color: var(--accent-gold) !important;
+        border-color: var(--border-medium) !important;
+        color: var(--text-primary) !important;
+        background: var(--bg-page) !important;
+        box-shadow: none !important;
       }
     }
   }
-}
+} // end .o_header_standard
 
 // Reservar CTA button in navbar
 .sw-nav-reservar-btn {
@@ -426,7 +449,7 @@ h6 {
     135deg,
     var(--accent-chocolate) 0%,
     var(--accent-chocolate-light) 100%
-  );
+  ) !important;
   color: #fff !important;
   border: none !important;
   border-radius: var(--radius-full);
@@ -448,25 +471,14 @@ h6 {
   }
 }
 
-[data-bs-theme="dark"] .sw-nav-reservar-btn {
-  background: linear-gradient(
-    135deg,
-    var(--accent-gold-dark) 0%,
-    var(--accent-gold) 100%
-  );
-  color: var(--text-inverse) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-
-  &:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    color: var(--text-inverse) !important;
-  }
-}
-
 // Buttons
 .btn-primary,
 .btn-chocolate {
-  background: linear-gradient(135deg, $sw-brown 0%, $sw-brown-light 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-chocolate) 0%,
+    var(--accent-chocolate-light) 100%
+  ) !important;
   border: none;
   border-radius: $sw-radius-xl;
   color: #fff !important;
@@ -479,8 +491,12 @@ h6 {
   &:hover,
   &:focus {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba($sw-brown, 0.35);
-    background: linear-gradient(135deg, $sw-brown-light 0%, $sw-brown 100%);
+    box-shadow: 0 8px 24px rgba(92, 61, 46, 0.35) !important;
+    background: linear-gradient(
+      135deg,
+      var(--accent-chocolate-light) 0%,
+      var(--accent-chocolate) 100%
+    ) !important;
   }
   &:active {
     transform: translateY(0);
@@ -931,6 +947,129 @@ h6 {
     var(--bg-elevated) 100%
   );
   transition: background var(--transition-base);
+}
+
+// === SECTION BACKGROUNDS — CSS-var-aware (no inline styles) ===
+
+// Product carousel
+.s_sweet_product_carousel {
+  background: linear-gradient(
+    160deg,
+    var(--bg-page) 0%,
+    var(--accent-cream) 100%
+  );
+  transition: background var(--transition-base);
+}
+
+// About Us section
+.s_sweet_about_us {
+  background: #fff8dc;
+  transition: background var(--transition-base);
+
+  .sw-about-title {
+    color: $sw-brown;
+    transition: color var(--transition-base);
+  }
+
+  .sw-about-quote {
+    color: $sw-brown;
+    transition: color var(--transition-base);
+  }
+
+  .sw-about-text {
+    color: var(--text-secondary);
+    transition: color var(--transition-base);
+  }
+
+  .sw-about-signature {
+    color: $sw-brown;
+    transition: color var(--transition-base);
+  }
+
+  .sw-stat-card {
+    background: #ffffff;
+    border-bottom: 3px solid $sw-brown;
+    box-shadow: 0 4px 16px rgba(44, 24, 16, 0.06);
+    transition: all var(--transition-base);
+
+    .sw-stat-num-choc {
+      color: $sw-brown;
+      font-family: "Playfair Display", serif;
+      transition: color var(--transition-base);
+    }
+
+    .sw-stat-num-gold {
+      color: $sw-gold;
+      font-family: "Playfair Display", serif;
+      transition: color var(--transition-base);
+    }
+  }
+
+  .sw-stat-card-gold {
+    border-bottom-color: $sw-gold;
+  }
+}
+
+// Branches section
+.s_sweet_branches {
+  background: var(--bg-surface);
+  transition: background var(--transition-base);
+
+  h2 {
+    color: var(--text-primary);
+    transition: color var(--transition-base);
+  }
+
+  .sw-branch-icon-wrap {
+    background: var(--accent-cream) !important;
+    transition: background var(--transition-base);
+  }
+
+  .sw-branch-icon {
+    color: var(--accent-chocolate);
+    transition: color var(--transition-base);
+  }
+
+  .card {
+    background: var(--bg-elevated) !important;
+    border-color: var(--border-subtle) !important;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--sw-shadow-md);
+    }
+  }
+}
+
+// Custom Order CTA
+.sw-cta-section,
+.s_sweet_custom_order {
+  background: linear-gradient(135deg, $sw-brown 0%, $sw-brown-light 100%);
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition-base);
+
+  h2,
+  p {
+    color: #fff !important;
+  }
+}
+
+// Flavors (dark section — always warm dark in light mode, deeper dark in dark mode)
+.s_sweet_flavors {
+  background: linear-gradient(135deg, #5c3d2e 0%, #8b4513 50%, #3e1f0d 100%);
+  transition: background var(--transition-base);
+
+  .sw-flavors-title {
+    color: #f5e6d3 !important;
+    transition: color var(--transition-base);
+  }
+
+  .sw-flavors-subtitle {
+    color: #e8c9a0 !important;
+    transition: color var(--transition-base);
+  }
 }
 
 // Feature card — CSS-var-aware dark mode (recommendation design)
@@ -1676,9 +1815,14 @@ footer:not(.sw-footer),
     color: var(--text-primary) !important;
   }
 
-  // Header: base styles already use CSS vars — dropdown needs explicit dark override
+  // Header: explicit !important to beat Odoo's o_colored_level o_cc class overrides
   .o_header_standard,
   #wrapwrap > header {
+    background: rgba(26, 24, 35, 0.92) !important;
+    backdrop-filter: blur(24px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+    border-bottom-color: rgba(232, 201, 160, 0.1) !important;
+
     .dropdown-menu {
       background: var(--bg-elevated) !important;
       border-color: var(--border-subtle) !important;
@@ -1705,6 +1849,58 @@ footer:not(.sw-footer),
       var(--bg-page) 0%,
       var(--bg-elevated) 100%
     ) !important;
+  }
+
+  // About section dark
+  .s_sweet_about_us {
+    background: #1a1823 !important;
+
+    .sw-about-title,
+    .sw-about-quote,
+    .sw-about-signature {
+      color: var(--accent-gold) !important;
+    }
+
+    .sw-stat-card {
+      background: var(--bg-elevated) !important;
+      border-bottom-color: var(--accent-gold) !important;
+
+      .sw-stat-num-choc {
+        color: var(--accent-gold) !important;
+      }
+
+      .sw-stat-num-gold {
+        color: var(--accent-gold-light) !important;
+      }
+
+      p {
+        color: var(--text-muted) !important;
+      }
+    }
+  }
+
+  // Branches section dark
+  .s_sweet_branches {
+    background: var(--bg-surface) !important;
+
+    .sw-branch-icon-wrap {
+      background: var(--bg-elevated) !important;
+    }
+
+    .sw-branch-icon {
+      color: var(--accent-gold) !important;
+    }
+
+    .card {
+      background: var(--bg-elevated) !important;
+      border-color: var(--border-subtle) !important;
+    }
+  }
+
+  // Custom Order CTA dark
+  .sw-cta-section,
+  .s_sweet_custom_order {
+    background: linear-gradient(135deg, #1a1823 0%, #252336 100%) !important;
   }
 
   // Flavors section dark
@@ -1772,11 +1968,6 @@ footer:not(.sw-footer),
     color: var(--text-secondary) !important;
   }
 
-  // About section
-  .s_sweet_about_us {
-    background: var(--bg-elevated) !important;
-  }
-
   // Footer
   .sw-footer {
     background: linear-gradient(
@@ -1813,5 +2004,21 @@ footer:not(.sw-footer),
     ) !important;
     color: var(--text-inverse) !important;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  // Reservar btn in dark
+  .sw-nav-reservar-btn {
+    background: linear-gradient(
+      135deg,
+      var(--accent-gold-dark) 0%,
+      var(--accent-gold) 100%
+    ) !important;
+    color: var(--text-inverse) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+      color: var(--text-inverse) !important;
+    }
   }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_sweet_custom_order" name="Sweet Custom Order">
-        <section class="s_sweet_custom_order py-5 text-white" style="background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);">
+        <section class="s_sweet_custom_order sw-cta-section py-5 text-white">
             <div class="container text-center">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
