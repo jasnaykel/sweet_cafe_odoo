@@ -50,7 +50,18 @@
         groups="sweet_cafe_management.sweet_group_almacen"
     />
 
-    <!-- Mermas -->
+    <!-- Mermas — Action defined here to guarantee availability at load time -->
+    <record id="action_sweet_scrap" model="ir.actions.act_window">
+        <field name="name">Control de Mermas</field>
+        <field name="res_model">sweet.scrap</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{"search_default_pending": 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Registre una merma</p>
+            <p>Controle todas las pérdidas de producto: mermas técnicas, caducidad, roturas, negligencias.</p>
+        </field>
+    </record>
+
     <menuitem
         id="sweet_menu_mermas"
         name="Mermas"

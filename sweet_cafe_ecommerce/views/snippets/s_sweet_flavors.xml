@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_sweet_flavors" name="Sweet Flavors Grid">
-        <section class="s_sweet_flavors py-5 bg-cream" style="background-color: #F5F5DC;">
+        <section class="s_sweet_flavors py-5"
+                 style="background: linear-gradient(135deg, #FDF6EC 0%, #F5E6D3 100%);">
             <div class="container">
-                <div class="text-center mb-5">
-                    <h2 class="display-5">Nuestros Sabores Estrella</h2>
-                    <p class="text-muted">Ingredientes de primera calidad en cada elaboración.</p>
+                <div class="sw-section-header text-center mb-5 sw-reveal">
+                    <h2>Nuestros Sabores Estrella</h2>
+                    <p class="mt-2">Ingredientes de primera calidad en cada elaboración artesanal.</p>
                 </div>
-                <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 border-0 shadow-sm text-center p-4">
-                            <i class="fa fa-birthday-cake fa-3x text-chocolate mb-3" style="color: #8B4513;"></i>
-                            <h4>Chocolate Antillano</h4>
-                            <p class="small text-muted">Cacao de exportación con la receta clásica de la casa.</p>
+                <div class="row g-4">
+                    <div class="col-md-4 sw-reveal">
+                        <div class="sw-feature-card text-center">
+                            <span class="sw-feature-icon">🍫</span>
+                            <h3>Chocolate Antillano</h3>
+                            <p>Cacao de exportación con la receta clásica de la casa, intenso y cremoso.</p>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 border-0 shadow-sm text-center p-4">
-                            <i class="fa fa-sun-o fa-3x text-gold mb-3" style="color: #D4AF37;"></i>
-                            <h4>Coco Fresco</h4>
-                            <p class="small text-muted">Ralladura natural de coco caribeño para un sabor tropical.</p>
+                    <div class="col-md-4 sw-reveal">
+                        <div class="sw-feature-card text-center">
+                            <span class="sw-feature-icon">🥥</span>
+                            <h3>Coco Fresco</h3>
+                            <p>Ralladura natural de coco caribeño para un sabor tropical irresistible.</p>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 border-0 shadow-sm text-center p-4">
-                            <i class="fa fa-leaf fa-3x text-success mb-3" style="color: #28a745;"></i>
-                            <h4>Guayaba Seleccionada</h4>
-                            <p class="small text-muted">La mermelada cubana más pura en masa hojaldrada.</p>
+                    <div class="col-md-4 sw-reveal">
+                        <div class="sw-feature-card text-center">
+                            <span class="sw-feature-icon">🍓</span>
+                            <h3>Guayaba Seleccionada</h3>
+                            <p>La mermelada cubana más pura envuelta en masa hojaldrada dorada.</p>
                         </div>
                     </div>
                 </div>

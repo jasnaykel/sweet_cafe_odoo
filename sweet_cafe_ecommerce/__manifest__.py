@@ -32,6 +32,7 @@ Incluye:
     'assets': {
         'web.assets_frontend': [
             'sweet_cafe_ecommerce/static/src/scss/sweet_ecommerce.scss',
+            'sweet_cafe_ecommerce/static/src/js/sweet_aurora.js',
         ],
     },
     'installable': True,

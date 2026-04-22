@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_sweet_hero" name="Sweet Hero Section">
-        <section class="s_sweet_hero oe_img_bg oe_custom_bg" style="background-image: url('/sweet_cafe_ecommerce/static/src/img/bakery_bg.jpg'); background-position: 50% 50%;">
-            <div class="container text-center py-5">
-                <div class="row content align-items-center">
-                    <div class="col-lg-8 offset-lg-2 bg-white-75 p-5 rounded shadow-lg">
-                        <h1 class="display-3 fw-bold text-chocolate">Momentos Dulces</h1>
-                        <p class="lead mb-4">Los mejores pasteles y dulces artesanales directo a tu mesa.</p>
-                        <div class="d-flex justify-content-center gap-3 mt-4">
-                            <a href="/shop" class="btn btn-primary btn-lg px-4">Comprar Ahora</a>
-                            <a href="/contactus" class="btn btn-outline-primary btn-lg px-4">Ver Sucursales</a>
+        <section class="s_sweet_hero position-relative overflow-hidden" style="min-height: 92vh; background: linear-gradient(160deg, #FDF6EC 0%, #F5E6D3 100%); padding-top: 100px;">
+
+            <!-- Aurora blobs rendered via CSS, no JS needed -->
+            <div class="sw-aurora-bg d-none d-md-block" aria-hidden="true">
+                <div class="sw-aurora-blob blob-1"></div>
+                <div class="sw-aurora-blob blob-2"></div>
+                <div class="sw-aurora-blob blob-3"></div>
+            </div>
+
+            <div class="container position-relative" style="z-index: 2;">
+                <div class="row align-items-center g-5">
+
+                    <!-- Content side -->
+                    <div class="col-lg-6">
+                        <div class="sw-hero-card">
+                            <div class="sw-hero-badge mb-3">
+                                &#10022; Sabor Aut&#233;ntico Cubano
+                            </div>
+                            <h1 class="sw-hero-title mb-3">
+                                Momentos <span>Dulces</span><br/>que Perduran
+                            </h1>
+                            <p class="sw-hero-subtitle">
+                                Los mejores pasteles y dulces artesanales elaborados con ingredientes
+                                de primera calidad. Tradición y modernidad en cada bocado.
+                            </p>
+                            <div class="sw-hero-buttons">
+                                <a href="/shop" class="btn btn-primary px-4 py-2">
+                                    <i class="fa fa-shopping-bag me-2"/>Explorar Catálogo
+                                </a>
+                                <a href="/reservar" class="btn btn-outline-chocolate px-4 py-2">
+                                    <i class="fa fa-calendar me-2"/>Hacer Reserva
+                                </a>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Visual side -->
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <div class="sw-hero-visual text-center">
+                            <div class="sw-hero-circle-wrap">
+                                <div class="sw-hero-circle-outer"></div>
+                                <div class="sw-hero-circle-inner"></div>
+                                <div class="sw-hero-product">&#127874;</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>

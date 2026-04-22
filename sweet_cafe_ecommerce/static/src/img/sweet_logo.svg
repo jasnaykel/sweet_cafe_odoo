@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 54" fill="none">
+  <!-- Cupcake icon -->
+  <g transform="translate(4,4)">
+    <!-- Frosting swirl -->
+    <ellipse cx="23" cy="14" rx="14" ry="8" fill="#E8A0BF" opacity="0.9"/>
+    <path d="M9 14 Q15 4 23 6 Q31 4 37 14" fill="#F5B8D5" opacity="0.8"/>
+    <!-- Cherry on top -->
+    <circle cx="23" cy="6" r="3" fill="#D4A574"/>
+    <line x1="23" y1="6" x2="26" y2="3" stroke="#5C3D2E" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Cup body -->
+    <path d="M10 18 L13 34 Q23 37 33 34 L36 18 Z" fill="#D4A574"/>
+    <!-- Cup lines -->
+    <path d="M12 22 L34 22" stroke="#C49060" stroke-width="0.8" opacity="0.6"/>
+    <path d="M11 27 L35 27" stroke="#C49060" stroke-width="0.8" opacity="0.6"/>
+    <!-- Sprinkles -->
+    <rect x="18" y="15" width="3" height="1.2" rx="0.6" fill="#fff" transform="rotate(-20,19.5,15.6)" opacity="0.9"/>
+    <rect x="24" y="13" width="3" height="1.2" rx="0.6" fill="#fff" transform="rotate(15,25.5,13.6)" opacity="0.9"/>
+    <rect x="20" y="10" width="3" height="1.2" rx="0.6" fill="#fff" transform="rotate(-10,21.5,10.6)" opacity="0.9"/>
+  </g>
+  <!-- Brand text -->
+  <text x="52" y="28" font-family="Georgia, 'Times New Roman', serif"
+        font-size="22" font-weight="700" fill="#5C3D2E" letter-spacing="-0.5">Sweet</text>
+  <text x="52" y="46" font-family="Georgia, 'Times New Roman', serif"
+        font-size="16" font-weight="400" fill="#D4A574" letter-spacing="3">CAFÉ</text>
+  <!-- Separator line -->
+  <line x1="140" y1="16" x2="140" y2="44" stroke="#D4A574" stroke-width="1" opacity="0.4"/>
+  <!-- Tagline -->
+  <text x="148" y="28" font-family="Arial, sans-serif"
+        font-size="8.5" fill="#8B5E3C" letter-spacing="1.5">DULCER&#205;A</text>
+  <text x="148" y="40" font-family="Arial, sans-serif"
+        font-size="8.5" fill="#8B5E3C" letter-spacing="1.5">ARTESANAL</text>
+</svg>

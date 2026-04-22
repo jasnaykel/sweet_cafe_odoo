@@ -1,115 +1,1085 @@
-// -*- mode: scss -*-
-// Sweet Café E-commerce Custom Theme
+// Sweet Cafe - Aurora UI Premium Theme (2026)
+// Glassmorphism + Aurora gradients + Playfair Display
+// Google Fonts are loaded via website.layout template override (no @import here)
 
-$sc-chocolate: #8B4513;
-$sc-cocoa: #5D2E46;
-$sc-cream: #F5F5DC;
-$sc-gold: #D4AF37;
-$sc-accent: #FFB7C5; // Cherry pink accent
+// Design Tokens
+$sw-cream: #fdf6ec;
+$sw-cream-dark: #f5e6d3;
+$sw-gold: #d4a574;
+$sw-gold-light: #e8c9a0;
+$sw-brown: #5c3d2e;
+$sw-brown-light: #8b5e3c;
+$sw-rose: #e8a0bf;
+$sw-text: #2c1810;
+$sw-text-light: #6b4e3d;
 
+$sw-glass: rgba(255, 255, 255, 0.72);
+$sw-glass-border: rgba(212, 165, 116, 0.22);
+$sw-shadow: rgba(44, 24, 16, 0.08);
+$sw-shadow-lg: rgba(44, 24, 16, 0.15);
+
+$sw-aurora-1: rgba(212, 165, 116, 0.38);
+$sw-aurora-2: rgba(232, 160, 191, 0.28);
+$sw-aurora-3: rgba(245, 230, 211, 0.48);
+
+$sw-radius-sm: 12px;
+$sw-radius-md: 20px;
+$sw-radius-lg: 24px;
+$sw-radius-xl: 32px;
+
+// Mixins
+@mixin glass-panel {
+  background: $sw-glass;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $sw-glass-border;
+  box-shadow: 0 10px 40px $sw-shadow;
+}
+
+// CSS custom properties
+:root {
+  --sw-cream: #{$sw-cream};
+  --sw-gold: #{$sw-gold};
+  --sw-brown: #{$sw-brown};
+  --sw-rose: #{$sw-rose};
+}
+
+// Base
 body {
-    background-color: #fff;
-    color: #444;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  background-color: $sw-cream;
+  color: $sw-text;
+  overflow-x: hidden;
 }
 
-// Global typography
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    color: $sc-chocolate;
-}
-
-// Customized Buttons
-.btn-primary {
-    background-color: $sc-chocolate;
-    border-color: $sc-chocolate;
-    &:hover {
-        background-color: $sc-cocoa;
-        border-color: $sc-cocoa;
-    }
-}
-
-// Pastry Badges
-.sc-badge-pastry {
-    background-color: $sc-accent;
-    color: #fff;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Playfair Display", Georgia, serif;
+  color: $sw-brown;
 }
 
 // Animations
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes sw-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.hover-elevate {
-    transition: all 0.3s ease;
+@keyframes sw-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+@keyframes sw-levitate {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes sw-pulse-badge {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+// Aurora Background
+.sw-aurora-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.sw-aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: sw-float 20s infinite ease-in-out;
+  opacity: 0.6;
+
+  &.blob-1 {
+    width: 600px;
+    height: 600px;
+    background: $sw-aurora-1;
+    top: -200px;
+    left: -100px;
+    animation-delay: 0s;
+  }
+  &.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: $sw-aurora-2;
+    top: 20%;
+    right: -150px;
+    animation-delay: -5s;
+  }
+  &.blob-3 {
+    width: 400px;
+    height: 400px;
+    background: $sw-aurora-3;
+    bottom: -100px;
+    left: 30%;
+    animation-delay: -10s;
+  }
+}
+
+// Top contact bar
+.sc-top-bar {
+  background: linear-gradient(
+    90deg,
+    $sw-brown 0%,
+    $sw-brown-light 100%
+  ) !important;
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+
+// Navbar / Header
+.o_header_standard,
+#wrapwrap > header {
+  @include glass-panel;
+  border-bottom: 1px solid $sw-glass-border;
+  transition: box-shadow 0.3s ease;
+
+  .navbar-brand {
+    font-family: "Playfair Display", serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(
+      135deg,
+      $sw-gold 0%,
+      $sw-rose 60%,
+      $sw-cream-dark 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    color: $sw-text-light !important;
+    position: relative;
+    transition: color 0.2s ease;
+
+    // Underline only for main menu links, NOT dropdowns (user/language)
+    &:not(.dropdown-toggle)::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      right: 50%;
+      height: 2px;
+      background: $sw-gold;
+      border-radius: 2px;
+      transition:
+        left 0.3s ease,
+        right 0.3s ease;
+    }
+
     &:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+      color: $sw-brown !important;
     }
-}
 
-// Glassmorphism
-.bg-white-75 {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-// Custom Hero Snippet Styling
-.s_sweet_hero {
-    animation: fadeInUp 1s ease-out;
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    
-    .hero-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 5rem;
-        font-weight: 900;
-        letter-spacing: -1px;
-        line-height: 1.1;
+    &:not(.dropdown-toggle):hover::after {
+      left: 0;
+      right: 0;
     }
+  }
+
+  // Language selector button — no border, no underline
+  .js_language_selector button {
+    background: transparent !important;
+    border: none !important;
+    color: $sw-text-light !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+    &:hover {
+      color: $sw-brown !important;
+    }
+  }
+
+  // User avatar circle
+  .o_no_autohide_item .nav-link {
+    &::after {
+      display: none !important;
+    }
+  }
 }
 
-// Section Dividers
-.bg-cream {
-    background-color: #FDF5E6;
+// Buttons
+.btn-primary,
+.btn-chocolate {
+  background: linear-gradient(135deg, $sw-brown 0%, $sw-brown-light 100%);
+  border: none;
+  border-radius: $sw-radius-xl;
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover,
+  &:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba($sw-brown, 0.35);
+    background: linear-gradient(135deg, $sw-brown-light 0%, $sw-brown 100%);
+  }
+  &:active {
+    transform: translateY(0);
+  }
 }
 
-.text-chocolate { color: #8B4513 !important; }
-.text-gold { color: #D4AF37 !important; }
 .btn-outline-chocolate {
-    color: #8B4513;
-    border-color: #8B4513;
-    &:hover {
-        background-color: #8B4513;
-        color: #fff;
-    }
+  color: $sw-brown;
+  border: 2px solid $sw-gold;
+  border-radius: $sw-radius-xl;
+  font-weight: 600;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: $sw-brown;
+    border-color: $sw-brown;
+    color: #fff;
+    transform: translateY(-2px);
+  }
 }
 
-// Product Page Improvements
-.o_wsale_product_page {
-    .sc-technical-specs {
-        border-left: 4px solid $sc-gold;
-        padding-left: 1rem;
-        margin-top: 2rem;
-        background-color: rgba($sc-cream, 0.5);
-        padding: 1rem;
-        border-radius: 8px;
-        
-        .spec-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            i {
-                margin-right: 0.5rem;
-                color: $sc-chocolate;
-            }
-        }
+// Hero Section
+.s_sweet_hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  padding-top: 120px;
+
+  .sw-hero-card {
+    @include glass-panel;
+    border-radius: $sw-radius-xl;
+    padding: 3.5rem;
+    animation: sw-fadeInUp 1s ease-out;
+
+    .sw-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: $sw-glass;
+      border: 1px solid $sw-glass-border;
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: $sw-gold;
+      margin-bottom: 1.5rem;
     }
+  }
+
+  .sw-hero-title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.5px;
+    color: $sw-brown;
+
+    span {
+      background: linear-gradient(135deg, $sw-gold 0%, $sw-rose 60%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  .sw-hero-subtitle {
+    font-size: 1.1rem;
+    color: $sw-text-light;
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2rem;
+  }
+
+  .sw-hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .sw-hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Animated circle visual (like demo)
+  .sw-hero-circle-wrap {
+    position: relative;
+    width: 420px;
+    height: 420px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .sw-hero-circle-outer {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 40% 40%,
+      rgba($sw-rose, 0.25) 0%,
+      rgba($sw-gold, 0.12) 50%,
+      transparent 100%
+    );
+    animation: sw-float 8s ease-in-out infinite;
+  }
+
+  .sw-hero-circle-inner {
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    right: 8%;
+    bottom: 8%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba($sw-gold, 0.22);
+    box-shadow:
+      0 24px 60px rgba($sw-brown, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  .sw-hero-product {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8rem;
+    animation: sw-levitate 4s ease-in-out infinite;
+    user-select: none;
+    pointer-events: none;
+    line-height: 1;
+  }
+}
+
+// Section headers
+.sw-section-header {
+  h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    color: $sw-brown;
+  }
+  p {
+    color: $sw-text-light;
+    font-size: 1.05rem;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+}
+
+// Premium Product Cards
+.sw-product-card,
+.card.sw-card {
+  @include glass-panel;
+  border-radius: $sw-radius-lg !important;
+  border: none !important;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  animation: sw-fadeInUp 0.6s ease-out;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 60px rgba($sw-brown, 0.18) !important;
+  }
+
+  .sw-card-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba($sw-brown, 0.4) 0%,
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+
+    &:hover img {
+      transform: scale(1.06);
+    }
+  }
+
+  .sw-product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(135deg, $sw-gold 0%, $sw-gold-light 100%);
+    color: $sw-brown;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+    animation: sw-pulse-badge 2.5s ease-in-out infinite;
+    box-shadow: 0 4px 12px rgba($sw-gold, 0.4);
+  }
+
+  .sw-product-badge-new {
+    background: linear-gradient(135deg, $sw-rose 0%, #f0b8d4 100%);
+    color: $sw-brown;
+  }
+
+  .card-body {
+    padding: 1.5rem !important;
+  }
+
+  .card-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $sw-brown;
+    margin-bottom: 0.4rem;
+  }
+
+  .card-text {
+    font-size: 0.85rem;
+    color: $sw-text-light;
+    line-height: 1.5;
+  }
+
+  .sw-price {
+    font-family: "Playfair Display", serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $sw-brown-light;
+
+    span {
+      font-size: 0.85rem;
+      color: $sw-text-light;
+      font-family: "Inter", sans-serif;
+    }
+  }
+
+  // Hide controls — reveal on card hover
+  .sw-qty-group,
+  .sweet_add_cart_form .btn[type="submit"] {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus-within {
+    .sw-qty-group,
+    .sweet_add_cart_form .btn[type="submit"] {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+
+  .sw-qty-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba($sw-cream-dark, 0.6);
+    border-radius: $sw-radius-sm;
+    padding: 4px 8px;
+
+    .sw-qty-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid $sw-glass-border;
+      border-radius: 8px;
+      background: $sw-glass;
+      color: $sw-brown;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      line-height: 1;
+
+      &:hover {
+        background: $sw-gold-light;
+        border-color: $sw-gold;
+      }
+    }
+
+    .sw-qty-val {
+      min-width: 28px;
+      text-align: center;
+      font-weight: 600;
+      color: $sw-brown;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Carousel controls
+.sw-carousel-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid $sw-glass-border;
+  background: $sw-glass;
+  backdrop-filter: blur(10px);
+  color: $sw-brown;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px $sw-shadow;
+
+  &:hover {
+    background: $sw-gold-light;
+    border-color: $sw-gold;
+    transform: scale(1.08);
+  }
+}
+
+.sc-best-sellers .carousel-control-prev,
+.sc-best-sellers .carousel-control-next,
+.s_sweet_product_carousel .carousel-control-prev,
+.s_sweet_product_carousel .carousel-control-next {
+  width: 48px;
+  height: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: $sw-glass;
+  backdrop-filter: blur(10px);
+  border: 1px solid $sw-glass-border;
+  border-radius: 50%;
+  opacity: 1;
+  box-shadow: 0 4px 16px $sw-shadow;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $sw-gold-light;
+  }
+}
+
+// Feature cards
+.sw-feature-card {
+  @include glass-panel;
+  border-radius: $sw-radius-lg;
+  padding: 2.5rem 2rem;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px $sw-shadow-lg;
+  }
+
+  .sw-feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: $sw-brown;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: $sw-text-light;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+}
+
+// Best sellers section
+.sc-best-sellers {
+  position: relative;
+
+  h2 {
+    color: #fff !important;
+  }
+
+  .card.h-100 {
+    @include glass-panel;
+    border-radius: $sw-radius-lg !important;
+    border: none !important;
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: translateY(-6px);
+    }
+  }
+}
+
+.s_sweet_flavors {
+  .card {
+    @include glass-panel;
+    border-radius: $sw-radius-lg !important;
+    border: none !important;
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: translateY(-6px);
+    }
+  }
+}
+
+// Reservation CTA
+.sc-reservation-cta {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -10%;
+    width: 60%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.04);
+    transform: rotate(-15deg);
+    pointer-events: none;
+  }
+
+  h2,
+  p {
+    color: #fff !important;
+  }
+
+  .btn {
+    background: $sw-glass;
+    backdrop-filter: blur(10px);
+    color: $sw-brown !important;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: $sw-radius-xl;
+    font-weight: 600;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+// Reservation form
+.sw-reservation-form {
+  @include glass-panel;
+  border-radius: $sw-radius-xl;
+  padding: 2.5rem;
+
+  .form-control,
+  .form-select {
+    background: rgba($sw-cream, 0.8);
+    border: 1px solid $sw-glass-border;
+    border-radius: $sw-radius-sm;
+    color: $sw-text;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus {
+      background: $sw-cream;
+      border-color: $sw-gold;
+      box-shadow: 0 0 0 3px rgba($sw-gold, 0.15);
+    }
+  }
+
+  label {
+    font-weight: 500;
+    color: $sw-text-light;
+    font-size: 0.88rem;
+  }
+}
+
+// Footer
+footer,
+.bg-chocolate {
+  background: linear-gradient(160deg, #1a0d05 0%, #3d1e0a 100%) !important;
+
+  h4,
+  h5 {
+    color: $sw-gold-light !important;
+  }
+
+  p,
+  li {
+    color: rgba($sw-cream, 0.65) !important;
+  }
+
+  a.text-reset,
+  .text-white-75,
+  .text-white-50 {
+    color: rgba($sw-cream, 0.65) !important;
+    &:hover {
+      color: $sw-gold-light !important;
+    }
+  }
+
+  hr {
+    border-color: rgba($sw-cream, 0.08) !important;
+  }
+
+  .input-group .form-control {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba($sw-cream, 0.15);
+    color: $sw-cream;
+    border-radius: $sw-radius-sm 0 0 $sw-radius-sm;
+  }
+}
+
+// Product page
+.o_wsale_product_page {
+  .sc-technical-specs {
+    @include glass-panel;
+    border-left: 4px solid $sw-gold !important;
+    border-radius: $sw-radius-md;
+    padding: 1.5rem !important;
+
+    h5 {
+      color: $sw-brown-light;
+    }
+  }
+}
+
+// Toast notification
+.sw-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  @include glass-panel;
+  border-radius: $sw-radius-md;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  min-width: 280px;
+
+  &.sw-toast-show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .sw-toast-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $sw-gold, $sw-rose);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $sw-brown;
+    margin-bottom: 2px;
+  }
+  p {
+    font-size: 0.8rem;
+    color: $sw-text-light;
+    margin: 0;
+  }
+}
+
+// Scroll reveal
+.sw-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+  &.sw-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Utility helpers
+.hover-elevate {
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px $sw-shadow-lg !important;
+  }
+}
+
+.bg-cream {
+  background-color: $sw-cream !important;
+}
+.bg-cream-dark {
+  background-color: $sw-cream-dark !important;
+}
+.text-chocolate {
+  color: $sw-brown !important;
+}
+.text-gold {
+  color: $sw-gold !important;
+}
+
+.bg-white-75 {
+  @include glass-panel;
+}
+
+.sc-badge-pastry {
+  background: linear-gradient(135deg, $sw-rose 0%, #f0b8d4 100%);
+  color: $sw-brown;
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+// Hide the floating button (JS injects into header instead)
+.sw-theme-float-btn {
+  display: none !important;
+}
+
+// Dark Mode Toggle — injected into navbar by JS
+.sw-theme-nav-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid $sw-glass-border;
+  background: rgba($sw-gold, 0.1);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.2s ease;
+  color: $sw-brown;
+  font-size: 1rem;
+  line-height: 1;
+
+  &:hover {
+    background: rgba($sw-gold, 0.25);
+    border-color: $sw-gold;
+    transform: scale(1.1);
+  }
+}
+
+// Navbar Dropdowns — language + user menu hover fix
+// Remove underline from language/user functional items
+.o_header_standard,
+#wrapwrap > header {
+  .o_language_switcher .nav-link::after,
+  .o_user_language .nav-link::after,
+  [class*="lang"] .nav-link::after,
+  [class*="user"] .nav-link::after {
+    display: none !important;
+  }
+
+  .nav-item.dropdown {
+    .dropdown-toggle::after {
+      display: none;
+    }
+
+    .dropdown-menu {
+      background: rgba(253, 246, 236, 0.96) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border-radius: $sw-radius-md !important;
+      border: 1px solid $sw-glass-border !important;
+      padding: 0.5rem !important;
+      min-width: 180px !important;
+      margin-top: 8px !important;
+      box-shadow: 0 16px 40px rgba($sw-brown, 0.15) !important;
+
+      .dropdown-item {
+        border-radius: $sw-radius-sm;
+        color: $sw-text-light;
+        font-size: 0.88rem;
+        font-weight: 500;
+        padding: 0.45rem 0.85rem;
+        transition:
+          background 0.15s ease,
+          color 0.15s ease;
+
+        &:hover,
+        &:focus,
+        &.active {
+          background: linear-gradient(
+            135deg,
+            rgba($sw-gold, 0.15),
+            rgba($sw-rose, 0.1)
+          ) !important;
+          color: $sw-brown !important;
+        }
+      }
+
+      .dropdown-divider {
+        border-color: $sw-glass-border;
+        margin: 0.3rem 0.5rem;
+      }
+    }
+  }
+
+  // User account icon / cart icon on hover
+  .o_header_user_links,
+  .o_wsale_header {
+    a,
+    button {
+      color: $sw-text-light !important;
+      transition: color 0.2s ease;
+      &:hover {
+        color: $sw-brown !important;
+      }
+    }
+  }
+}
+
+// Dark Mode overrides (Bootstrap 5.3 data-bs-theme="dark")
+[data-bs-theme="dark"] {
+  --sw-cream: #1c0d06;
+  --sw-brown: #e8c9a0;
+
+  body,
+  #wrapwrap {
+    background-color: #1c0d06 !important;
+    color: #f5e6d3 !important;
+  }
+
+  .s_sweet_hero,
+  .s_sweet_product_carousel,
+  .s_sweet_flavors {
+    background: linear-gradient(160deg, #1c0d06 0%, #2e1508 100%) !important;
+  }
+
+  .sw-hero-card,
+  .sw-product-card,
+  .sw-feature-card,
+  .sw-reservation-form,
+  .card {
+    background: rgba(40, 20, 8, 0.85) !important;
+    border-color: rgba(212, 165, 116, 0.15) !important;
+    color: #f5e6d3 !important;
+  }
+
+  .sw-hero-title,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #e8c9a0 !important;
+  }
+
+  .sw-hero-subtitle,
+  .card-text,
+  p {
+    color: rgba(245, 230, 211, 0.7) !important;
+  }
+
+  .o_header_standard,
+  #wrapwrap > header {
+    background: rgba(28, 13, 6, 0.9) !important;
+    border-bottom-color: rgba(212, 165, 116, 0.15) !important;
+
+    .navbar-brand {
+      background: linear-gradient(135deg, #e8c9a0 0%, #e8a0bf 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+
+    .nav-link {
+      color: rgba(245, 230, 211, 0.75) !important;
+    }
+    .nav-link:hover {
+      color: #e8c9a0 !important;
+    }
+
+    .dropdown-menu {
+      background: rgba(28, 13, 6, 0.95) !important;
+      .dropdown-item {
+        color: rgba(245, 230, 211, 0.75) !important;
+      }
+      .dropdown-item:hover {
+        color: #e8c9a0 !important;
+      }
+    }
+  }
+
+  .sc-top-bar {
+    background: linear-gradient(90deg, #0e0603 0%, #1c0d06 100%) !important;
+  }
+
+  #sw-theme-icon::before {
+    content: "\1F319";
+  }
 }

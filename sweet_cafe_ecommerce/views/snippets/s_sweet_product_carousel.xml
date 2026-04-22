@@ -1,54 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_sweet_product_carousel" name="Sweet Product Carousel">
-        <section class="s_sweet_product_carousel py-5" style="background-color: #fff;">
-            <div class="container">
-                <div class="text-center mb-5">
-                    <h2 class="display-5 text-chocolate">Nuestras Especialidades</h2>
-                    <p class="text-muted">Directo del horno a tu carrito.</p>
+        <section class="s_sweet_product_carousel py-5"
+                 style="background: linear-gradient(160deg, #FDF6EC 0%, #F5E6D3 100%); position: relative; overflow: hidden;">
+            <div class="container position-relative" style="z-index: 1;">
+
+                <div class="sw-section-header text-center mb-5 sw-reveal">
+                    <h2>Nuestras Especialidades</h2>
+                    <p class="mt-2">Elaborados con ingredientes de primera calidad, directo del horno a tu carrito.</p>
                 </div>
 
-                <div id="sweetProductCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000">
+                <div id="sweetProductCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
                     <div class="carousel-inner">
                         <t t-set="products" t-value="request.env['product.template'].sudo().search(
-                            [('sale_ok', '=', True), ('active', '=', True)], limit=12)"/>
+                            [('sale_ok', '=', True), ('active', '=', True)], limit=16)"/>
                         <t t-set="chunks" t-value="[products[i:i + 4] for i in range(0, len(products), 4)]"/>
-                        
+
                         <t t-foreach="chunks" t-as="chunk">
                             <div t-attf-class="carousel-item #{'active' if chunk_index == 0 else ''}">
-                                <div class="row">
+                                <div class="row g-4 px-2">
                                     <t t-foreach="chunk" t-as="product">
-                                        <div class="col-md-3 mb-4">
-                                            <div class="card h-100 border-0 shadow-sm transition-base hover-elevate">
-                                                <div class="position-relative overflow-hidden" style="height: 200px;">
-                                                    <img t-attf-src="/web/image/product.template/#{product.id}/image_512" class="card-img-top h-100 w-100 object-fit-cover" t-att-alt="product.name"/>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="sw-product-card card h-100">
+                                                <div class="sw-card-img-wrap">
+                                                    <a t-attf-href="/shop/product/#{product.id}">
+                                                        <img t-attf-src="/web/image/product.template/#{product.id}/image_512"
+                                                             loading="lazy"
+                                                             t-att-alt="product.name"/>
+                                                    </a>
                                                     <t t-if="product.is_pastry">
-                                                        <span class="badge position-absolute top-0 end-0 m-2" style="background-color: #FFB7C5; color: #8B4513;">Pastelería</span>
+                                                        <span class="sw-product-badge sw-product-badge-new">Paster&#237;a</span>
+                                                    </t>
+                                                    <t t-elif="product.custom_order">
+                                                        <span class="sw-product-badge">A Medida</span>
                                                     </t>
                                                 </div>
-                                                <div class="card-body d-flex flex-column p-4">
-                                                    <h5 class="card-title text-truncate" t-field="product.name"/>
+                                                <div class="card-body d-flex flex-column">
+                                                    <h5 class="card-title text-truncate">
+                                                        <a t-attf-href="/shop/product/#{product.id}"
+                                                           class="text-decoration-none text-chocolate"
+                                                           t-field="product.name"/>
+                                                    </h5>
+                                                    <p class="card-text small" t-if="product.description_sale">
+                                                        <t t-esc="(product.description_sale or '')[:90]"/>
+                                                    </p>
                                                     <div class="mt-auto">
                                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                                            <span class="h5 mb-0 text-chocolate fw-bold" t-field="product.list_price" t-options="{'widget': 'monetary', 'display_currency': product.currency_id}"/>
+                                                            <span class="sw-price"
+                                                                  t-field="product.list_price"
+                                                                  t-options="{'widget': 'monetary', 'display_currency': product.currency_id}"/>
                                                         </div>
-
-                                                        <!-- Add to Cart — uses /sweet/cart/add (type=http) because
-                                                             /shop/cart/update is type=jsonrpc in Odoo 17+ -->
                                                         <form action="/sweet/cart/add" method="POST" class="sweet_add_cart_form">
                                                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                             <input type="hidden" name="product_id" t-att-value="product.product_variant_id.id"/>
-
-                                                            <div class="input-group mb-2">
-                                                                <button class="btn btn-outline-secondary btn-sm" type="button"
-                                                                        onclick="this.parentNode.querySelector('input[name=add_qty]').stepDown()">-</button>
-                                                                <input type="number" class="form-control form-control-sm text-center"
-                                                                       name="add_qty" value="1" min="1"/>
-                                                                <button class="btn btn-outline-secondary btn-sm" type="button"
-                                                                        onclick="this.parentNode.querySelector('input[name=add_qty]').stepUp()">+</button>
+                                                            <div class="sw-qty-group mb-2">
+                                                                <button type="button" class="sw-qty-btn"
+                                                                        onclick="var i=this.parentNode.querySelector('input[name=add_qty]');i.value=Math.max(1,parseInt(i.value)-1)">&#8722;</button>
+                                                                <input type="number" name="add_qty" value="1" min="1"
+                                                                       class="sw-qty-val form-control border-0 bg-transparent p-0"
+                                                                       style="width:36px;text-align:center;font-weight:600;color:#5C3D2E;"/>
+                                                                <button type="button" class="sw-qty-btn"
+                                                                        onclick="var i=this.parentNode.querySelector('input[name=add_qty]');i.value=parseInt(i.value)+1">+</button>
                                                             </div>
-                                                            <button type="submit" class="btn btn-chocolate btn-sm w-100 rounded-pill">
-                                                                <i class="fa fa-shopping-cart me-1"/> A&#241;adir
+                                                            <button type="submit" class="btn btn-primary btn-sm w-100">
+                                                                <i class="fa fa-shopping-cart me-1"/>A&#241;adir
                                                             </button>
                                                         </form>
                                                     </div>
@@ -59,86 +74,113 @@
                                 </div>
                             </div>
                         </t>
+
                         <t t-if="not products">
                             <div class="carousel-item active">
-                                <div class="text-center py-5">
-                                    <p class="text-muted italic">Próximamente más delicias...</p>
+                                <div class="text-center py-5 text-muted">
+                                    <i class="fa fa-birthday-cake fa-3x mb-3" style="color:#D4A574;"/>
+                                    <p>Pr&#243;ximamente m&#225;s delicias...</p>
                                 </div>
                             </div>
                         </t>
                     </div>
-                    
-                    <button class="carousel-control-prev" type="button" data-bs-target="#sweetProductCarousel" data-bs-slide="prev" style="width: 5%;">
-                        <span class="carousel-control-prev-icon bg-chocolate rounded-circle p-3" aria-hidden="true"></span>
+
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#sweetProductCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"/>
                         <span class="visually-hidden">Anterior</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#sweetProductCarousel" data-bs-slide="next" style="width: 5%;">
-                        <span class="carousel-control-next-icon bg-chocolate rounded-circle p-3" aria-hidden="true"></span>
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#sweetProductCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"/>
                         <span class="visually-hidden">Siguiente</span>
                     </button>
                 </div>
+
+                <div class="text-center mt-4">
+                    <a href="/shop" class="btn btn-outline-chocolate px-4 mt-2">
+                        Ver todos los productos <i class="fa fa-arrow-right ms-1"/>
+                    </a>
+                </div>
             </div>
-        </section>
 
-        <script type="text/javascript">
-        //<![CDATA[
-        (function () {
-            /* Update the Odoo header cart badge without page reload.
-               Selector: .my_cart_quantity (sup badge in Odoo 19 website_sale) */
-            function updateCartBadge(qty) {
-                document.querySelectorAll('.my_cart_quantity').forEach(function (el) {
-                    el.textContent = qty;
-                    if (qty > 0) {
-                        el.classList.remove('d-none');
-                    } else {
-                        el.classList.add('d-none');
-                    }
-                });
-            }
-
-            /* Event delegation — captures ALL .sweet_add_cart_form
-               regardless of render order (best sellers loads after this tag). */
-            document.addEventListener('submit', function (e) {
-                var form = e.target.closest('.sweet_add_cart_form');
-                if (!form) return;
-                e.preventDefault();
-
-                var productId = parseInt(form.querySelector('input[name=product_id]').value);
-                var qty = parseInt(form.querySelector('input[name=add_qty]').value) || 1;
-                var btn = form.querySelector('button[type=submit]');
-                var origHtml = btn.innerHTML;
-                btn.disabled = true;
-
-                fetch('/sweet/cart/add', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({jsonrpc:'2.0', method:'call', params:{product_id: productId, add_qty: qty}}),
-                    credentials: 'same-origin',
-                })
-                .then(function (r) { return r.json(); })
-                .then(function (data) {
-                    var result = data.result || {};
-                    if (result.cart_quantity !== undefined) {
-                        updateCartBadge(result.cart_quantity);
-                        btn.innerHTML = '<i class="fa fa-check me-1"></i> A\u00f1adido';
-                        btn.style.backgroundColor = '#28a745';
-                        btn.style.borderColor = '#28a745';
-                        btn.style.color = '#fff';
-                        setTimeout(function () {
+            <script type="text/javascript">
+            //<![CDATA[
+            (function () {
+                function updateCartBadge(qty) {
+                    document.querySelectorAll('.my_cart_quantity').forEach(function (el) {
+                        el.textContent = qty;
+                        el.classList.toggle('d-none', qty <= 0);
+                    });
+                }
+                function showToast(name, qty) {
+                    var t = document.createElement('div');
+                    t.className = 'sw-toast sw-toast-show';
+                    t.innerHTML =
+                        '<div class="sw-toast-icon">\u2713</div>' +
+                        '<div><h4>\u00a1A\u00f1adido al carrito!</h4>' +
+                        '<p>' + name + ' \u00d7 ' + qty + '</p></div>';
+                    document.body.appendChild(t);
+                    setTimeout(function () { t.remove(); }, 3000);
+                }
+                document.addEventListener('submit', function (e) {
+                    var form = e.target.closest('.sweet_add_cart_form');
+                    if (!form) return;
+                    e.preventDefault();
+                    var productId = parseInt(form.querySelector('input[name=product_id]').value);
+                    var qtyInput  = form.querySelector('input[name=add_qty]');
+                    var qty       = parseInt(qtyInput ? qtyInput.value : 1) || 1;
+                    var btn       = form.querySelector('button[type=submit]');
+                    var origHtml  = btn.innerHTML;
+                    var card      = form.closest('.sw-product-card, .card');
+                    var name      = card ? (card.querySelector('.card-title a') || card.querySelector('.card-title') || {textContent: ''}).textContent.trim() : '';
+                    btn.disabled = true;
+                    btn.innerHTML = '<i class="fa fa-spinner fa-spin me-1"></i>...';
+                    fetch('/sweet/cart/add', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            jsonrpc: '2.0', method: 'call',
+                            params: { product_id: productId, add_qty: qty }
+                        }),
+                        credentials: 'same-origin',
+                    })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        var result = data.result || {};
+                        if (result.cart_quantity !== undefined) {
+                            updateCartBadge(result.cart_quantity);
+                            showToast(name, qty);
+                            btn.innerHTML = '<i class="fa fa-check me-1"></i>A\u00f1adido';
+                            btn.style.background = 'linear-gradient(135deg,#5C3D2E,#28a745)';
+                            setTimeout(function () {
+                                btn.innerHTML = origHtml;
+                                btn.style.background = '';
+                                btn.disabled = false;
+                            }, 1800);
+                        } else {
                             btn.innerHTML = origHtml;
-                            btn.style.backgroundColor = '';
-                            btn.style.borderColor = '';
-                            btn.style.color = '';
                             btn.disabled = false;
-                        }, 1800);
-                    } else {
+                        }
+                    })
+                    .catch(function () {
+                        btn.innerHTML = origHtml;
                         btn.disabled = false;
-                    }
-                })
-                .catch(function () { btn.disabled = false; });
-            });
-        })();
-        //]]>
-        </script>
+                    });
+                });
+                if ('IntersectionObserver' in window) {
+                    var io = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (e) {
+                            if (e.isIntersecting) { e.target.classList.add('sw-active'); io.unobserve(e.target); }
+                        });
+                    }, { threshold: 0.12 });
+                    document.querySelectorAll('.sw-reveal').forEach(function (el) { io.observe(el); });
+                } else {
+                    document.querySelectorAll('.sw-reveal').forEach(function (el) { el.classList.add('sw-active'); });
+                }
+            })();
+            //]]>
+            </script>
+        </section>
     </template>
 </odoo>
