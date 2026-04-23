@@ -1579,7 +1579,7 @@ h6 {
 
     p {
       font-size: 0.875rem;
-      color: var(--text-secondary);
+      color: var(--text-secondary) !important;
       line-height: 1.7;
       margin-bottom: 1.5rem;
       transition: color var(--transition-base);
@@ -1617,7 +1617,7 @@ h6 {
       font-family: "Playfair Display", serif;
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--accent-chocolate);
+      color: var(--accent-chocolate) !important;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 1.25rem;
@@ -1632,16 +1632,16 @@ h6 {
       li {
         margin-bottom: 0.6rem;
         font-size: 0.875rem;
-        color: var(--text-secondary);
+        color: var(--text-secondary) !important;
         transition: color var(--transition-base);
 
         a {
-          color: var(--text-secondary);
+          color: var(--text-secondary) !important;
           text-decoration: none;
           transition: color var(--transition-fast);
 
           &:hover {
-            color: var(--accent-gold);
+            color: var(--accent-gold) !important;
           }
         }
 
@@ -2077,6 +2077,44 @@ footer:not(.sw-footer),
     .fa,
     i.fa {
       color: var(--text-secondary) !important;
+    }
+
+    // Search form — input + submit button visibility in dark
+    .o_searchbar_form,
+    form[role="search"],
+    .o_wsale_search {
+      input[type="search"],
+      input[type="text"],
+      .form-control {
+        background: var(--bg-elevated) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-medium) !important;
+
+        &::placeholder {
+          color: var(--text-muted) !important;
+        }
+      }
+
+      .btn,
+      button[type="submit"],
+      button[type="button"] {
+        background: transparent !important;
+        color: var(--text-secondary) !important;
+        border-color: transparent !important;
+
+        .fa,
+        i {
+          color: var(--text-secondary) !important;
+        }
+
+        &:hover {
+          color: var(--accent-gold) !important;
+          .fa,
+          i {
+            color: var(--accent-gold) !important;
+          }
+        }
+      }
     }
   }
 
