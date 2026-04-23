@@ -298,11 +298,11 @@ h6 {
     height: 50px;
     flex-shrink: 0;
     position: relative;
+    animation: sw-logo-float 3s ease-in-out infinite;
     img {
       width: 100%;
       height: 100%;
       display: block;
-      animation: sw-logo-float 3s ease-in-out infinite;
       filter: drop-shadow(0 2px 8px rgba(200, 149, 108, 0.4));
     }
   }
@@ -1579,7 +1579,7 @@ h6 {
 
     p {
       font-size: 0.875rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       line-height: 1.7;
       margin-bottom: 1.5rem;
       transition: color var(--transition-base);
@@ -1617,7 +1617,7 @@ h6 {
       font-family: "Playfair Display", serif;
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--text-primary);
+      color: var(--accent-chocolate);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 1.25rem;
@@ -1632,11 +1632,11 @@ h6 {
       li {
         margin-bottom: 0.6rem;
         font-size: 0.875rem;
-        color: var(--text-muted);
+        color: var(--text-secondary);
         transition: color var(--transition-base);
 
         a {
-          color: var(--text-muted);
+          color: var(--text-secondary);
           text-decoration: none;
           transition: color var(--transition-fast);
 
@@ -1652,7 +1652,7 @@ h6 {
       }
     }
   }
-}
+} // end .sw-footer
 
 .sw-footer-bottom {
   border-top: 1px solid var(--border-subtle);
@@ -2044,6 +2044,40 @@ footer:not(.sw-footer),
     .o_wsale_header button:hover {
       color: var(--accent-gold) !important;
     }
+
+    // Bootstrap btn-secondary / btn-light used by Odoo search/filter buttons
+    .btn-secondary,
+    .btn-light,
+    .btn-outline-secondary,
+    button.btn:not(.sw-nav-reservar-btn):not(.sw-theme-nav-btn):not(
+        .btn-primary
+      ):not(.btn-chocolate) {
+      background: transparent !important;
+      background-color: transparent !important;
+      border-color: transparent !important;
+      color: var(--text-secondary) !important;
+      box-shadow: none !important;
+
+      .fa,
+      i {
+        color: var(--text-secondary) !important;
+      }
+
+      &:hover {
+        background: rgba(200, 149, 108, 0.12) !important;
+        color: var(--accent-gold) !important;
+        .fa,
+        i {
+          color: var(--accent-gold) !important;
+        }
+      }
+    }
+
+    // All icons in header must be visible
+    .fa,
+    i.fa {
+      color: var(--text-secondary) !important;
+    }
   }
 
   .o_header_standard,
@@ -2202,14 +2236,58 @@ footer:not(.sw-footer),
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
   }
 
-  // Product / feature / generic cards
+  // Product / feature / generic cards — explicit cascade to all children
   .sw-product-card,
   .sw-feature-card,
   .sw-reservation-form,
+  .s_sweet_product_carousel .card,
   .card {
     background: var(--bg-surface) !important;
+    background-color: var(--bg-surface) !important;
+    --bs-card-bg: var(--bg-surface);
+    --bs-card-color: var(--text-primary);
     border-color: var(--border-subtle) !important;
     color: var(--text-primary) !important;
+
+    .card-body {
+      background: transparent !important;
+      color: var(--text-primary) !important;
+    }
+
+    .card-title,
+    h5,
+    h4,
+    h3 {
+      color: var(--text-primary) !important;
+    }
+
+    .card-text,
+    p,
+    .small {
+      color: var(--text-muted) !important;
+    }
+
+    a:not(.btn) {
+      color: var(--text-primary) !important;
+    }
+
+    .sw-price {
+      color: var(--accent-gold) !important;
+    }
+
+    .sw-qty-group {
+      background: var(--bg-elevated) !important;
+    }
+
+    .sw-qty-btn {
+      background: var(--bg-page) !important;
+      color: var(--text-primary) !important;
+      border-color: var(--border-subtle) !important;
+    }
+
+    .sw-qty-val {
+      color: var(--text-primary) !important;
+    }
   }
 
   // Generic headings
