@@ -1178,6 +1178,7 @@ h6 {
   .sw-branch-icon {
     color: var(--accent-chocolate);
     transition: color var(--transition-base);
+    animation: sw-logo-float 3s ease-in-out infinite;
   }
 
   .card {
@@ -1203,6 +1204,13 @@ h6 {
   h2,
   p {
     color: #fff !important;
+  }
+
+  // Magic wand icon — floating animation
+  .fa-magic,
+  .text-accent {
+    animation: sw-logo-float 3s ease-in-out infinite;
+    display: inline-block;
   }
 
   // "Solicitar Presupuesto" — btn-light on dark section needs a real hover
@@ -1571,21 +1579,25 @@ h6 {
       gap: 0.75rem;
       margin-bottom: 1rem;
 
+      img {
+        animation: sw-logo-float 3s ease-in-out infinite;
+        filter: drop-shadow(0 2px 6px rgba(200, 149, 108, 0.35));
+      }
+
       .sw-footer-name {
         font-family: "Playfair Display", serif;
         font-size: 1.4rem;
         font-weight: 700;
-        color: var(--accent-gold);
+        color: $sw-gold !important;
         transition: color var(--transition-base);
       }
     }
 
     p {
       font-size: 0.875rem;
-      color: var(--text-secondary) !important;
+      color: $sw-text-light !important;
       line-height: 1.7;
       margin-bottom: 1.5rem;
-      transition: color var(--transition-base);
     }
 
     .sw-footer-social {
@@ -1620,11 +1632,10 @@ h6 {
       font-family: "Playfair Display", serif;
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--accent-chocolate) !important;
+      color: $sw-brown !important;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 1.25rem;
-      transition: color var(--transition-base);
     }
 
     ul {
@@ -1635,21 +1646,20 @@ h6 {
       li {
         margin-bottom: 0.6rem;
         font-size: 0.875rem;
-        color: var(--text-secondary) !important;
-        transition: color var(--transition-base);
+        color: $sw-text-light !important;
 
         a {
-          color: var(--text-secondary) !important;
+          color: $sw-text-light !important;
           text-decoration: none;
           transition: color var(--transition-fast);
 
           &:hover {
-            color: var(--accent-gold) !important;
+            color: $sw-gold !important;
           }
         }
 
         i {
-          color: var(--accent-gold);
+          color: $sw-gold;
           opacity: 0.7;
         }
       }
