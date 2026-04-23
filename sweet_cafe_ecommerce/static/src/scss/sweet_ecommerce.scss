@@ -374,7 +374,7 @@ h6 {
     }
   }
 
-  // Language selector — pill style matching demo
+  // Language selector — pill style with globe icon before text
   .js_language_selector {
     button,
     .dropdown-toggle,
@@ -387,9 +387,20 @@ h6 {
       color: var(--text-secondary) !important;
       font-weight: 500;
       font-size: 0.88rem;
-      padding: 6px 14px;
+      padding: 6px 14px 6px 10px;
       border-radius: var(--radius-full);
       transition: all var(--transition-fast);
+      position: relative;
+
+      &::before {
+        content: "\f0ac"; // fa-globe
+        font-family: "FontAwesome", "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        flex-shrink: 0;
+        transition: color var(--transition-fast);
+      }
 
       &::after {
         display: none !important;
@@ -398,11 +409,14 @@ h6 {
       &:hover {
         background: rgba(200, 149, 108, 0.1) !important;
         color: var(--accent-gold) !important;
+        &::before {
+          color: var(--accent-gold);
+        }
       }
     }
   }
 
-  // User avatar nav item — pill with border matching demo
+  // User avatar nav item — pill with gradient avatar circle (Kimi style)
   .o_no_autohide_item {
     .nav-link {
       &::after {
@@ -421,12 +435,35 @@ h6 {
       font-weight: 500;
       transition: all var(--transition-fast);
 
+      // Real Odoo avatar image or .o_avatar
       img,
       .o_avatar {
         width: 26px !important;
         height: 26px !important;
         border-radius: 50% !important;
         object-fit: cover;
+        flex-shrink: 0;
+      }
+
+      // Fallback avatar circle if no img (CSS pseudo-element)
+      &:not(:has(img)):not(:has(.o_avatar))::before {
+        content: "\f007"; // fa-user
+        font-family: "FontAwesome", "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 0.75rem;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--accent-gold),
+          var(--accent-rose)
+        );
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
       }
 
       &:hover {
@@ -435,6 +472,31 @@ h6 {
         background: var(--bg-page) !important;
         box-shadow: none !important;
       }
+    }
+  }
+
+  // Cart, search, and other header utility icons
+  .o_header_user_links a,
+  .o_wsale_header a,
+  .o_wsale_header button,
+  .o_header_user_links button,
+  .o_cart_summary {
+    color: var(--text-secondary) !important;
+    background: transparent !important;
+    border: none !important;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    position: relative;
+
+    &:hover {
+      background: rgba(200, 149, 108, 0.1) !important;
+      color: var(--accent-gold) !important;
+      transform: translateY(-1px);
     }
   }
 } // end .o_header_standard
@@ -462,18 +524,66 @@ h6 {
   position: relative;
 
   &:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(92, 61, 46, 0.35) !important;
+    transform: translateY(-3px);
+    filter: brightness(1.15);
+    box-shadow: 0 12px 28px rgba(92, 61, 46, 0.45) !important;
     color: #fff !important;
-    background: linear-gradient(
-      135deg,
-      var(--accent-chocolate) 0%,
-      var(--accent-chocolate-light) 100%
-    ) !important;
+    background: linear-gradient(135deg, #9b4f1a 0%, #d48940 100%) !important;
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    filter: brightness(0.95);
   }
 
   &::after {
     display: none !important;
+  }
+}
+
+// Best-sellers "Ver todos los productos" btn
+// Section is always dark-brown, so button must always be light/gold
+.sc-best-sellers {
+  .btn-outline-chocolate {
+    color: var(--accent-gold-light) !important;
+    border-color: var(--accent-gold) !important;
+    border-width: 2px;
+
+    &:hover {
+      background: var(--accent-gold) !important;
+      border-color: var(--accent-gold) !important;
+      color: #1a0e00 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+  }
+}
+
+// Footer copyright — light mode text must be readable
+.o_footer_copyright,
+.o_footer_copyright.o_colored_level {
+  .o_footer_copyright_name,
+  .o_brand_promotion,
+  .o_brand_promotion a {
+    color: var(--text-secondary) !important;
+  }
+}
+
+// Best-sellers "Ver todos los productos" btn
+// Section is always dark-brown, so button must always be light/gold
+.sc-best-sellers {
+  .btn-outline-chocolate {
+    color: var(--accent-gold-light) !important;
+    border-color: var(--accent-gold) !important;
+    border-width: 2px;
+
+    &:hover {
+      background: var(--accent-gold) !important;
+      border-color: var(--accent-gold) !important;
+      color: #1a0e00 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
   }
 }
 
@@ -742,21 +852,27 @@ h6 {
   }
 }
 
-// Premium Product Cards
+// Premium Product Cards — CSS vars for dark mode support
 .sw-product-card,
 .card.sw-card {
-  @include glass-panel;
+  background: var(--bg-surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle) !important;
   border-radius: $sw-radius-lg !important;
-  border: none !important;
+  box-shadow: var(--sw-shadow-sm);
   overflow: hidden;
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    background var(--transition-base),
+    border-color var(--transition-base);
   animation: sw-fadeInUp 0.6s ease-out;
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: 0 24px 60px rgba($sw-brown, 0.18) !important;
+    box-shadow: var(--sw-shadow-xl) !important;
+    border-color: var(--border-medium) !important;
   }
 
   .sw-card-img-wrap {
@@ -817,26 +933,30 @@ h6 {
     font-family: "Playfair Display", serif;
     font-size: 1.05rem;
     font-weight: 600;
-    color: $sw-brown;
+    color: var(--text-primary);
     margin-bottom: 0.4rem;
+    transition: color var(--transition-base);
   }
 
   .card-text {
     font-size: 0.85rem;
-    color: $sw-text-light;
+    color: var(--text-secondary);
     line-height: 1.5;
+    transition: color var(--transition-base);
   }
 
   .sw-price {
     font-family: "Playfair Display", serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: $sw-brown-light;
+    color: var(--accent-gold);
+    transition: color var(--transition-base);
 
     span {
       font-size: 0.85rem;
-      color: $sw-text-light;
+      color: var(--text-muted);
       font-family: "Inter", sans-serif;
+      transition: color var(--transition-base);
     }
   }
 
@@ -1298,6 +1418,12 @@ h6 {
 .sc-reservation-cta {
   position: relative;
   overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    var(--accent-chocolate) 0%,
+    var(--accent-chocolate-light) 100%
+  );
+  transition: background var(--transition-base);
 
   &::before {
     content: "";
@@ -1317,18 +1443,19 @@ h6 {
   }
 
   .btn {
-    background: $sw-glass;
+    background: rgba(255, 255, 255, 0.15) !important;
     backdrop-filter: blur(10px);
-    color: $sw-brown !important;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
     border-radius: $sw-radius-xl;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.95) !important;
+      color: var(--accent-chocolate) !important;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
     }
   }
 }
@@ -2081,10 +2208,125 @@ footer:not(.sw-footer),
     }
   }
 
-  // Card title links (carousel, shop)
+  // Card title links (carousel, shop) and qty values
   .sw-card-title-link,
-  .sw-qty-val {
+  .sw-qty-val,
+  .sw-product-card .card-title,
+  .sw-product-card .card-text,
+  .card.sw-card .card-title {
     color: var(--text-primary) !important;
+  }
+
+  // Product card dark backgrounds (both carousels)
+  .sw-product-card,
+  .card.sw-card {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+
+    .sw-price {
+      color: var(--accent-gold) !important;
+    }
+
+    .sw-qty-group {
+      background: var(--bg-elevated) !important;
+    }
+
+    .sw-qty-btn {
+      background: var(--bg-page) !important;
+      color: var(--text-primary) !important;
+      border-color: var(--border-subtle) !important;
+    }
+  }
+
+  // Header cart/search icons visible in dark
+  .o_header_user_links a,
+  .o_header_user_links button,
+  .o_wsale_header a,
+  .o_wsale_header button,
+  .o_cart_summary,
+  #wrapwrap > header .o_wsale_header,
+  #wrapwrap > header .o_header_user_links {
+    color: var(--text-secondary) !important;
+
+    .fa,
+    i {
+      color: var(--text-secondary) !important;
+    }
+
+    &:hover,
+    &:hover .fa,
+    &:hover i {
+      color: var(--accent-gold) !important;
+    }
+  }
+
+  // Sucursales cards dark
+  .s_sweet_branches {
+    .card,
+    .sw-branch-card {
+      background: var(--bg-elevated) !important;
+      border-color: var(--border-subtle) !important;
+
+      h4 {
+        color: var(--text-primary) !important;
+      }
+      p {
+        color: var(--text-muted) !important;
+      }
+
+      .btn-outline-chocolate,
+      .btn.sw-btn-secondary {
+        color: var(--accent-gold) !important;
+        border-color: var(--accent-gold) !important;
+        background: transparent !important;
+
+        &:hover {
+          background: var(--accent-gold) !important;
+          color: var(--text-inverse) !important;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  // Reservation CTA dark
+  .sc-reservation-cta {
+    background: linear-gradient(135deg, #1a1823 0%, #252336 100%) !important;
+
+    h2,
+    p {
+      color: var(--text-primary) !important;
+    }
+
+    .btn {
+      background: rgba(232, 201, 160, 0.12) !important;
+      color: var(--accent-gold-light) !important;
+      border-color: rgba(232, 201, 160, 0.25) !important;
+
+      &:hover {
+        background: var(--accent-gold) !important;
+        color: var(--text-inverse) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+  }
+
+  // Custom Order CTA (sw-cta-section) dark button
+  .sw-cta-section,
+  .s_sweet_custom_order {
+    .btn {
+      background: rgba(232, 201, 160, 0.12) !important;
+      color: var(--accent-gold-light) !important;
+      border: 1px solid rgba(232, 201, 160, 0.25) !important;
+
+      &:hover {
+        background: var(--accent-gold) !important;
+        color: var(--text-inverse) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
   }
 
   // Footer copyright — override o_colored_level o_cc warm-brown
