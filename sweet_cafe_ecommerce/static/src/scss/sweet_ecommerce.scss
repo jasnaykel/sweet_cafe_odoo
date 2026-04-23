@@ -1539,7 +1539,10 @@ h6 {
     160deg,
     var(--bg-elevated) 0%,
     var(--bg-surface) 100%
-  );
+  ) !important;
+  // Force readable text — beats o_colored_level overrides
+  --bs-body-color: #{$sw-text};
+  color: $sw-text-light !important;
   border-top: 1px solid var(--border-subtle);
   transition:
     background var(--transition-base),
@@ -2073,9 +2076,11 @@ footer:not(.sw-footer),
       }
     }
 
-    // All icons in header must be visible
+    // All icons in header must be visible — both FontAwesome and Odoo Icons
     .fa,
-    i.fa {
+    i.fa,
+    .oi,
+    i.oi {
       color: var(--text-secondary) !important;
     }
 
@@ -2103,17 +2108,39 @@ footer:not(.sw-footer),
         border-color: transparent !important;
 
         .fa,
-        i {
+        i,
+        .oi {
           color: var(--text-secondary) !important;
         }
 
         &:hover {
           color: var(--accent-gold) !important;
           .fa,
-          i {
+          i,
+          .oi {
             color: var(--accent-gold) !important;
           }
         }
+      }
+    }
+
+    // Header search button (Odoo 19 uses oi-search)
+    a[href*="search"],
+    button[data-action="search"],
+    .o_searchbar_form button,
+    .o_searchbar_form .btn {
+      color: var(--text-secondary) !important;
+      background: transparent !important;
+
+      .oi,
+      .fa,
+      i {
+        color: var(--text-secondary) !important;
+      }
+      &:hover .oi,
+      &:hover .fa,
+      &:hover i {
+        color: var(--accent-gold) !important;
       }
     }
   }
