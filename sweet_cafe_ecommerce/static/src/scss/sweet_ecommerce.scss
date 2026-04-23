@@ -569,6 +569,30 @@ h6 {
   }
 }
 
+// Odoo standard footer (#footer) — light mode: ensure text is readable
+#footer,
+.o_footer_columns {
+  color: var(--text-secondary) !important;
+
+  h4,
+  h5 {
+    color: var(--text-primary) !important;
+  }
+
+  p,
+  li,
+  .text-muted {
+    color: var(--text-secondary) !important;
+  }
+
+  a {
+    color: var(--text-secondary) !important;
+    &:hover {
+      color: var(--accent-gold) !important;
+    }
+  }
+}
+
 // Best-sellers "Ver todos los productos" btn
 // Section is always dark-brown, so button must always be light/gold
 .sc-best-sellers {
@@ -1180,6 +1204,25 @@ h6 {
   p {
     color: #fff !important;
   }
+
+  // "Solicitar Presupuesto" — btn-light on dark section needs a real hover
+  .btn-light {
+    background: rgba(255, 255, 255, 0.92) !important;
+    color: $sw-brown !important;
+    border: none;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      background: #fff !important;
+      color: darken($sw-brown, 10%) !important;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
 }
 
 // Flavors (dark section — always warm dark in light mode, deeper dark in dark mode)
@@ -1756,6 +1799,11 @@ footer:not(.sw-footer),
 .text-chocolate {
   color: $sw-brown !important;
 }
+
+[data-bs-theme="dark"] .text-chocolate,
+[data-bs-theme="dark"] a.text-chocolate {
+  color: var(--accent-gold-light) !important;
+}
 .text-gold {
   color: $sw-gold !important;
 }
@@ -1978,6 +2026,31 @@ footer:not(.sw-footer),
   #wrapwrap > header nav,
   #wrapwrap > header .navbar,
   #wrapwrap > header .o_colored_level,
+  #wrapwrap > header .o_cc,
+  #top {
+    // cart & search icons must be visible
+    .o_header_user_links a,
+    .o_header_user_links button,
+    .o_wsale_header a,
+    .o_wsale_header button,
+    .o_cart_summary,
+    .fa {
+      color: var(--text-secondary) !important;
+    }
+
+    .o_header_user_links a:hover,
+    .o_header_user_links button:hover,
+    .o_wsale_header a:hover,
+    .o_wsale_header button:hover {
+      color: var(--accent-gold) !important;
+    }
+  }
+
+  .o_header_standard,
+  #wrapwrap > header,
+  #wrapwrap > header nav,
+  #wrapwrap > header .navbar,
+  #wrapwrap > header .o_colored_level,
   #wrapwrap > header .o_cc {
     background: rgba(26, 24, 35, 0.92) !important;
     background-color: rgba(26, 24, 35, 0.92) !important;
@@ -2046,6 +2119,16 @@ footer:not(.sw-footer),
   .s_sweet_branches {
     background: var(--bg-surface) !important;
 
+    h2,
+    .display-4 {
+      color: var(--text-primary) !important;
+    }
+
+    .lead,
+    .text-muted {
+      color: var(--text-muted) !important;
+    }
+
     .sw-branch-icon-wrap {
       background: var(--bg-elevated) !important;
     }
@@ -2057,6 +2140,17 @@ footer:not(.sw-footer),
     .card {
       background: var(--bg-elevated) !important;
       border-color: var(--border-subtle) !important;
+
+      .card-title {
+        color: var(--text-primary) !important;
+      }
+      .card-text,
+      .text-muted {
+        color: var(--text-muted) !important;
+      }
+      hr {
+        border-color: rgba(232, 201, 160, 0.2) !important;
+      }
     }
   }
 
@@ -2345,10 +2439,37 @@ footer:not(.sw-footer),
     }
   }
 
+  // Footer columns — dark mode: text must be readable
+  #footer,
+  .o_footer_columns,
+  #footer .o_colored_level,
+  .o_footer_columns .o_colored_level {
+    background-color: var(--bg-elevated) !important;
+    background-image: none !important;
+
+    h4,
+    h5 {
+      color: var(--text-primary) !important;
+    }
+    p,
+    li {
+      color: var(--text-muted) !important;
+    }
+    a {
+      color: var(--text-muted) !important;
+      &:hover {
+        color: var(--accent-gold) !important;
+      }
+    }
+    .text-muted {
+      color: var(--text-muted) !important;
+    }
+  }
+
   // Any remaining o_colored_level in footer area
   .o_footer_columns .o_colored_level,
   #footer .o_colored_level {
-    background-color: transparent !important;
+    background-color: var(--bg-elevated) !important;
     background-image: none !important;
   }
 }
