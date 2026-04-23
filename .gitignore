@@ -21,6 +21,15 @@
 # README del proyecto
 !/README.md
 
+# QA Agent (Playwright tests)
+!/qa-agent/
+qa-agent/node_modules/
+qa-agent/.auth/
+qa-agent/test-results/
+qa-agent/playwright-report/
+qa-agent/reports/
+qa-agent/.env
+
 # Ignorar archivos temporales y basura dentro de los módulos
 **/__pycache__/
 **/*.pyc
