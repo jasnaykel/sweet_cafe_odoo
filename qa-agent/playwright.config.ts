@@ -61,6 +61,7 @@ export default defineConfig({
         "**/sweet_cafe/pos.spec.ts",
         "**/sweet_cafe/hr.spec.ts",
         "**/sweet_cafe/hr-employee-flow.spec.ts",
+        "**/sweet_cafe/hr-employee-advanced.spec.ts",
         "**/sweet_cafe/payroll.spec.ts",
         "**/auth/odoo-login.spec.ts",
       ],

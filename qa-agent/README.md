@@ -15,8 +15,9 @@ qa-agent/
 │   │   ├── branches.spec.ts
 │   │   ├── ecommerce.spec.ts
 │   │   ├── ecommerce-reservation.spec.ts
-│   │   ├── hr.spec.ts                   # RRHH base
-│   │   ├── hr-employee-flow.spec.ts     # ⭐ Flujo exhaustivo de empleado (Cuba)
+│   │   ├── hr.spec.ts                       # RRHH base
+│   │   ├── hr-employee-flow.spec.ts         # ⭐ Flujo de empleado (l10n_cu_hr)
+│   │   ├── hr-employee-advanced.spec.ts     # 🔬 QA Senior — validaciones, edge cases, regresión, UX, perf
 │   │   ├── inventory.spec.ts
 │   │   ├── payroll.spec.ts
 │   │   ├── pos.spec.ts
@@ -131,16 +132,25 @@ npx playwright show-trace test-results/<carpeta-del-fallo>/trace.zip
 
 ## 🎯 Estado actual
 
-Última ejecución: **26/26 tests pasando** (`hr.spec.ts` + `hr-employee-flow.spec.ts`).
+Última ejecución: **63/63 tests pasando** (`hr.spec.ts` + `hr-employee-flow.spec.ts` + `hr-employee-advanced.spec.ts`).
 
-Cubre los siguientes fixes:
+Cobertura por categoría:
 
-- Pestaña "Others" / afiliación política oculta
-- `private_phone` duplicado oculto
-- "Código Empleado" reubicado a pestaña Trabajo
-- `occupational_category_id` visible (sin `required` bloqueante)
-- Validaciones `@onchange` cambiadas a `warning` no bloqueante
-- Guardia en `payroll.movement` cuando no hay `employee_id`
+| Categoría                                                           | Tests  |
+| ------------------------------------------------------------------- | ------ |
+| Vistas y módulos base de RRHH                                       | 11     |
+| Flujo de empleado (fixes recientes)                                 | 15     |
+| **🔬 Validaciones de formato** (CI, código, email, ñ, acentos)      | **8**  |
+| **⚠️ Campos requeridos y mensajes de error**                        | **5**  |
+| **🔐 Integridad de datos** (persistencia, HTTP 500, console errors) | **3**  |
+| **📑 Notebook y pestañas**                                          | **4**  |
+| **♿ Accesibilidad y UX** (focus, keyboard, i18n, responsive)       | **4**  |
+| **🎨 Regresión visual** (botones, cabecera, iconos)                 | **4**  |
+| **🔗 Integración con módulos** (departamentos, contratos, lista)    | **3**  |
+| **🛡️ Seguridad y permisos**                                         | **2**  |
+| **↩️ Descartar/cancelar**                                           | **1**  |
+| **⚡ Rendimiento** (carga form/lista, cambio pestañas)              | **3**  |
+| **TOTAL**                                                           | **63** |
 
 ## 📚 Referencias
 
