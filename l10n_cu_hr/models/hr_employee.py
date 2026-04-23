@@ -113,15 +113,23 @@ class HrEmployee(models.Model):
         patron = r'^\d{11}$'
         if self.identification_id:
             if not re.match(patron, self.identification_id):
-                 raise ValidationError(
-                    "¡El formato del número de identidad debe ser de 11 digitos")
+                return {
+                    'warning': {
+                        'title': 'Número de Identidad',
+                        'message': '¡El formato del número de identidad debe ser de 11 dígitos',
+                    }
+                }
     @api.onchange('number')
     def _onchange_numb(self):
         patron = r'^\d{5}$'
         if self.number:
             if not re.match(patron, self.number):
-                 raise ValidationError(
-                    "¡El código del empleado debe ser de 5 digitos")
+                return {
+                    'warning': {
+                        'title': 'Código de Empleado',
+                        'message': '¡El código del empleado debe ser de 5 dígitos',
+                    }
+                }
 
     @api.depends('name', 'last_name', 'second_last_name')
     def _compute_full_name(self):

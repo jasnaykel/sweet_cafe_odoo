@@ -26,6 +26,8 @@ class HrContract(models.Model):
 
     def _create_payroll_movement(self, movement_type='high'):
         for contract in self:
+            if not contract.employee_id:
+                continue
             details_movement_type = \
                 self.env['details.movement.type'].search([('movement_type', '=', movement_type)])
             self.env['payroll.movement'].create({

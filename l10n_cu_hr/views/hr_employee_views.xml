@@ -37,23 +37,23 @@
                         <field name="second_last_name" placeholder="Segundo Apellido" required="1" class="oe_inline" style="font-size: 1.2rem;"/>
                     </div>
             </xpath>
-            <xpath expr="//field[@name='mobile_phone']" position="before">
+            <xpath expr="//field[@name='department_id']" position="before">
                 <field name="number" string="Código Empleado" required="1" />
-             </xpath>
+            </xpath>
             <xpath expr="//field[@name='certificate']" position="after">
                 <field name="profession_id" required="1" />
              </xpath>
              <xpath expr="//field[@name='study_field']" position="after">
                 <field name="schooling_level_id" required="1" />
              </xpath>
-<!--            <xpath expr="//field[@name='schooling_level_id']" position="after">-->
-<!--                    <field name="occupational_category_id" required="1"/>-->
-<!--             </xpath>-->
+            <xpath expr="//field[@name='schooling_level_id']" position="after">
+                    <field name="occupational_category_id" />
+             </xpath>
             <xpath expr="//field[@name='identification_id']" position="after">
                 <field name="skin_color" />
              </xpath>
             <xpath expr="//page[@name='hr_settings']" position="after">
-                <page name="others" string="Others" groups="hr.group_hr_user">
+                <page name="others" string="Others" groups="hr.group_hr_user" invisible="1">
                     <group>
                         <field name="political_affiliation" />
                     </group>
@@ -81,7 +81,11 @@
             <!-- Añadir un campo invisible para almacenar los IDs de gerentes disponibles -->
             <xpath expr="//field[@name='parent_id']" position="after">
                 <field name="available_manager_ids" invisible="1"/>
-            </xpath>  
+            </xpath>
+            <!-- Ocultar teléfono privado duplicado -->
+            <xpath expr="//field[@name='private_phone']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
 
         </field>
     </record>
