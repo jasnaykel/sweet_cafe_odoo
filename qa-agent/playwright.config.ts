@@ -70,6 +70,8 @@ export default defineConfig({
         "**/sweet_cafe/ecommerce.spec.ts",
         "**/sweet_cafe/ecommerce-reservation.spec.ts",
         "**/sweet_cafe/negative-validation.spec.ts",
+        "**/sweet_cafe/expert-workflows.spec.ts",
+        "**/sweet_cafe/expert-access-control.spec.ts",
         "**/auth/odoo-login.spec.ts",
       ],
       use: {
