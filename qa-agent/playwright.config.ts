@@ -69,6 +69,7 @@ export default defineConfig({
         "**/sweet_cafe/branches.spec.ts",
         "**/sweet_cafe/ecommerce.spec.ts",
         "**/sweet_cafe/ecommerce-reservation.spec.ts",
+        "**/sweet_cafe/negative-validation.spec.ts",
         "**/auth/odoo-login.spec.ts",
       ],
       use: {
