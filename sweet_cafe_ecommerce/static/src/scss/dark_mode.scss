@@ -1,0 +1,763 @@
+// Sweet Café — Dark Mode
+// Toggle button, navbar dropdowns, and component overrides
+// ═══════════════════════════════════════════════════════════════
+
+// ─── Dark Mode Toggle Button ──────────────────────────────────
+.sw-theme-nav-btn {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba($sw-glass-border, 0.5);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba($sw-gold, 0.18) 0%,
+      transparent 70%
+    );
+    opacity: 1;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.08),
+      0 0 0 4px rgba($sw-gold, 0.15);
+    border-color: rgba($sw-gold, 0.6);
+  }
+
+  &:active {
+    transform: scale(0.95) translateY(0);
+  }
+
+  .sw-toggle-icon {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sw-icon-sun {
+    color: #f59e0b;
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+    animation: sw-logo-float 3s ease-in-out infinite;
+
+    .sw-sun-rays {
+      animation: sw-sun-pulse 3s ease-in-out infinite;
+    }
+  }
+
+  .sw-icon-moon {
+    color: #94a3b8;
+    transform: rotate(-90deg) scale(0);
+    opacity: 0;
+  }
+}
+
+[data-bs-theme="dark"] .sw-theme-nav-btn {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+
+  &::before {
+    background: radial-gradient(
+      circle,
+      rgba(148, 163, 184, 0.12) 0%,
+      transparent 70%
+    );
+  }
+
+  &:hover {
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      0 0 0 4px rgba(159, 126, 174, 0.2);
+    border-color: rgba(196, 181, 212, 0.5);
+  }
+
+  .sw-icon-sun {
+    color: #64748b;
+    transform: rotate(90deg) scale(0);
+    opacity: 0;
+  }
+
+  .sw-icon-moon {
+    color: #e2e8f0;
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+    animation: sw-logo-float 3s ease-in-out infinite;
+  }
+}
+
+@keyframes sw-sun-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// ─── Navbar Dropdowns ─────────────────────────────────────────
+.o_header_standard,
+#wrapwrap > header {
+  .o_language_switcher .nav-link::after,
+  .o_user_language .nav-link::after,
+  [class*="lang"] .nav-link::after,
+  [class*="user"] .nav-link::after {
+    display: none !important;
+  }
+
+  .nav-item.dropdown {
+    .dropdown-toggle::after {
+      display: none;
+    }
+
+    .dropdown-menu {
+      background: var(--bg-overlay) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      border-radius: $sw-radius-md !important;
+      border: 1px solid var(--border-subtle) !important;
+      padding: 0.5rem !important;
+      min-width: 180px !important;
+      margin-top: 8px !important;
+      box-shadow: var(--sw-shadow-lg) !important;
+
+      .dropdown-item {
+        border-radius: $sw-radius-sm;
+        color: var(--text-secondary);
+        font-size: 0.88rem;
+        font-weight: 500;
+        padding: 0.45rem 0.85rem;
+        transition:
+          background var(--transition-fast),
+          color var(--transition-fast);
+
+        &:hover,
+        &:focus,
+        &.active {
+          background: linear-gradient(
+            135deg,
+            rgba(200, 149, 108, 0.15),
+            rgba(212, 132, 156, 0.1)
+          ) !important;
+          color: $sw-brown !important;
+        }
+      }
+
+      .dropdown-divider {
+        border-color: $sw-glass-border;
+        margin: 0.3rem 0.5rem;
+      }
+    }
+  }
+
+  .o_header_user_links,
+  .o_wsale_header {
+    a,
+    button {
+      color: var(--text-secondary) !important;
+      transition: color var(--transition-fast);
+      &:hover {
+        color: var(--accent-gold) !important;
+      }
+    }
+  }
+}
+
+// ─── Dark Mode Component Overrides ────────────────────────────
+[data-bs-theme="dark"] {
+  body,
+  #wrapwrap {
+    background-color: var(--bg-page) !important;
+    color: var(--text-primary) !important;
+  }
+
+  // Header
+  .o_header_standard,
+  #wrapwrap > header,
+  #wrapwrap > header nav,
+  #wrapwrap > header .navbar,
+  #wrapwrap > header .o_colored_level,
+  #wrapwrap > header .o_cc,
+  #top {
+    .o_header_user_links a,
+    .o_header_user_links button,
+    .o_wsale_header a,
+    .o_wsale_header button,
+    .o_cart_summary,
+    .fa {
+      color: var(--text-secondary) !important;
+    }
+
+    .o_header_user_links a:hover,
+    .o_header_user_links button:hover,
+    .o_wsale_header a:hover,
+    .o_wsale_header button:hover {
+      color: var(--accent-gold) !important;
+    }
+
+    .btn-secondary,
+    .btn-light,
+    .btn-outline-secondary,
+    button.btn:not(.sw-nav-reservar-btn):not(.sw-theme-nav-btn):not(
+        .btn-primary
+      ):not(.btn-chocolate) {
+      background: transparent !important;
+      background-color: transparent !important;
+      border-color: transparent !important;
+      color: var(--text-secondary) !important;
+      box-shadow: none !important;
+
+      .fa,
+      i {
+        color: var(--text-secondary) !important;
+      }
+
+      &:hover {
+        background: rgba(200, 149, 108, 0.12) !important;
+        color: var(--accent-gold) !important;
+        .fa,
+        i {
+          color: var(--accent-gold) !important;
+        }
+      }
+    }
+
+    .fa,
+    i.fa,
+    .oi,
+    i.oi {
+      color: var(--text-secondary) !important;
+    }
+
+    .o_searchbar_form,
+    form[role="search"],
+    .o_wsale_search {
+      input[type="search"],
+      input[type="text"],
+      .form-control {
+        background: var(--bg-elevated) !important;
+        color: var(--text-primary) !important;
+        border-color: var(--border-medium) !important;
+
+        &::placeholder {
+          color: var(--text-muted) !important;
+        }
+      }
+
+      .btn,
+      button[type="submit"],
+      button[type="button"] {
+        background: transparent !important;
+        color: var(--text-secondary) !important;
+        border-color: transparent !important;
+
+        .fa,
+        i,
+        .oi {
+          color: var(--text-secondary) !important;
+        }
+
+        &:hover {
+          color: var(--accent-gold) !important;
+          .fa,
+          i,
+          .oi {
+            color: var(--accent-gold) !important;
+          }
+        }
+      }
+    }
+
+    a[href*="search"],
+    button[data-action="search"],
+    .o_searchbar_form button,
+    .o_searchbar_form .btn {
+      color: var(--text-secondary) !important;
+      background: transparent !important;
+
+      .oi,
+      .fa,
+      i {
+        color: var(--text-secondary) !important;
+      }
+      &:hover .oi,
+      &:hover .fa,
+      &:hover i {
+        color: var(--accent-gold) !important;
+      }
+    }
+  }
+
+  .o_header_standard,
+  #wrapwrap > header,
+  #wrapwrap > header nav,
+  #wrapwrap > header .navbar,
+  #wrapwrap > header .o_colored_level,
+  #wrapwrap > header .o_cc {
+    background: rgba(26, 24, 35, 0.92) !important;
+    background-color: rgba(26, 24, 35, 0.92) !important;
+    background-image: none !important;
+    backdrop-filter: blur(24px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+    border-bottom-color: rgba(232, 201, 160, 0.1) !important;
+
+    .dropdown-menu {
+      background: var(--bg-elevated) !important;
+      border-color: var(--border-subtle) !important;
+
+      .dropdown-item {
+        color: var(--text-secondary) !important;
+        &:hover {
+          color: var(--accent-gold) !important;
+          background: var(--bg-surface) !important;
+        }
+      }
+    }
+  }
+
+  .sc-top-bar {
+    background: linear-gradient(90deg, #0e0c14 0%, #1a1823 100%) !important;
+  }
+
+  .s_sweet_product_carousel {
+    background: linear-gradient(
+      160deg,
+      var(--bg-page) 0%,
+      var(--bg-elevated) 100%
+    ) !important;
+  }
+
+  .s_sweet_about_us {
+    background: #1a1823 !important;
+
+    .sw-about-title,
+    .sw-about-quote,
+    .sw-about-signature {
+      color: var(--accent-gold) !important;
+    }
+
+    .sw-stat-card {
+      background: var(--bg-elevated) !important;
+      border-bottom-color: var(--accent-gold) !important;
+
+      .sw-stat-num-choc {
+        color: var(--accent-gold) !important;
+      }
+
+      .sw-stat-num-gold {
+        color: var(--accent-gold-light) !important;
+      }
+
+      p {
+        color: var(--text-muted) !important;
+      }
+    }
+  }
+
+  .s_sweet_branches {
+    background: var(--bg-surface) !important;
+
+    h2,
+    .display-4 {
+      color: var(--text-primary) !important;
+    }
+
+    .lead,
+    .text-muted {
+      color: var(--text-muted) !important;
+    }
+
+    .sw-branch-icon-wrap {
+      background: var(--bg-elevated) !important;
+    }
+
+    .sw-branch-icon {
+      color: var(--accent-gold) !important;
+    }
+
+    .card {
+      background: var(--bg-elevated) !important;
+      border-color: var(--border-subtle) !important;
+
+      .card-title {
+        color: var(--text-primary) !important;
+      }
+      .card-text,
+      .text-muted {
+        color: var(--text-muted) !important;
+      }
+      hr {
+        border-color: rgba(232, 201, 160, 0.2) !important;
+      }
+    }
+  }
+
+  .sw-cta-section,
+  .s_sweet_custom_order {
+    background: linear-gradient(135deg, #1a1823 0%, #252336 100%) !important;
+  }
+
+  .s_sweet_flavors {
+    background: linear-gradient(
+      160deg,
+      #1a1823 0%,
+      #252336 50%,
+      #1a1823 100%
+    ) !important;
+  }
+
+  .sc-best-sellers {
+    background: linear-gradient(160deg, #0e0c14 0%, #1a1823 100%) !important;
+
+    .sw-best-title {
+      color: var(--accent-gold) !important;
+    }
+    .sw-best-subtitle {
+      color: var(--text-secondary) !important;
+    }
+    .sw-section-header h2 {
+      color: var(--accent-gold) !important;
+    }
+    .sw-section-header p {
+      color: var(--text-secondary) !important;
+    }
+
+    .card,
+    .sw-card {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border-color: rgba(255, 255, 255, 0.08) !important;
+      color: var(--text-primary) !important;
+    }
+  }
+
+  .sw-hero-card {
+    background: var(--bg-overlay) !important;
+    border-color: var(--border-subtle) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .sw-product-card,
+  .sw-feature-card,
+  .sw-reservation-form,
+  .s_sweet_product_carousel .card,
+  .card {
+    background: var(--bg-surface) !important;
+    background-color: var(--bg-surface) !important;
+    --bs-card-bg: var(--bg-surface);
+    --bs-card-color: var(--text-primary);
+    border-color: var(--border-subtle) !important;
+    color: var(--text-primary) !important;
+
+    .card-body {
+      background: transparent !important;
+      color: var(--text-primary) !important;
+    }
+
+    .card-title,
+    h5,
+    h4,
+    h3 {
+      color: var(--text-primary) !important;
+    }
+
+    .card-text,
+    p,
+    .small {
+      color: var(--text-muted) !important;
+    }
+
+    a:not(.btn) {
+      color: var(--text-primary) !important;
+    }
+
+    .sw-price {
+      color: var(--accent-gold) !important;
+    }
+
+    .sw-qty-group {
+      background: var(--bg-elevated) !important;
+    }
+
+    .sw-qty-btn {
+      background: var(--bg-page) !important;
+      color: var(--text-primary) !important;
+      border-color: var(--border-subtle) !important;
+    }
+
+    .sw-qty-val {
+      color: var(--text-primary) !important;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--text-primary) !important;
+  }
+  p {
+    color: var(--text-secondary) !important;
+  }
+
+  .sw-footer {
+    background: linear-gradient(
+      180deg,
+      var(--bg-surface) 0%,
+      var(--bg-page) 100%
+    ) !important;
+    border-top-color: var(--border-subtle) !important;
+
+    .sw-footer-col h4 {
+      color: $sw-gold !important;
+    }
+  }
+
+  footer.sw-footer .sw-footer-bottom p,
+  .sw-footer > .sw-footer-bottom > p {
+    color: var(--text-muted) !important;
+  }
+
+  .sc-reservation-cta {
+    background: linear-gradient(135deg, #1a1823 0%, #252336 100%) !important;
+
+    h2,
+    p {
+      color: var(--text-primary) !important;
+    }
+
+    .btn {
+      background: rgba(232, 201, 160, 0.12) !important;
+      color: var(--accent-gold-light) !important;
+      border-color: rgba(232, 201, 160, 0.25) !important;
+
+      &:hover {
+        background: var(--accent-gold) !important;
+        color: var(--text-inverse) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+  }
+
+  .btn-outline-chocolate {
+    color: var(--accent-gold) !important;
+    border-color: var(--accent-gold) !important;
+
+    &:hover {
+      background: var(--accent-gold) !important;
+      color: var(--text-inverse) !important;
+    }
+  }
+
+  .btn-primary,
+  .btn-chocolate {
+    background: linear-gradient(
+      135deg,
+      var(--accent-gold-dark) 0%,
+      var(--accent-gold) 100%
+    ) !important;
+    color: var(--text-inverse) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .sw-nav-reservar-btn {
+    background: linear-gradient(
+      135deg,
+      var(--accent-gold-dark) 0%,
+      var(--accent-gold) 100%
+    ) !important;
+    color: var(--text-inverse) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+
+    &:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+      color: var(--text-inverse) !important;
+    }
+  }
+
+  .s_sweet_features {
+    background: linear-gradient(
+      135deg,
+      var(--bg-page) 0%,
+      var(--bg-elevated) 100%
+    ) !important;
+  }
+
+  .sw-feature-card {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+
+    h3 {
+      color: var(--text-primary) !important;
+    }
+
+    p {
+      color: var(--text-muted) !important;
+    }
+  }
+
+  .sw-card-title-link,
+  .sw-qty-val,
+  .sw-product-card .card-title,
+  .sw-product-card .card-text,
+  .card.sw-card .card-title {
+    color: var(--text-primary) !important;
+  }
+
+  .sw-product-card,
+  .card.sw-card {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+
+    .sw-price {
+      color: var(--accent-gold) !important;
+    }
+
+    .sw-qty-group {
+      background: var(--bg-elevated) !important;
+    }
+
+    .sw-qty-btn {
+      background: var(--bg-page) !important;
+      color: var(--text-primary) !important;
+      border-color: var(--border-subtle) !important;
+    }
+  }
+
+  .o_header_user_links a,
+  .o_header_user_links button,
+  .o_wsale_header a,
+  .o_wsale_header button,
+  .o_cart_summary,
+  #wrapwrap > header .o_wsale_header,
+  #wrapwrap > header .o_header_user_links {
+    color: var(--text-secondary) !important;
+
+    .fa,
+    i {
+      color: var(--text-secondary) !important;
+    }
+
+    &:hover,
+    &:hover .fa,
+    &:hover i {
+      color: var(--accent-gold) !important;
+    }
+  }
+
+  .s_sweet_branches {
+    .card,
+    .sw-branch-card {
+      background: var(--bg-elevated) !important;
+      border-color: var(--border-subtle) !important;
+
+      h4 {
+        color: var(--text-primary) !important;
+      }
+      p {
+        color: var(--text-muted) !important;
+      }
+
+      .btn-outline-chocolate,
+      .btn.sw-btn-secondary {
+        color: var(--accent-gold) !important;
+        border-color: var(--accent-gold) !important;
+        background: transparent !important;
+
+        &:hover {
+          background: var(--accent-gold) !important;
+          color: var(--text-inverse) !important;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  .sw-cta-section,
+  .s_sweet_custom_order {
+    .btn {
+      background: rgba(232, 201, 160, 0.12) !important;
+      color: var(--accent-gold-light) !important;
+      border: 1px solid rgba(232, 201, 160, 0.25) !important;
+
+      &:hover {
+        background: var(--accent-gold) !important;
+        color: var(--text-inverse) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+  }
+
+  .o_footer_copyright,
+  .o_footer_copyright.o_colored_level,
+  .o_footer_copyright.o_cc {
+    background-color: var(--bg-page) !important;
+    background-image: none !important;
+    color: var(--text-muted) !important;
+
+    .o_footer_copyright_name,
+    .o_brand_promotion,
+    .o_brand_promotion a,
+    .js_language_selector a {
+      color: var(--text-muted) !important;
+    }
+  }
+
+  #footer,
+  .o_footer_columns,
+  #footer .o_colored_level,
+  .o_footer_columns .o_colored_level {
+    background-color: var(--bg-elevated) !important;
+    background-image: none !important;
+
+    h4,
+    h5 {
+      color: var(--text-primary) !important;
+    }
+    p,
+    li {
+      color: var(--text-muted) !important;
+    }
+    a {
+      color: var(--text-muted) !important;
+      &:hover {
+        color: var(--accent-gold) !important;
+      }
+    }
+    .text-muted {
+      color: var(--text-muted) !important;
+    }
+  }
+
+  .o_footer_columns .o_colored_level,
+  #footer .o_colored_level {
+    background-color: var(--bg-elevated) !important;
+    background-image: none !important;
+  }
+}

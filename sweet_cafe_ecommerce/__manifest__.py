@@ -32,7 +32,12 @@ Incluye:
     ],
     'assets': {
         'web.assets_frontend': [
-            'sweet_cafe_ecommerce/static/src/scss/sweet_ecommerce.scss',
+            # SCSS partials — order matters: tokens first (vars/mixins used by all)
+            'sweet_cafe_ecommerce/static/src/scss/tokens.scss',
+            'sweet_cafe_ecommerce/static/src/scss/layout.scss',
+            'sweet_cafe_ecommerce/static/src/scss/components.scss',
+            'sweet_cafe_ecommerce/static/src/scss/dark_mode.scss',
+            'sweet_cafe_ecommerce/static/src/scss/shop.scss',
             'sweet_cafe_ecommerce/static/src/js/sweet_aurora.js',
         ],
     },

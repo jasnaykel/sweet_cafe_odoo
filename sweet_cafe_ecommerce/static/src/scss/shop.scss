@@ -1,0 +1,518 @@
+// Sweet Café — Shop Page
+// Premium design for /shop: hero, filters, product grid, pagination
+// ═══════════════════════════════════════════════════════════════
+
+// ─── Shop Hero Animations ─────────────────────────────────────
+@keyframes sw-particle-float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-18px) scale(1.15);
+    opacity: 1;
+  }
+}
+
+@keyframes sw-ring-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.06);
+    opacity: 0.22;
+  }
+}
+
+// ─── Shop Hero ────────────────────────────────────────────────
+.sw-shop-hero-premium {
+  position: relative;
+  border-radius: $sw-radius-xl;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  min-height: 260px;
+  background: linear-gradient(
+    135deg,
+    var(--accent-chocolate) 0%,
+    $sw-brown-light 50%,
+    darken($sw-gold, 15%) 100%
+  );
+  display: flex;
+  align-items: center;
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+
+  [data-bs-theme="dark"] & {
+    background: linear-gradient(135deg, #1a0f0a 0%, #2d1f14 50%, #3d2a1a 100%);
+  }
+}
+
+.sw-shop-hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sw-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  animation: sw-particle-float 4s ease-in-out infinite;
+
+  [data-bs-theme="dark"] & {
+    background: rgba(232, 201, 160, 0.25);
+  }
+}
+
+.sw-hero-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  animation: sw-ring-pulse 5s ease-in-out infinite;
+
+  [data-bs-theme="dark"] & {
+    border-color: rgba(232, 201, 160, 0.1);
+  }
+}
+
+.sw-hero-float-product {
+  position: absolute;
+  right: 3rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: clamp(160px, 22vw, 240px);
+  height: clamp(160px, 22vw, 240px);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // Animation applied to img so the container's transform: translate(0,-50%) is not overridden
+    animation: sw-levitate 5s ease-in-out infinite;
+  }
+}
+
+.sw-shop-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+}
+
+.sw-shop-hero-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+
+  span {
+    font-style: italic;
+    background: linear-gradient(135deg, $sw-gold-light 0%, #fde68a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.sw-shop-hero-subtitle {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+
+.sw-shop-hero-stats {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.sw-shop-hero-stat {
+  text-align: center;
+}
+
+.sw-shop-hero-stat-number {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: $sw-gold-light;
+  line-height: 1;
+}
+
+.sw-shop-hero-stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 2px;
+}
+
+// ─── Search Input ─────────────────────────────────────────────
+.sw-input {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  border-radius: $sw-radius-sm !important;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base),
+    box-shadow var(--transition-fast);
+
+  &::placeholder {
+    color: var(--text-muted) !important;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.25) !important;
+    border-color: var(--accent-gold) !important;
+    background: var(--bg-elevated) !important;
+  }
+}
+
+// ─── Filter Sidebar Panel ─────────────────────────────────────
+.sw-filter-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: $sw-radius-lg;
+  padding: 1.5rem;
+  box-shadow: var(--sw-shadow-sm);
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+
+  h6 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    transition: color var(--transition-base);
+  }
+
+  a {
+    display: block;
+    padding: 0.45rem 0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      color: var(--accent-gold);
+    }
+    &.active {
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+  }
+
+  .form-range {
+    accent-color: var(--accent-gold);
+    width: 100%;
+  }
+
+  .sw-filter-price-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    transition: color var(--transition-base);
+  }
+}
+
+// ─── Product Card Image Wrap (shop grid) ─────────────────────
+.sw-product-img-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 210px;
+  background: var(--bg-elevated);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+    display: block;
+  }
+
+  .sw-product-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: linear-gradient(135deg, $sw-gold 0%, $sw-gold-light 100%);
+    color: $sw-brown;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba($sw-gold, 0.4);
+    animation: sw-pulse-badge 2.5s ease-in-out infinite;
+    white-space: nowrap;
+  }
+}
+
+.sw-product-card:hover .sw-product-img-wrap img {
+  transform: scale(1.06);
+}
+
+.sw-product-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  line-height: 1.3;
+
+  &:hover {
+    color: var(--accent-gold);
+  }
+}
+
+.sw-product-price {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  transition: color var(--transition-base);
+}
+
+// ─── Primary Button (shop scoped) ────────────────────────────
+.sw-btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--accent-chocolate) 0%,
+    var(--accent-chocolate-light) 100%
+  );
+  color: #fff !important;
+  border: none;
+  border-radius: $sw-radius-sm;
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 0.55rem 1.4rem;
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    opacity var(--transition-fast);
+  letter-spacing: 0.3px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($sw-brown, 0.35);
+    opacity: 0.92;
+  }
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  [data-bs-theme="dark"] & {
+    background: linear-gradient(
+      135deg,
+      var(--accent-gold-dark) 0%,
+      var(--accent-gold) 100%
+    );
+    color: #1a1823 !important;
+    box-shadow: 0 4px 16px rgba(232, 201, 160, 0.2);
+    &:hover {
+      box-shadow: 0 8px 24px rgba(232, 201, 160, 0.35);
+    }
+  }
+}
+
+// ─── Pagination ───────────────────────────────────────────────
+.sw-page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  &:hover {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba($sw-gold, 0.4);
+  }
+
+  &.sw-page-active {
+    background: linear-gradient(
+      135deg,
+      var(--accent-chocolate) 0%,
+      var(--accent-chocolate-light) 100%
+    );
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba($sw-brown, 0.35);
+
+    [data-bs-theme="dark"] & {
+      background: linear-gradient(
+        135deg,
+        var(--accent-gold-dark) 0%,
+        var(--accent-gold) 100%
+      );
+      color: #1a1823;
+      box-shadow: 0 4px 14px rgba(232, 201, 160, 0.3);
+    }
+  }
+
+  [data-bs-theme="dark"] &:hover {
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: #1a1823;
+  }
+}
+
+// ─── Sort Select ─────────────────────────────────────────────
+.sw-sort-select {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  border-radius: $sw-radius-sm !important;
+  padding: 0.5rem 2.25rem 0.5rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238c7b6f' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  cursor: pointer;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-fast);
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.25) !important;
+    border-color: var(--accent-gold) !important;
+  }
+}
+
+// ─── Badge Variants ───────────────────────────────────────────
+.sw-badge-new {
+  background: linear-gradient(135deg, $sw-rose 0%, #f0b8d4 100%) !important;
+  color: $sw-brown !important;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba($sw-rose, 0.4);
+}
+
+.sw-badge-custom {
+  background: linear-gradient(135deg, #7c6ef0 0%, #a89af7 100%) !important;
+  color: #fff !important;
+}
+
+// ─── Odoo /shop native overrides ─────────────────────────────
+#products_grid .oe_product,
+.o_wsale_products_grid_table .oe_product {
+  .oe_product_image_link {
+    overflow: hidden;
+    border-radius: $sw-radius-lg $sw-radius-lg 0 0;
+  }
+  .oe_product_cart {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-top: none !important;
+    border-radius: 0 0 $sw-radius-lg $sw-radius-lg !important;
+    transition:
+      background var(--transition-base),
+      border-color var(--transition-base);
+  }
+  .oe_product_image {
+    height: 210px;
+    object-fit: cover;
+    width: 100%;
+    transition: transform 0.45s ease;
+  }
+  &:hover .oe_product_image {
+    transform: scale(1.06);
+  }
+  .product_name {
+    font-family: "Playfair Display", Georgia, serif;
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .oe_currency_value,
+  .monetary_field {
+    color: var(--accent-gold);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+}
+
+#wrapwrap .page-content,
+#wrapwrap #shop {
+  background: transparent;
+}
+
+// No white flash on product image in dark mode
+[data-bs-theme="dark"] .oe_product_image_link,
+[data-bs-theme="dark"] .sw-product-img-wrap {
+  background: var(--bg-elevated);
+}
+
+// ─── Responsive ───────────────────────────────────────────────
+@media (max-width: 991.98px) {
+  .sw-shop-hero-premium {
+    min-height: 200px;
+    padding: 1.75rem 1.5rem;
+  }
+  .sw-hero-float-product {
+    display: none;
+  }
+  .sw-shop-hero-title {
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sw-shop-hero-stats {
+    gap: 1rem;
+  }
+  .sw-shop-hero-stat-number {
+    font-size: 1.3rem;
+  }
+  .sw-filter-panel {
+    padding: 1rem;
+  }
+  .sw-page-link {
+    width: 34px;
+    height: 34px;
+    font-size: 0.82rem;
+  }
+}

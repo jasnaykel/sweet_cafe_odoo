@@ -1,0 +1,97 @@
+// Sweet Café — Design Tokens
+// SCSS variables, mixins, and CSS custom properties (light + dark mode)
+// ═══════════════════════════════════════════════════════════════
+
+// ─── SCSS Variables ───────────────────────────────────────────
+$sw-cream: #fdf6ec;
+$sw-cream-dark: #f5e6d3;
+$sw-gold: #d4a574;
+$sw-gold-light: #e8c9a0;
+$sw-brown: #5c3d2e;
+$sw-brown-light: #8b5e3c;
+$sw-rose: #e8a0bf;
+$sw-text: #2c1810;
+$sw-text-light: #6b4e3d;
+
+$sw-glass: rgba(255, 255, 255, 0.72);
+$sw-glass-border: rgba(212, 165, 116, 0.22);
+$sw-shadow: rgba(44, 24, 16, 0.08);
+$sw-shadow-lg: rgba(44, 24, 16, 0.15);
+
+$sw-aurora-1: rgba(212, 165, 116, 0.38);
+$sw-aurora-2: rgba(232, 160, 191, 0.28);
+$sw-aurora-3: rgba(245, 230, 211, 0.48);
+
+$sw-radius-sm: 12px;
+$sw-radius-md: 20px;
+$sw-radius-lg: 24px;
+$sw-radius-xl: 32px;
+
+// ─── Mixins ───────────────────────────────────────────────────
+@mixin glass-panel {
+  background: $sw-glass;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid $sw-glass-border;
+  box-shadow: 0 10px 40px $sw-shadow;
+}
+
+// ─── CSS Custom Properties — Light Mode ───────────────────────
+:root {
+  --bg-page: #{$sw-cream};
+  --bg-surface: #ffffff;
+  --bg-elevated: #fffdf9;
+  --bg-overlay: rgba(255, 253, 249, 0.85);
+  --text-primary: #1e120e;
+  --text-secondary: #{$sw-text-light};
+  --text-muted: #8c7b6f;
+  --text-inverse: #{$sw-cream};
+  --accent-gold: #{$sw-gold};
+  --accent-gold-light: #{$sw-gold-light};
+  --accent-gold-dark: #a67b52;
+  --accent-rose: #{$sw-rose};
+  --accent-rose-light: #f0b8d4;
+  --accent-cream: #{$sw-cream-dark};
+  --accent-chocolate: #{$sw-brown};
+  --accent-chocolate-light: #{$sw-brown-light};
+  --border-subtle: rgba(92, 61, 46, 0.08);
+  --border-medium: rgba(92, 61, 46, 0.15);
+  --sw-shadow-sm: 0 2px 8px rgba(30, 18, 14, 0.04);
+  --sw-shadow-md: 0 8px 24px rgba(30, 18, 14, 0.08);
+  --sw-shadow-lg: 0 16px 48px rgba(30, 18, 14, 0.12);
+  --sw-shadow-xl: 0 24px 64px rgba(30, 18, 14, 0.16);
+  --radius-full: 9999px;
+  --transition-base: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  // legacy SCSS var aliases
+  --sw-cream: #{$sw-cream};
+  --sw-gold: #{$sw-gold};
+  --sw-brown: #{$sw-brown};
+  --sw-rose: #{$sw-rose};
+}
+
+// ─── CSS Custom Properties — Dark Mode ────────────────────────
+[data-bs-theme="dark"] {
+  --bg-page: #121018;
+  --bg-surface: #1a1823;
+  --bg-elevated: #252336;
+  --bg-overlay: rgba(26, 24, 35, 0.88);
+  --text-primary: #f0e6d8;
+  --text-secondary: #b8a99a;
+  --text-muted: #7a6e63;
+  --text-inverse: #1a1823;
+  --accent-gold: #e8c9a0;
+  --accent-gold-light: #f5e6d3;
+  --accent-gold-dark: #c8956c;
+  --accent-rose: #e8a0bf;
+  --accent-rose-light: #f0b8d4;
+  --accent-cream: #2a2638;
+  --accent-chocolate: #e8c9a0;
+  --accent-chocolate-light: #f5e6d3;
+  --border-subtle: rgba(232, 201, 160, 0.08);
+  --border-medium: rgba(232, 201, 160, 0.14);
+  --sw-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --sw-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --sw-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+  --sw-shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.6);
+}

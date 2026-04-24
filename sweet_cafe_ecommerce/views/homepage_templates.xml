@@ -19,11 +19,6 @@
               name="Sweet Caf&#233; Header Premium">
         <xpath expr="//head" position="inside">
             <style>
-            /* Ocultar link Inicio del men&#250; principal */
-            .o_header_standard .nav-item > a.nav-link[href="/"],
-            #wrapwrap > header .nav-item > a.nav-link[href="/"] {
-                display: none !important;
-            }
             /* Ocultar bot&#243;n CTA "Contact Us" nativo de Odoo (duplicado con men&#250; Contactar) */
             #wrapwrap > header .btn_cta,
             .o_header_standard .btn_cta,
@@ -31,6 +26,14 @@
                 display: none !important;
             }
             </style>
+        </xpath>
+    </template>
+
+    <!-- Ocultar el ítem Home/Inicio del nav server-side para cualquier idioma -->
+    <template id="sweet_hide_home_nav" inherit_id="website.submenu" priority="20"
+              name="Sweet Caf&#233; Hide Home Nav">
+        <xpath expr="//li[1]" position="attributes">
+            <attribute name="t-if">submenu.is_visible and not (submenu.child_id or submenu.is_mega_menu) and not (submenu.url in ('/', '') or (submenu.url or '').startswith('/#') or submenu.name in ('Home', 'Inicio', 'Accueil', 'Startseite'))</attribute>
         </xpath>
     </template>
 
