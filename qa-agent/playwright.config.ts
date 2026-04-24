@@ -1,6 +1,15 @@
 /**
- * Sweet Café QA Agent - Playwright Configuration
- * Tests visuales y de flujo para el sistema Odoo 19 de Sweet Café
+ * Sweet Café QA Agent — Playwright Configuration
+ * ================================================
+ * Tests backend + frontend del sistema Odoo 19.
+ * Arquitectura: UN proyecto principal con auth admin por defecto.
+ * Los tests [FE] usan test.use({ storageState: {cookies:[],origins:[]} })
+ * para limpiar la sesión y probar páginas públicas.
+ *
+ * Correr suite completa:       npx playwright test
+ * Solo backend:                npx playwright test --grep "\[BE\]|SEC-0"
+ * Solo frontend:               npx playwright test --grep "\[FE\]|SEC-16"
+ * Solo un módulo:              npx playwright test tests/sweet_cafe/employees.spec.ts
  *
  * @see https://playwright.dev/docs/test-configuration
  */
@@ -8,30 +17,26 @@
 import { defineConfig, devices } from "@playwright/test";
 import { config } from "dotenv";
 
-// Cargar variables de entorno
 config();
 
 export default defineConfig({
-  // Carpeta de tests
   testDir: "./tests",
 
-  // Secuencial: Odoo necesita 1 worker para evitar conflictos de sesión
+  // Secuencial — Odoo necesita 1 worker para evitar conflictos de sesión
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 1,
+  retries: process.env.CI ? 2 : 0,
   workers: 1,
 
-  // Login una sola vez antes de todos los tests
   globalSetup: "./tests/setup/global-setup.ts",
 
-  // Reportes
+  // Reportes: custom HTML + list en consola + JSON para CI
   reporter: [
-    ["html", { open: "never", outputFolder: "./reports/playwright-report" }],
+    ["./src/reporters/sweet-cafe-reporter.ts"],
     ["json", { outputFile: "./reports/test-results.json" }],
     ["list"],
   ],
 
-  // Configuración global
   use: {
     baseURL: process.env.ODOO_URL || "http://localhost:8069",
     trace: "on-first-retry",
@@ -44,34 +49,36 @@ export default defineConfig({
     navigationTimeout: 60000,
   },
 
+  // Timeouts óptimos: 120s por test, 15s para expect
   timeout: 120000,
   expect: { timeout: 15000 },
   outputDir: "./test-results",
 
-  // Proyectos — solo Chromium (instalado)
   projects: [
-    // Proyecto para tests del BACKEND Odoo (requieren login)
+    // ─── Proyecto principal: todos los módulos, backend + frontend ───
+    // Los tests [FE] dentro de cada spec limpian el storageState con test.use()
     {
-      name: "odoo-backend",
+      name: "sweet-cafe",
       testMatch: [
-        "**/sweet_cafe/branches.spec.ts",
+        "**/sweet_cafe/employees.spec.ts",
         "**/sweet_cafe/products.spec.ts",
-        "**/sweet_cafe/reservations.spec.ts",
         "**/sweet_cafe/inventory.spec.ts",
-        "**/sweet_cafe/pos.spec.ts",
-        "**/sweet_cafe/hr.spec.ts",
-        "**/sweet_cafe/hr-employee-flow.spec.ts",
-        "**/sweet_cafe/hr-employee-advanced.spec.ts",
+        "**/sweet_cafe/reservations.spec.ts",
         "**/sweet_cafe/payroll.spec.ts",
+        "**/sweet_cafe/pos.spec.ts",
+        "**/sweet_cafe/branches.spec.ts",
+        "**/sweet_cafe/ecommerce.spec.ts",
+        "**/sweet_cafe/ecommerce-reservation.spec.ts",
         "**/auth/odoo-login.spec.ts",
       ],
       use: {
         ...devices["Desktop Chrome"],
-        // Reutilizar sesión autenticada del globalSetup
+        // Auth admin por defecto — los describes [FE] lo limpian con test.use()
         storageState: ".auth/admin.json",
       },
     },
-    // Proyecto para tests del FRONTEND público (no requieren login)
+    // ─── Proyecto legacy de compatibilidad (ecommerce público) ───────
+    // Mantenido para poder correr --project=odoo-website por compatibilidad
     {
       name: "odoo-website",
       testMatch: [
