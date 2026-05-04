@@ -18,6 +18,7 @@ Incluye:
         'sweet_cafe_management',
     ],
     'data': [
+        'data/ecommerce_categories.xml',
         'views/website_sale_templates.xml',
         'views/homepage_templates.xml',
         'views/sweet_reservation_templates.xml',
@@ -44,4 +45,7 @@ Incluye:
     'installable': True,
     'application': False,
     'license': 'LGPL-3',
+    'demo': [
+        'demo/ecommerce_products_demo.xml',
+    ],
 }

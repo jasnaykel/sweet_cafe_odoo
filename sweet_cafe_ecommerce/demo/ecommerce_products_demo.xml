@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        DEMO DATA — Sweet Café eCommerce
+        Se carga DESPUÉS de sweet_cafe_management, por eso puede referenciar
+        sus productos y también las categorías públicas de este mismo módulo.
+
+        Flujo Odoo para la tienda:
+        1. product.public.category  → aparece en sidebar izquierdo de /shop
+        2. product.public_categ_ids → asigna producto a esa categoría del sidebar
+        3. is_published = True       → hace visible el producto en /shop
+    -->
+
+    <!-- ─── Publicar + asignar categoría eCommerce a productos demo ─── -->
+
+    <record id="sweet_cafe_management.product_cake_chocolate" model="product.template">
+        <field name="is_published" eval="True"/>
+        <field name="public_categ_ids" eval="[(4, ref('sweet_cafe_ecommerce.public_category_cakes'))]"/>
+    </record>
+
+    <record id="sweet_cafe_management.product_mini_cake_vainilla" model="product.template">
+        <field name="is_published" eval="True"/>
+        <field name="public_categ_ids" eval="[(4, ref('sweet_cafe_ecommerce.public_category_cakes'))]"/>
+    </record>
+
+    <record id="sweet_cafe_management.product_tartaleta_coco" model="product.template">
+        <field name="is_published" eval="True"/>
+        <field name="public_categ_ids" eval="[(4, ref('sweet_cafe_ecommerce.public_category_tartaletas'))]"/>
+    </record>
+
+    <record id="sweet_cafe_management.product_tartaleta_guayaba" model="product.template">
+        <field name="is_published" eval="True"/>
+        <field name="public_categ_ids" eval="[(4, ref('sweet_cafe_ecommerce.public_category_tartaletas'))]"/>
+    </record>
+
+    <record id="sweet_cafe_management.product_galleta_miel" model="product.template">
+        <field name="is_published" eval="True"/>
+        <field name="public_categ_ids" eval="[(4, ref('sweet_cafe_ecommerce.public_category_galletas'))]"/>
+    </record>
+</odoo>

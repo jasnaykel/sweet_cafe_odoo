@@ -3,6 +3,18 @@
 // ═══════════════════════════════════════════════════════════════
 
 // ─── Shop Hero Animations ─────────────────────────────────────
+@keyframes sw-pulse-badge {
+  0%,
+  100% {
+    box-shadow: 0 4px 12px rgba($sw-gold, 0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba($sw-gold, 0.65);
+    transform: scale(1.05);
+  }
+}
+
 @keyframes sw-particle-float {
   0%,
   100% {
@@ -27,13 +39,24 @@
   }
 }
 
+// Levitate animation for the float product circle — combines Y-centering + float
+// so the img inside is NOT animated (avoids clipping from overflow:hidden)
+@keyframes sw-float-product-levitate {
+  0%,
+  100% {
+    transform: translate(0, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(0, -50%) translateY(-10px);
+  }
+}
+
 // ─── Shop Hero ────────────────────────────────────────────────
 .sw-shop-hero-premium {
   position: relative;
   border-radius: $sw-radius-xl;
   overflow: hidden;
   margin-bottom: 2.5rem;
-  min-height: 260px;
   background: linear-gradient(
     135deg,
     var(--accent-chocolate) 0%,
@@ -43,6 +66,8 @@
   display: flex;
   align-items: center;
   padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+  // Extra bottom/top space so the levitating circle never exits the clipped boundary
+  min-height: 290px;
 
   [data-bs-theme="dark"] & {
     background: linear-gradient(135deg, #1a0f0a 0%, #2d1f14 50%, #3d2a1a 100%);
@@ -82,7 +107,9 @@
   position: absolute;
   right: 3rem;
   top: 50%;
-  transform: translate(0, -50%);
+  // Animation includes the Y-centering transform, so overflow:hidden circle
+  // is animated as a whole unit and the img never clips inside it.
+  animation: sw-float-product-levitate 5s ease-in-out infinite;
   width: clamp(160px, 22vw, 240px);
   height: clamp(160px, 22vw, 240px);
   border-radius: 50%;
@@ -94,8 +121,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    // Animation applied to img so the container's transform: translate(0,-50%) is not overridden
-    animation: sw-levitate 5s ease-in-out infinite;
+    // No animation here — animation is on the container to avoid img clipping
   }
 }
 
@@ -436,43 +462,213 @@
   color: #fff !important;
 }
 
-// ─── Odoo /shop native overrides ─────────────────────────────
-#products_grid .oe_product,
-.o_wsale_products_grid_table .oe_product {
-  .oe_product_image_link {
-    overflow: hidden;
-    border-radius: $sw-radius-lg $sw-radius-lg 0 0;
-  }
-  .oe_product_cart {
+// ─── Odoo 19 /shop native overrides ─────────────────────────
+// Odoo 19 product card key classes:
+//   .o_wsale_product_grid_wrapper (wrapper per product)
+//     form.eeee_product_cart (the card itself)
+//       .eeee_product_image > a.eeee_product_image_link
+//         span.eeee_product_image_img_wrapper > .eeee_product_image_img
+//       .o_wsale_product_information
+//         .o_wsale_products_item_title
+//         .o_wsale_product_sub > .product_price
+
+.o_wsale_product_grid_wrapper {
+  height: 100%;
+
+  form.eeee_product_cart {
     background: var(--bg-surface) !important;
     border: 1px solid var(--border-subtle) !important;
-    border-top: none !important;
-    border-radius: 0 0 $sw-radius-lg $sw-radius-lg !important;
+    border-radius: $sw-radius-lg !important;
+    overflow: hidden;
+    flex-direction: column;
+    height: 100%;
     transition:
       background var(--transition-base),
-      border-color var(--transition-base);
+      border-color var(--transition-base),
+      box-shadow var(--transition-base),
+      transform var(--transition-fast);
+
+    &:hover {
+      box-shadow: var(--sw-shadow-md);
+      transform: translateY(-3px);
+
+      .eeee_product_image_img {
+        transform: scale(1.06);
+      }
+    }
   }
-  .oe_product_image {
+
+  .eeee_product_image {
     height: 210px;
-    object-fit: cover;
-    width: 100%;
-    transition: transform 0.45s ease;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    flex-shrink: 0;
+
+    .eeee_product_image_link {
+      display: block;
+      height: 100%;
+    }
+
+    .eeee_product_image_img_wrapper {
+      height: 100%;
+      width: 100%;
+    }
+
+    .eeee_product_image_img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
   }
-  &:hover .oe_product_image {
-    transform: scale(1.06);
+
+  .o_wsale_product_information {
+    padding: 0.85rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
-  .product_name {
+
+  .o_wsale_products_item_title {
     font-family: "Playfair Display", Georgia, serif;
-    color: var(--text-primary);
+    font-size: 0.95rem;
     font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text-primary);
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--accent-gold);
+      }
+    }
   }
-  .oe_currency_value,
-  .monetary_field {
-    color: var(--accent-gold);
+
+  .eeee_subdescription {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .o_wsale_product_sub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  .product_price .fw-bold {
     font-family: "Playfair Display", Georgia, serif;
     font-size: 1.1rem;
     font-weight: 700;
+    color: var(--accent-gold) !important;
   }
+
+  .product_price del {
+    font-size: 0.8rem;
+    color: var(--text-muted) !important;
+  }
+}
+
+// ─── Native Sidebar (Odoo 19) ────────────────────────────────
+#products_grid_before {
+  .products_categories {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: $sw-radius-lg;
+    padding: 1.5rem;
+    box-shadow: var(--sw-shadow-sm);
+    margin-bottom: 0.75rem;
+    transition:
+      background var(--transition-base),
+      border-color var(--transition-base);
+
+    .o_categories_collapse_title b,
+    h6 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.85rem;
+      display: block;
+    }
+
+    ul.nav a {
+      display: block;
+      padding: 0.4rem 0;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+
+      &:hover {
+        color: var(--accent-gold);
+      }
+
+      &.text-decoration-underline {
+        color: var(--accent-gold);
+        font-weight: 600;
+        text-decoration: none !important;
+      }
+    }
+  }
+
+  .products_attributes_filters:not(:empty) {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: $sw-radius-lg;
+    padding: 1.5rem;
+    box-shadow: var(--sw-shadow-sm);
+    margin-bottom: 0.75rem;
+    transition:
+      background var(--transition-base),
+      border-color var(--transition-base);
+
+    h6 b {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .form-check-input:checked {
+      background-color: var(--accent-gold);
+      border-color: var(--accent-gold);
+    }
+
+    .form-check-label {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+  }
+
+  #o_wsale_price_range_option {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: $sw-radius-lg;
+    padding: 1.5rem;
+    box-shadow: var(--sw-shadow-sm);
+    margin-bottom: 0.75rem;
+
+    .form-range {
+      accent-color: var(--accent-gold);
+    }
+
+    b {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+  }
+}
+
+// ─── Shop page background ─────────────────────────────────────
+.o_wsale_products_page {
+  background: var(--bg-page);
 }
 
 #wrapwrap .page-content,
@@ -481,9 +677,33 @@
 }
 
 // No white flash on product image in dark mode
-[data-bs-theme="dark"] .oe_product_image_link,
-[data-bs-theme="dark"] .sw-product-img-wrap {
-  background: var(--bg-elevated);
+[data-bs-theme="dark"] {
+  .eeee_product_image,
+  .eeee_product_image_link,
+  .sw-product-img-wrap {
+    background: var(--bg-elevated);
+  }
+
+  .o_sortby_dropdown .dropdown-menu,
+  .o_pricelist_dropdown .dropdown-menu {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+
+    .dropdown-item {
+      color: var(--text-secondary);
+
+      &:hover,
+      &:focus {
+        background: var(--bg-elevated);
+        color: var(--accent-gold);
+      }
+
+      &.active {
+        background: var(--accent-chocolate);
+        color: #fff;
+      }
+    }
+  }
 }
 
 // ─── Responsive ───────────────────────────────────────────────
