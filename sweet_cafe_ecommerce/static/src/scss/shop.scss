@@ -361,7 +361,76 @@
   }
 }
 
-// ─── Pagination ───────────────────────────────────────────────
+// ─── Pagination nativa de Odoo — override con efecto ─────────────────────────
+.o_wsale_products_page .pagination .page-item,
+#o_wsale_products_grid ~ * .pagination .page-item,
+.o_wsale_pager .pagination .page-item {
+  .page-link {
+    border-radius: 50% !important;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+    font-weight: 500;
+    border: 1px solid var(--border-medium);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      background: $sw-gold !important;
+      border-color: $sw-gold !important;
+      color: $sw-brown !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba($sw-gold, 0.4);
+    }
+  }
+
+  &.active .page-link {
+    background: $sw-brown !important;
+    border-color: $sw-brown !important;
+    color: #fff !important;
+    box-shadow: 0 4px 14px rgba($sw-brown, 0.35);
+  }
+
+  &.disabled .page-link {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+[data-bs-theme="dark"] {
+  .o_wsale_products_page .pagination .page-item,
+  #o_wsale_products_grid ~ * .pagination .page-item,
+  .o_wsale_pager .pagination .page-item {
+    .page-link {
+      background: var(--bg-elevated) !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+      color: rgba(240, 235, 228, 0.7) !important;
+
+      &:hover {
+        background: $sw-gold !important;
+        color: $sw-brown !important;
+        border-color: $sw-gold !important;
+      }
+    }
+
+    &.active .page-link {
+      background: $sw-gold !important;
+      border-color: $sw-gold !important;
+      color: $sw-brown !important;
+    }
+  }
+}
+
+// ─── Sort Select (clases sw- legacy) ──────────────────────────
 .sw-page-link {
   display: inline-flex;
   align-items: center;
@@ -376,45 +445,25 @@
   font-size: 0.88rem;
   font-weight: 500;
   transition:
-    background var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast),
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
-    background: var(--accent-gold);
-    border-color: var(--accent-gold);
-    color: #fff;
+    background: $sw-gold;
+    border-color: $sw-gold;
+    color: $sw-brown;
     transform: translateY(-2px);
     box-shadow: 0 4px 14px rgba($sw-gold, 0.4);
   }
 
   &.sw-page-active {
-    background: linear-gradient(
-      135deg,
-      var(--accent-chocolate) 0%,
-      var(--accent-chocolate-light) 100%
-    );
-    border-color: transparent;
+    background: $sw-brown;
+    border-color: $sw-brown;
     color: #fff;
     box-shadow: 0 4px 14px rgba($sw-brown, 0.35);
-
-    [data-bs-theme="dark"] & {
-      background: linear-gradient(
-        135deg,
-        var(--accent-gold-dark) 0%,
-        var(--accent-gold) 100%
-      );
-      color: #1a1823;
-      box-shadow: 0 4px 14px rgba(232, 201, 160, 0.3);
-    }
-  }
-
-  [data-bs-theme="dark"] &:hover {
-    background: var(--accent-gold);
-    border-color: var(--accent-gold);
-    color: #1a1823;
   }
 }
 
@@ -463,34 +512,36 @@
 }
 
 // ─── Odoo 19 /shop native overrides ─────────────────────────
-// Odoo 19 product card key classes:
-//   .o_wsale_product_grid_wrapper (wrapper per product)
-//     form.eeee_product_cart (the card itself)
-//       .eeee_product_image > a.eeee_product_image_link
-//         span.eeee_product_image_img_wrapper > .eeee_product_image_img
+// Estructura nativa Odoo 19:
+//   .o_wsale_product_grid_wrapper
+//     form.eeee_product_cart
+//       .eeee_product_image > .eeee_product_image_img
 //       .o_wsale_product_information
 //         .o_wsale_products_item_title
-//         .o_wsale_product_sub > .product_price
+//         .eeee_subdescription
+//         .o_wsale_product_sub  (precio + botón carrito)
 
 .o_wsale_product_grid_wrapper {
   height: 100%;
 
+  // ── MODO CLARO: tarjeta premium crema + chocolate ──────────────
   form.eeee_product_cart {
-    background: var(--bg-surface) !important;
-    border: 1px solid var(--border-subtle) !important;
+    background: #fff !important;
+    border: 1px solid rgba($sw-brown, 0.14) !important;
     border-radius: $sw-radius-lg !important;
     overflow: hidden;
     flex-direction: column;
     height: 100%;
+    position: relative;
     transition:
-      background var(--transition-base),
-      border-color var(--transition-base),
       box-shadow var(--transition-base),
-      transform var(--transition-fast);
+      transform var(--transition-fast),
+      border-color var(--transition-fast);
 
     &:hover {
-      box-shadow: var(--sw-shadow-md);
-      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba($sw-brown, 0.2);
+      transform: translateY(-4px);
+      border-color: rgba($sw-gold, 0.5) !important;
 
       .eeee_product_image_img {
         transform: scale(1.06);
@@ -498,22 +549,22 @@
     }
   }
 
+  // Área de imagen: fondo crema cálido
   .eeee_product_image {
     height: 210px;
     overflow: hidden;
-    background: var(--bg-elevated);
+    background: #f5ede4;
     flex-shrink: 0;
+    position: relative;
 
     .eeee_product_image_link {
       display: block;
       height: 100%;
     }
-
     .eeee_product_image_img_wrapper {
       height: 100%;
       width: 100%;
     }
-
     .eeee_product_image_img {
       width: 100%;
       height: 100%;
@@ -522,55 +573,107 @@
     }
   }
 
+  // Sección de info: gradiente suave inferior
   .o_wsale_product_information {
-    padding: 0.85rem 1rem 1rem;
+    padding: 0.85rem 1rem 0.9rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    background: linear-gradient(180deg, #fff 0%, #fdf8f4 100%);
   }
 
+  // Título: chocolate oscuro, siempre legible
   .o_wsale_products_item_title {
     font-family: "Playfair Display", Georgia, serif;
     font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: #2c1810 !important;
 
     a {
-      color: inherit;
+      color: inherit !important;
       text-decoration: none;
-
       &:hover {
-        color: var(--accent-gold);
+        color: $sw-gold !important;
       }
     }
   }
 
+  // Descripción corta: máx 2 líneas
   .eeee_subdescription {
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: #7a5c48 !important;
     margin-bottom: 0.5rem;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
+  // Fila precio + botón carrito
   .o_wsale_product_sub {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
     margin-top: auto;
-    padding-top: 0.5rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba($sw-brown, 0.08);
   }
 
-  .product_price .fw-bold {
+  // Precio: chocolate oscuro en modo claro
+  .product_price .fw-bold,
+  .product_price .o_price_unit,
+  .product_price > span:first-child {
     font-family: "Playfair Display", Georgia, serif;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    color: var(--accent-gold) !important;
+    color: $sw-brown !important;
   }
 
   .product_price del {
-    font-size: 0.8rem;
-    color: var(--text-muted) !important;
+    font-size: 0.78rem;
+    color: #a08070 !important;
+  }
+
+  // Botón carrito: cuadrado redondeado, marrón + blanco
+  a.o_add_cart_btn,
+  a[href*="cart"].btn,
+  .o_wsale_product_btn,
+  button.btn[name="add_to_cart"] {
+    background: $sw-brown !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: $sw-radius-sm !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0;
+    position: static !important;
+    transition:
+      background var(--transition-fast),
+      box-shadow var(--transition-fast);
+
+    i,
+    .fa {
+      font-size: 0.85rem;
+      color: #fff !important;
+    }
+
+    &:hover {
+      background: $sw-gold !important;
+      color: $sw-brown !important;
+      box-shadow: 0 4px 14px rgba($sw-gold, 0.45);
+      i,
+      .fa {
+        color: $sw-brown !important;
+      }
+    }
   }
 }
 
@@ -676,31 +779,98 @@
   background: transparent;
 }
 
-// No white flash on product image in dark mode
+// ─── Tarjetas modo OSCURO — idéntico a imagen de referencia ────────────────
 [data-bs-theme="dark"] {
-  .eeee_product_image,
-  .eeee_product_image_link,
-  .sw-product-img-wrap {
-    background: var(--bg-elevated);
-  }
+  .o_wsale_product_grid_wrapper {
+    form.eeee_product_cart {
+      background: var(
+        --bg-elevated
+      ) !important; // mismo tono que fondo de página
+      border-color: rgba(255, 255, 255, 0.07) !important;
 
-  .o_sortby_dropdown .dropdown-menu,
-  .o_pricelist_dropdown .dropdown-menu {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-medium);
+      &:hover {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border-color: rgba($sw-gold, 0.3) !important;
 
-    .dropdown-item {
-      color: var(--text-secondary);
+        // botón carrito: aparecer al hover
+        .o_wsale_product_btn_add_cart,
+        a.o_add_cart_btn,
+        button.btn[name="add_to_cart"],
+        a[href*="cart"].btn {
+          background: $sw-gold !important;
+          box-shadow: 0 4px 12px rgba($sw-gold, 0.4);
+          i,
+          .fa {
+            color: $sw-brown !important;
+          }
+        }
+      }
+    }
 
-      &:hover,
-      &:focus {
-        background: var(--bg-elevated);
-        color: var(--accent-gold);
+    .eeee_product_image {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .o_wsale_product_information {
+      background: var(--bg-elevated);
+    }
+
+    .o_wsale_products_item_title,
+    .o_wsale_products_item_title a {
+      color: #f0ebe4 !important;
+    }
+
+    .eeee_subdescription {
+      color: rgba(240, 235, 228, 0.5) !important;
+    }
+
+    .o_wsale_product_sub {
+      border-top-color: rgba(255, 255, 255, 0.07);
+    }
+
+    .product_price .fw-bold,
+    .product_price .o_price_unit,
+    .product_price > span:first-child {
+      color: $sw-gold-light !important;
+    }
+
+    // Botón carrito en dark: solo icono dorado en reposo
+    .o_wsale_product_btn_add_cart,
+    a.o_add_cart_btn,
+    button.btn[name="add_to_cart"],
+    a[href*="cart"].btn {
+      background: transparent !important;
+      i,
+      .fa {
+        color: $sw-gold !important;
       }
 
+      &:hover {
+        background: $sw-gold !important;
+        i,
+        .fa {
+          color: $sw-brown !important;
+        }
+      }
+    }
+  }
+
+  // Dropdown sort en dark
+  .o_sortby_dropdown .dropdown-menu {
+    background: var(--bg-elevated);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    .dropdown-item {
+      color: rgba(240, 235, 228, 0.75);
+      &:hover,
+      &:focus {
+        background: var(--bg-surface);
+        color: $sw-gold;
+      }
       &.active {
-        background: var(--accent-chocolate);
-        color: #fff;
+        background: $sw-gold;
+        color: $sw-brown;
+        font-weight: 600;
       }
     }
   }
@@ -734,5 +904,190 @@
     width: 34px;
     height: 34px;
     font-size: 0.82rem;
+  }
+}
+
+// ─── Ocultar search+sort nativos dentro del grid ─────────────────────────────
+// (los hemos movido al sw-shop-topbar, sobre el sidebar)
+#products_grid {
+  h1.o_wsale_shop_title,
+  .products_header {
+    display: none !important;
+  }
+
+  #o_wsale_products_header {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+// ─── Autocomplete/suggestions del buscador nativo ─────────────────────────────
+// El dropdown de sugerencias hereda dark del navbar; forzamos colores correctos
+.o_searchbar_autocomplete,
+.o_wsale_products_searchbar_form + .o_searchbar_autocomplete,
+.o_website_searchbar_ac_menu {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: $sw-radius-md !important;
+  box-shadow: var(--sw-shadow-lg) !important;
+  color: var(--text-primary) !important;
+  z-index: 1050;
+
+  .o_dropdown_item,
+  .o_searchbar_autocomplete_item,
+  .dropdown-item {
+    color: var(--text-secondary) !important;
+    background: transparent !important;
+    padding: 0.5rem 1rem;
+
+    &:hover,
+    &.active,
+    &:focus {
+      background: var(--bg-elevated) !important;
+      color: var(--accent-gold) !important;
+    }
+
+    .o_dropdown_name,
+    small {
+      color: inherit !important;
+    }
+  }
+
+  .o_dropdown_footer {
+    border-top: 1px solid var(--border-subtle) !important;
+    color: var(--text-muted) !important;
+    background: var(--bg-elevated) !important;
+  }
+}
+
+// ─── Topbar: búsqueda + orden — entre el hero y el sidebar ───────────────────
+.sw-shop-topbar {
+  .sw-shop-topbar-inner {
+    position: relative; // necesario para que el dropdown salga hacia abajo
+  }
+
+  .o_wsale_products_searchbar_form {
+    flex: 1 1 0;
+    background: var(--bg-surface);
+    border-radius: $sw-radius-md;
+    border: 1px solid var(--border-subtle);
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    > .input-group,
+    > form {
+      overflow: hidden;
+      border-radius: $sw-radius-md;
+    }
+
+    input.form-control,
+    input[type="search"] {
+      background: transparent;
+      border: none;
+      padding: 0.45rem 0.85rem; // más compacto
+      font-size: 0.88rem;
+      box-shadow: none;
+      color: var(--text-primary);
+
+      &:focus {
+        box-shadow: none;
+        outline: none;
+      }
+      &::placeholder {
+        color: var(--text-muted);
+      }
+    }
+
+    button[type="submit"],
+    button.btn.btn-primary,
+    .btn-primary {
+      background: $sw-gold !important;
+      color: $sw-brown !important;
+      border: none !important;
+      border-radius: 0 $sw-radius-md $sw-radius-md 0 !important;
+      padding: 0.45rem 1rem !important; // mismo alto que input
+      font-weight: 700;
+      white-space: nowrap;
+      transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+
+      i,
+      .oi {
+        color: $sw-brown !important;
+      }
+
+      &:hover {
+        background: darken($sw-gold, 10%) !important;
+        box-shadow: 0 4px 12px rgba($sw-gold, 0.4);
+      }
+      &:active {
+        background: darken($sw-gold, 16%) !important;
+      }
+    }
+  }
+
+  // Sort By — dropdown abre hacia ABAJO
+  .o_sortby_dropdown {
+    position: relative;
+
+    .btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: $sw-radius-md;
+      padding: 0.65rem 1rem;
+      white-space: nowrap;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      transition: border-color var(--transition-fast);
+
+      &:hover {
+        border-color: var(--accent-gold);
+      }
+    }
+
+    // forzar dropdown hacia abajo (Bootstrap usa transform que lo sube en bottom)
+    .dropdown-menu {
+      top: 100% !important;
+      bottom: auto !important;
+      transform: none !important;
+      margin-top: 0.35rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: $sw-radius-md;
+      box-shadow: var(--sw-shadow-lg);
+      z-index: 1060;
+
+      .dropdown-item {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+
+        &:hover,
+        &:focus {
+          background: var(--bg-elevated);
+          color: var(--accent-gold);
+        }
+        &.active,
+        &:active {
+          background: $sw-gold;
+          color: $sw-brown;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .sw-shop-topbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+
+    .o_sortby_dropdown {
+      align-self: flex-end;
+    }
   }
 }

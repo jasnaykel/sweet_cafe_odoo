@@ -190,6 +190,18 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ─── Barra de búsqueda + orden — ancho completo, sobre el sidebar ─── -->
+            <div class="sw-shop-topbar container mb-3">
+                <div class="sw-shop-topbar-inner d-flex align-items-center gap-3 flex-wrap">
+                    <t t-if="is_view_active('website_sale.search')">
+                        <t t-call="website_sale.search"/>
+                    </t>
+                    <t t-if="is_view_active('website_sale.sort')">
+                        <t t-call="website_sale.sort"/>
+                    </t>
+                </div>
+            </div>
         </xpath>
     </template>
 </odoo>
