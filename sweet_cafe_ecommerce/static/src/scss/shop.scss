@@ -585,13 +585,21 @@
     }
   }
 
-  // Sección de info: gradiente suave inferior
+  // Sección de info: override showcase absolute → static, flex column
   .o_wsale_product_information {
+    position: static !important;
+    inset: unset !important;
     padding: 0.85rem 1rem 0.9rem;
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-areas: unset !important;
     flex-grow: 1;
     background: linear-gradient(180deg, #fff 0%, #fdf8f4 100%);
+  }
+
+  .o_wsale_product_information_text {
+    grid-area: unset !important;
+    flex-grow: 1;
   }
 
   // Título: chocolate oscuro, siempre legible
@@ -614,7 +622,7 @@
   // Descripción corta: máx 2 líneas
   .oe_subdescription {
     font-size: 0.8rem;
-    color: #7a5c48 !important;
+    color: $sw-brown !important;
     margin-bottom: 0.5rem;
     flex-grow: 1;
     display: -webkit-box;
@@ -623,25 +631,33 @@
     overflow: hidden;
   }
 
-  // Fila precio + botón carrito
+  // Fila precio + botón carrito: precio izq, botón der
   .o_wsale_product_sub {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
     gap: 0.5rem;
     margin-top: auto;
     padding-top: 0.6rem;
     border-top: 1px solid rgba($sw-brown, 0.08);
   }
 
-  // Precio: chocolate oscuro en modo claro
+  .product_price {
+    grid-area: unset !important;
+    align-self: unset !important;
+    flex-grow: 1;
+  }
+
+  // Precio: dorado
   .product_price .fw-bold,
   .product_price .o_price_unit,
   .product_price > span:first-child {
     font-family: "Playfair Display", Georgia, serif;
     font-size: 1.05rem;
     font-weight: 700;
-    color: $sw-brown !important;
+    color: $sw-gold !important;
   }
 
   .product_price del {
@@ -652,11 +668,16 @@
   // Botón carrito: icono-only en reposo, fondo aparece al hover de tarjeta
   .o_wsale_product_btn {
     flex-shrink: 0;
+    grid-area: unset !important;
+    align-self: unset !important;
+    position: static !important;
+    inset: unset !important;
+    margin-top: 0 !important;
   }
 
+  // display:contents = el botón fluye directamente al padre flex
   .o_wsale_product_action_row {
-    display: flex;
-    align-items: center;
+    display: contents !important;
   }
 
   .o_wsale_product_btn_primary {
@@ -819,7 +840,15 @@
     }
 
     .o_wsale_product_information {
+      position: static !important;
+      inset: unset !important;
+      display: flex !important;
+      flex-direction: column !important;
       background: var(--bg-elevated);
+    }
+
+    .o_wsale_product_information_text {
+      flex-grow: 1;
     }
 
     .o_wsale_products_item_title,
@@ -828,7 +857,7 @@
     }
 
     .oe_subdescription {
-      color: rgba(240, 235, 228, 0.5) !important;
+      color: rgba(240, 235, 228, 0.82) !important;
     }
 
     .o_wsale_product_sub {
@@ -838,7 +867,7 @@
     .product_price .fw-bold,
     .product_price .o_price_unit,
     .product_price > span:first-child {
-      color: $sw-gold-light !important;
+      color: $sw-gold !important;
     }
 
     // Botón carrito en dark: icono dorado en reposo, fondo dorado al hover de tarjeta
