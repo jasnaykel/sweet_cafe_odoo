@@ -512,20 +512,21 @@
 }
 
 // ─── Odoo 19 /shop native overrides ─────────────────────────
-// Estructura nativa Odoo 19:
-//   .o_wsale_product_grid_wrapper
-//     form.eeee_product_cart
-//       .eeee_product_image > .eeee_product_image_img
-//       .o_wsale_product_information
-//         .o_wsale_products_item_title
-//         .eeee_subdescription
-//         .o_wsale_product_sub  (precio + botón carrito)
+// Estructura real Odoo 19 (product_tile_templates.xml):
+//   form.oe_product_cart
+//     .oe_product_image > .oe_product_image_link > img.oe_product_image_img
+//     .o_wsale_product_information > .o_wsale_product_information_text
+//       h2.o_wsale_products_item_title
+//       .oe_subdescription_wrapper > .oe_subdescription
+//     .o_wsale_product_sub
+//       .product_price > span.fw-bold
+//       .o_wsale_product_btn > .o_wsale_product_action_row > button.o_wsale_product_btn_primary
 
 .o_wsale_product_grid_wrapper {
   height: 100%;
 
-  // ── MODO CLARO: tarjeta premium crema + chocolate ──────────────
-  form.eeee_product_cart {
+  // ── Tarjeta base: modo claro ───────────────────────────────
+  form.oe_product_cart {
     background: #fff !important;
     border: 1px solid rgba($sw-brown, 0.14) !important;
     border-radius: $sw-radius-lg !important;
@@ -543,29 +544,40 @@
       transform: translateY(-4px);
       border-color: rgba($sw-gold, 0.5) !important;
 
-      .eeee_product_image_img {
+      .oe_product_image_img {
         transform: scale(1.06);
+      }
+
+      .o_wsale_product_btn_primary {
+        background: $sw-brown !important;
+        color: #fff !important;
+        border-color: $sw-brown !important;
+        box-shadow: 0 4px 14px rgba($sw-brown, 0.35);
+
+        .fa {
+          color: #fff !important;
+        }
       }
     }
   }
 
   // Área de imagen: fondo crema cálido
-  .eeee_product_image {
+  .oe_product_image {
     height: 210px;
     overflow: hidden;
     background: #f5ede4;
     flex-shrink: 0;
     position: relative;
 
-    .eeee_product_image_link {
+    .oe_product_image_link {
       display: block;
       height: 100%;
     }
-    .eeee_product_image_img_wrapper {
+    .oe_product_image_img_wrapper {
       height: 100%;
       width: 100%;
     }
-    .eeee_product_image_img {
+    .oe_product_image_img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -600,7 +612,7 @@
   }
 
   // Descripción corta: máx 2 líneas
-  .eeee_subdescription {
+  .oe_subdescription {
     font-size: 0.8rem;
     color: #7a5c48 !important;
     margin-bottom: 0.5rem;
@@ -637,14 +649,20 @@
     color: #a08070 !important;
   }
 
-  // Botón carrito: cuadrado redondeado, marrón + blanco
-  a.o_add_cart_btn,
-  a[href*="cart"].btn,
-  .o_wsale_product_btn,
-  button.btn[name="add_to_cart"] {
-    background: $sw-brown !important;
-    color: #fff !important;
-    border: none !important;
+  // Botón carrito: icono-only en reposo, fondo aparece al hover de tarjeta
+  .o_wsale_product_btn {
+    flex-shrink: 0;
+  }
+
+  .o_wsale_product_action_row {
+    display: flex;
+    align-items: center;
+  }
+
+  .o_wsale_product_btn_primary {
+    background: rgba($sw-brown, 0.08) !important;
+    color: $sw-brown !important;
+    border: 1px solid rgba($sw-brown, 0.2) !important;
     border-radius: $sw-radius-sm !important;
     width: 36px !important;
     height: 36px !important;
@@ -654,25 +672,18 @@
     align-items: center !important;
     justify-content: center !important;
     flex-shrink: 0;
-    position: static !important;
     transition:
       background var(--transition-fast),
+      border-color var(--transition-fast),
       box-shadow var(--transition-fast);
 
-    i,
-    .fa {
-      font-size: 0.85rem;
-      color: #fff !important;
+    .o_label {
+      display: none !important;
     }
 
-    &:hover {
-      background: $sw-gold !important;
+    .fa {
+      font-size: 0.85rem;
       color: $sw-brown !important;
-      box-shadow: 0 4px 14px rgba($sw-gold, 0.45);
-      i,
-      .fa {
-        color: $sw-brown !important;
-      }
     }
   }
 }
@@ -782,24 +793,20 @@
 // ─── Tarjetas modo OSCURO — idéntico a imagen de referencia ────────────────
 [data-bs-theme="dark"] {
   .o_wsale_product_grid_wrapper {
-    form.eeee_product_cart {
-      background: var(
-        --bg-elevated
-      ) !important; // mismo tono que fondo de página
+    form.oe_product_cart {
+      background: var(--bg-elevated) !important;
       border-color: rgba(255, 255, 255, 0.07) !important;
 
       &:hover {
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         border-color: rgba($sw-gold, 0.3) !important;
 
-        // botón carrito: aparecer al hover
-        .o_wsale_product_btn_add_cart,
-        a.o_add_cart_btn,
-        button.btn[name="add_to_cart"],
-        a[href*="cart"].btn {
+        .o_wsale_product_btn_primary {
           background: $sw-gold !important;
+          color: $sw-brown !important;
+          border-color: $sw-gold !important;
           box-shadow: 0 4px 12px rgba($sw-gold, 0.4);
-          i,
+
           .fa {
             color: $sw-brown !important;
           }
@@ -807,7 +814,7 @@
       }
     }
 
-    .eeee_product_image {
+    .oe_product_image {
       background: rgba(255, 255, 255, 0.04);
     }
 
@@ -820,7 +827,7 @@
       color: #f0ebe4 !important;
     }
 
-    .eeee_subdescription {
+    .oe_subdescription {
       color: rgba(240, 235, 228, 0.5) !important;
     }
 
@@ -834,23 +841,13 @@
       color: $sw-gold-light !important;
     }
 
-    // Botón carrito en dark: solo icono dorado en reposo
-    .o_wsale_product_btn_add_cart,
-    a.o_add_cart_btn,
-    button.btn[name="add_to_cart"],
-    a[href*="cart"].btn {
+    // Botón carrito en dark: icono dorado en reposo, fondo dorado al hover de tarjeta
+    .o_wsale_product_btn_primary {
       background: transparent !important;
-      i,
+      border-color: rgba($sw-gold, 0.3) !important;
+
       .fa {
         color: $sw-gold !important;
-      }
-
-      &:hover {
-        background: $sw-gold !important;
-        i,
-        .fa {
-          color: $sw-brown !important;
-        }
       }
     }
   }
