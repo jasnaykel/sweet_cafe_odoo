@@ -35,6 +35,7 @@
         'l10n_cu_hr_contract',
         'l10n_cu_hr_employee_contract',
         'l10n_cu_hr_payroll_movement',
+        'hr_recruitment',           # Pipeline de reclutamiento interno
     ],
     'data': [
         # Security — always first
