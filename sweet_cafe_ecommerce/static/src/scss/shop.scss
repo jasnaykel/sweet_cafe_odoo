@@ -549,13 +549,13 @@
       }
 
       .o_wsale_product_btn_primary {
-        background: $sw-brown !important;
-        color: #fff !important;
-        border-color: $sw-brown !important;
-        box-shadow: 0 4px 14px rgba($sw-brown, 0.35);
+        background: rgba(200, 149, 108, 0.1) !important;
+        color: var(--accent-gold) !important;
+        border-color: var(--accent-gold) !important;
+        box-shadow: 0 4px 14px rgba($sw-gold, 0.3);
 
         .fa {
-          color: #fff !important;
+          color: var(--accent-gold) !important;
         }
       }
     }
@@ -603,26 +603,34 @@
   }
 
   // Título: chocolate oscuro, siempre legible
-  .o_wsale_products_item_title {
+  .o_wsale_products_item_title,
+  .o_wsale_products_item_title h2,
+  .o_wsale_products_item_title a,
+  .o_wsale_product_information .o_wsale_products_item_title a {
     font-family: "Playfair Display", Georgia, serif;
     font-size: 0.95rem;
     font-weight: 700;
     margin-bottom: 0.3rem;
-    color: #2c1810 !important;
+    color: #1a0a04 !important;
+    -webkit-text-fill-color: #1a0a04 !important;
 
     a {
-      color: inherit !important;
+      color: #1a0a04 !important;
+      -webkit-text-fill-color: #1a0a04 !important;
       text-decoration: none;
       &:hover {
         color: $sw-gold !important;
+        -webkit-text-fill-color: $sw-gold !important;
       }
     }
   }
 
   // Descripción corta: máx 2 líneas
-  .oe_subdescription {
+  .oe_subdescription,
+  .oe_subdescription_wrapper .oe_subdescription {
     font-size: 0.8rem;
-    color: $sw-brown !important;
+    color: #5c3d2e !important;
+    -webkit-text-fill-color: #5c3d2e !important;
     margin-bottom: 0.5rem;
     flex-grow: 1;
     display: -webkit-box;
@@ -681,10 +689,11 @@
   }
 
   .o_wsale_product_btn_primary {
-    background: rgba($sw-brown, 0.08) !important;
+    background: transparent !important;
     color: $sw-brown !important;
-    border: 1px solid rgba($sw-brown, 0.2) !important;
+    border: 1px solid rgba($sw-brown, 0.4) !important;
     border-radius: $sw-radius-sm !important;
+    box-shadow: none !important; // evita sombras Bootstrap en esquinas
     width: 36px !important;
     height: 36px !important;
     min-width: 36px;
@@ -695,8 +704,14 @@
     flex-shrink: 0;
     transition:
       background var(--transition-fast),
-      border-color var(--transition-fast),
-      box-shadow var(--transition-fast);
+      color var(--transition-fast),
+      border-color var(--transition-fast);
+
+    &:focus,
+    &:focus-visible {
+      box-shadow: none !important;
+      outline: none !important;
+    }
 
     .o_label {
       display: none !important;
@@ -705,6 +720,7 @@
     .fa {
       font-size: 0.85rem;
       color: $sw-brown !important;
+      transition: color var(--transition-fast);
     }
   }
 }
@@ -852,12 +868,17 @@
     }
 
     .o_wsale_products_item_title,
-    .o_wsale_products_item_title a {
+    .o_wsale_products_item_title h2,
+    .o_wsale_products_item_title a,
+    .o_wsale_product_information .o_wsale_products_item_title a {
       color: #f0ebe4 !important;
+      -webkit-text-fill-color: #f0ebe4 !important;
     }
 
-    .oe_subdescription {
-      color: rgba(240, 235, 228, 0.82) !important;
+    .oe_subdescription,
+    .oe_subdescription_wrapper .oe_subdescription {
+      color: rgba(240, 235, 228, 0.8) !important;
+      -webkit-text-fill-color: rgba(240, 235, 228, 0.8) !important;
     }
 
     .o_wsale_product_sub {
@@ -867,16 +888,19 @@
     .product_price .fw-bold,
     .product_price .o_price_unit,
     .product_price > span:first-child {
-      color: $sw-gold !important;
+      color: $sw-gold-light !important;
+      -webkit-text-fill-color: $sw-gold-light !important;
     }
 
-    // Botón carrito en dark: icono dorado en reposo, fondo dorado al hover de tarjeta
+    // Botón carrito en dark: icono dorado brillante en reposo
     .o_wsale_product_btn_primary {
-      background: transparent !important;
-      border-color: rgba($sw-gold, 0.3) !important;
+      background: rgba($sw-gold, 0.12) !important;
+      border-color: rgba($sw-gold-light, 0.5) !important;
+      border-radius: $sw-radius-sm !important;
+      box-shadow: none !important; // elimina sombras en las esquinas
 
       .fa {
-        color: $sw-gold !important;
+        color: $sw-gold-light !important;
       }
     }
   }
@@ -993,7 +1017,10 @@
   }
 
   .o_wsale_products_searchbar_form {
-    flex: 1 1 0;
+    flex: 0 1 520px !important; // Bootstrap inyecta flex-grow-1 !important, necesitamos max-width
+    max-width: 520px !important;
+    width: 520px;
+    min-width: 220px;
     background: var(--bg-surface);
     border-radius: $sw-radius-md;
     border: 1px solid var(--border-subtle);

@@ -274,6 +274,16 @@ h6 {
       left: 0;
       right: 0;
     }
+
+    // Página activa: igual que hover
+    &.active {
+      color: var(--accent-gold) !important;
+
+      &:not(.dropdown-toggle)::after {
+        left: 0;
+        right: 0;
+      }
+    }
   }
 
   // Language selector
