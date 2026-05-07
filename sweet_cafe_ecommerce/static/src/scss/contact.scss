@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════════════
 
 // ─── Variables locales ────────────────────────────────────────────────
-$contact-hero-height: 280px;
+$contact-hero-height: 520px;
 $contact-card-radius: 20px;
 $contact-info-radius: 16px;
 $contact-icon-size: 46px;
@@ -72,7 +72,259 @@ $contact-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-// ─── Hero Section ─────────────────────────────────────────────────────
+// ─── Hero con imagen de fondo ─────────────────────────────────────────
+.sw-contact-hero-img {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+
+  @media (max-width: 575.98px) {
+    min-height: 420px;
+  }
+}
+
+// Imagen de fondo (desacoplada del texto para parallax CSS)
+.sw-hero-img-bg {
+  position: absolute;
+  inset: -6%; // margen extra para el parallax scale
+  background-image: url("/sweet_cafe_ecommerce/static/src/img/contact_hero.jpg");
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  transform: scale(1.06);
+  animation: sw-hero-ken-burns 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes sw-hero-ken-burns {
+  from {
+    transform: scale(1.06) translateX(0) translateY(0);
+  }
+  to {
+    transform: scale(1.12) translateX(-1%) translateY(-1%);
+  }
+}
+
+// Overlay multicapa: oscurece + calienta el tono
+.sw-hero-img-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(15, 8, 4, 0.55) 0%,
+      rgba(40, 20, 8, 0.72) 55%,
+      rgba(15, 8, 4, 0.82) 100%
+    ),
+    radial-gradient(
+      ellipse 80% 60% at 50% 40%,
+      rgba(212, 165, 116, 0.08) 0%,
+      transparent 70%
+    );
+  z-index: 1;
+}
+
+// Partículas flotantes
+.sw-hero-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.sw-particle {
+  position: absolute;
+  color: var(--accent-gold);
+  opacity: 0;
+  font-size: 0.85rem;
+  animation: sw-particle-rise 8s ease-in-out infinite;
+  will-change: transform, opacity;
+
+  &--1 {
+    left: 8%;
+    bottom: 20%;
+    animation-delay: 0s;
+    font-size: 0.7rem;
+  }
+  &--2 {
+    left: 22%;
+    bottom: 10%;
+    animation-delay: 1.4s;
+    font-size: 0.55rem;
+    opacity: 0;
+  }
+  &--3 {
+    left: 42%;
+    bottom: 5%;
+    animation-delay: 2.8s;
+    font-size: 0.9rem;
+  }
+  &--4 {
+    left: 65%;
+    bottom: 18%;
+    animation-delay: 0.7s;
+    font-size: 0.65rem;
+  }
+  &--5 {
+    left: 80%;
+    bottom: 8%;
+    animation-delay: 2.1s;
+    font-size: 0.75rem;
+  }
+  &--6 {
+    left: 90%;
+    bottom: 25%;
+    animation-delay: 3.5s;
+    font-size: 0.5rem;
+  }
+}
+
+@keyframes sw-particle-rise {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  85% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-120px) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+// Contenido del hero (sobre el overlay)
+.sw-hero-img-content {
+  position: relative;
+  z-index: 3;
+  padding: 100px 1rem 120px;
+  max-width: 720px;
+  margin: 0 auto;
+
+  @media (max-width: 575.98px) {
+    padding: 80px 1rem 100px;
+  }
+}
+
+// Eyebrow (chip) en versión hero (sobre imagen oscura)
+.sw-contact-eyebrow--hero {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(10px);
+  animation: sw-fade-down 0.7s ease both;
+
+  i {
+    color: var(--accent-gold-light) !important;
+  }
+}
+
+// Título hero
+.sw-contact-title--hero {
+  color: #ffffff !important;
+  text-shadow:
+    0 2px 24px rgba(0, 0, 0, 0.55),
+    0 1px 4px rgba(0, 0, 0, 0.35);
+  animation: sw-fade-up 0.75s 0.18s ease both;
+  transition: none !important;
+}
+
+// Subtítulo hero
+.sw-contact-subtitle--hero {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+  animation: sw-fade-up 0.75s 0.36s ease both;
+  transition: none !important;
+}
+
+// Indicador de scroll
+.sw-hero-scroll-hint {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  animation: sw-fade-up 0.75s 0.55s ease both;
+}
+
+.sw-scroll-mouse {
+  width: 26px;
+  height: 42px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-radius: 13px;
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+}
+
+.sw-scroll-wheel {
+  width: 4px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
+  animation: sw-scroll-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes sw-scroll-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.3;
+  }
+}
+
+// Wave divisor inferior del hero
+.sw-hero-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  line-height: 0;
+
+  svg {
+    width: 100%;
+    height: 70px;
+    display: block;
+  }
+}
+
+// ─── Animaciones de entrada ───────────────────────────────────────────
+@keyframes sw-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sw-fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─── Hero Section (versión solo texto — mantener por si se usa) ───────
 .sw-contact-hero {
   position: relative;
   z-index: 1;
@@ -481,13 +733,13 @@ textarea.sw-form-input {
   iframe {
     display: block;
     width: 100%;
-    height: 420px;
+    height: 260px;
     border: 0;
     filter: var(--sw-map-filter);
     transition: filter var(--transition-base);
 
     @media (max-width: 575.98px) {
-      height: 280px;
+      height: 200px;
     }
   }
 }

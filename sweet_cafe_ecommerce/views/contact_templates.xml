@@ -24,20 +24,61 @@
                 <div class="sw-aurora__orb sw-aurora__orb--3"/>
             </div>
 
-            <!-- ─── Hero Section ──────────────────────────────────────── -->
-            <section class="sw-contact-hero">
-                <div class="container text-center">
-                    <div class="sw-contact-eyebrow">
+            <!-- ─── Hero Section con imagen ──────────────────────────── -->
+            <section class="sw-contact-hero-img" aria-label="Contáctenos hero">
+
+                <!-- Imagen de fondo (CSS background) -->
+                <div class="sw-hero-img-bg" aria-hidden="true"/>
+
+                <!-- Gradiente de superposición multicapa -->
+                <div class="sw-hero-img-overlay" aria-hidden="true"/>
+
+                <!-- Partículas decorativas flotantes -->
+                <div class="sw-hero-particles" aria-hidden="true">
+                    <span class="sw-particle sw-particle--1">✦</span>
+                    <span class="sw-particle sw-particle--2">✦</span>
+                    <span class="sw-particle sw-particle--3">◆</span>
+                    <span class="sw-particle sw-particle--4">✦</span>
+                    <span class="sw-particle sw-particle--5">✧</span>
+                    <span class="sw-particle sw-particle--6">◆</span>
+                </div>
+
+                <!-- Contenido centrado -->
+                <div class="container sw-hero-img-content text-center">
+
+                    <div class="sw-contact-eyebrow sw-contact-eyebrow--hero">
                         <i class="fa fa-comment-o me-2" aria-hidden="true"/>
                         ESTAMOS PARA TI
                     </div>
-                    <h1 class="sw-contact-title">Contáctenos</h1>
-                    <p class="sw-contact-subtitle">
+
+                    <h1 class="sw-contact-title sw-contact-title--hero">
+                        Contáctenos
+                    </h1>
+
+                    <p class="sw-contact-subtitle sw-contact-subtitle--hero">
                         ¿Tienes una idea dulce en mente? Escríbenos y te responderemos<br
                             class="d-none d-md-inline"/>
                         con la misma dedicación que ponemos en cada pastel.
                     </p>
+
+                    <!-- Indicador de scroll -->
+                    <div class="sw-hero-scroll-hint" aria-hidden="true">
+                        <div class="sw-scroll-mouse">
+                            <div class="sw-scroll-wheel"/>
+                        </div>
+                    </div>
+
                 </div>
+
+                <!-- Divisor wave inferior -->
+                <div class="sw-hero-wave" aria-hidden="true">
+                    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z"
+                              fill="var(--bg-page)"/>
+                    </svg>
+                </div>
+
             </section>
 
             <!-- ─── Contenido principal: Formulario + Información ─────── -->
@@ -282,7 +323,7 @@
                     <iframe
                         src="https://www.openstreetmap.org/export/embed.html?bbox=-82.4500%2C23.0800%2C-82.3000%2C23.2000&amp;layer=mapnik&amp;marker=23.1340%2C-82.3590"
                         width="100%"
-                        height="420"
+                        height="260"
                         style="border:0; display:block;"
                         allowfullscreen=""
                         loading="lazy"
