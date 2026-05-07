@@ -217,10 +217,9 @@
     </template>
 
     <!-- Chip de categoría encima del título del producto -->
-    <template id="sw_pdp_category_chip" inherit_id="website_sale.product"
+    <template id="sw_pdp_category_chip" inherit_id="website_sale.product_title"
               name="Sweet Café PDP Category Chip">
-        <xpath expr="//div[hasclass('o_wsale_product_details_content_section_title')]"
-               position="before">
+        <xpath expr="//h1" position="before">
             <t t-if="product.public_categ_ids">
                 <div class="sw-pdp-cat-chip">
                     <i class="fa fa-tag" aria-hidden="true"/>
@@ -262,17 +261,20 @@
     <!-- "También te puede gustar" — override del heading de Odoo -->
     <template id="sw_pdp_alternative_heading" inherit_id="website_sale.alternative_products"
               name="Sweet Café — Relacionados en Español">
-        <xpath expr="//section[hasclass('o_wsale_alternative_products')]" position="before">
-            <div class="sw-pdp-related-head container">
-                <div class="sw-contact-eyebrow d-inline-flex mb-3">
+        <!-- Reemplazar título y subtítulo con versión premium en español -->
+        <xpath expr="//h4" position="replace">
+            <div class="text-center mb-2">
+                <div class="sw-contact-eyebrow d-inline-flex mb-2">
                     <i class="fa fa-birthday-cake me-2" aria-hidden="true"/>
                     TAMBIÉN TE PUEDE GUSTAR
                 </div>
                 <h2 class="sw-pdp-related-title">Descubre más delicias</h2>
-                <p class="sw-pdp-related-sub">
-                    Otros productos de nuestra repostería artesanal que te pueden encantar
-                </p>
             </div>
+        </xpath>
+        <xpath expr="//p[hasclass('lead')]" position="replace">
+            <p class="sw-pdp-related-sub text-center">
+                Otros productos de nuestra repostería artesanal que te pueden encantar
+            </p>
         </xpath>
     </template>
 
