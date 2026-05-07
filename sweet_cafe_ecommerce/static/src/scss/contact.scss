@@ -288,7 +288,7 @@ $contact-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 // Wave divisor inferior del hero
 .sw-hero-wave {
   position: absolute;
-  bottom: 0;
+  bottom: -2px; // -2px elimina el gap de 1px por antialiasing del SVG
   left: 0;
   right: 0;
   z-index: 4;
@@ -296,7 +296,7 @@ $contact-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   svg {
     width: 100%;
-    height: 70px;
+    height: 72px; // +2px para cubrir el gap
     display: block;
   }
 }
@@ -716,39 +716,129 @@ textarea.sw-form-input {
   }
 }
 
-// ─── Sección del Mapa ─────────────────────────────────────────────────
+// ─── Sección del Mapa — Card contenida ──────────────────────────────
 .sw-contact-map-section {
   position: relative;
   z-index: 1;
-  margin-top: 0;
-  background: var(--bg-surface);
-  transition: background-color var(--transition-base);
+  padding: 0 0 72px;
+  background: transparent;
 }
 
-.sw-map-wrapper {
-  position: relative;
-  width: 100%;
+// Card que contiene el mapa (con animación de entrada)
+.sw-map-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
   overflow: hidden;
+  box-shadow: var(--sw-shadow-lg);
+  max-width: 900px;
+  margin: 0 auto;
+  animation: sw-map-reveal 0.8s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+
+  &:hover {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
+  }
+}
+
+@keyframes sw-map-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Cabecera del card del mapa
+.sw-map-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.sw-map-pin-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e8845a 0%, #c85a2a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(200, 90, 42, 0.35);
+}
+
+.sw-map-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sw-map-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.1rem;
+  transition: color var(--transition-base);
+}
+
+.sw-map-card-addr {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+  transition: color var(--transition-base);
+}
+
+// Wrapper del iframe dentro del card
+.sw-map-frame-wrapper {
+  position: relative;
+  overflow: hidden;
+  line-height: 0; // elimina gap inferior del iframe
 
   iframe {
     display: block;
     width: 100%;
-    height: 260px;
+    height: 280px;
     border: 0;
     filter: var(--sw-map-filter);
     transition: filter var(--transition-base);
 
     @media (max-width: 575.98px) {
-      height: 200px;
+      height: 220px;
     }
+  }
+
+  // Viñeta en los bordes del iframe para integrarlo mejor
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 100% 100% at 50% 50%,
+      transparent 65%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
   }
 }
 
 .sw-map-overlay-link {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  z-index: 2;
+  // ya no se usa, el link va en el header
+  display: none;
 }
 
 .sw-map-ext-link {

@@ -317,27 +317,51 @@
                 </div><!-- /container -->
             </section><!-- /sw-contact-main -->
 
-            <!-- ─── Sección del mapa ───────────────────────────────────── -->
+            <!-- ─── Sección del mapa — Card contenida ────────────────── -->
             <section class="sw-contact-map-section" aria-label="Ubicación en el mapa">
-                <div class="sw-map-wrapper">
-                    <iframe
-                        src="https://www.openstreetmap.org/export/embed.html?bbox=-82.4500%2C23.0800%2C-82.3000%2C23.2000&amp;layer=mapnik&amp;marker=23.1340%2C-82.3590"
-                        width="100%"
-                        height="260"
-                        style="border:0; display:block;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        title="Ubicación Sweet Café — La Habana, Cuba"/>
-                    <div class="sw-map-overlay-link">
-                        <a href="https://www.openstreetmap.org/?mlat=23.134&amp;mlon=-82.359#map=13/23.134/-82.359"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="sw-map-ext-link">
-                            <i class="fa fa-external-link me-1" aria-hidden="true"/>
-                            Abrir en Maps
-                        </a>
-                    </div>
-                </div>
+                <div class="container">
+                    <div class="sw-map-card">
+
+                        <!-- Cabecera del card -->
+                        <div class="sw-map-card-header">
+                            <div class="sw-map-pin-badge">
+                                <i class="fa fa-map-marker" aria-hidden="true"/>
+                            </div>
+                            <div class="sw-map-card-info">
+                                <h4 class="sw-map-card-title">Encuéntranos</h4>
+                                <p class="sw-map-card-addr">
+                                    <t t-if="res_company.partner_id.city">
+                                        <t t-out="res_company.partner_id.city"/>
+                                        <t t-if="res_company.partner_id.country_id">
+                                            , <t t-out="res_company.partner_id.country_id.name"/>
+                                        </t>
+                                    </t>
+                                    <t t-else="">La Habana, Cuba</t>
+                                </p>
+                            </div>
+                            <a href="https://www.openstreetmap.org/?mlat=23.134&amp;mlon=-82.359#map=13/23.134/-82.359"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="sw-map-ext-link ms-auto">
+                                <i class="fa fa-external-link me-1" aria-hidden="true"/>
+                                Abrir en Maps
+                            </a>
+                        </div>
+
+                        <!-- El mapa contenido -->
+                        <div class="sw-map-frame-wrapper">
+                            <iframe
+                                src="https://www.openstreetmap.org/export/embed.html?bbox=-82.4500%2C23.0800%2C-82.3000%2C23.2000&amp;layer=mapnik&amp;marker=23.1340%2C-82.3590"
+                                width="100%"
+                                height="280"
+                                style="border:0; display:block;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                title="Ubicación Sweet Café — La Habana, Cuba"/>
+                        </div>
+
+                    </div><!-- /sw-map-card -->
+                </div><!-- /container -->
             </section>
 
         </div><!-- /wrap -->
