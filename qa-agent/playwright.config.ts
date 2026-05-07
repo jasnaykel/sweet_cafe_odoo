@@ -34,6 +34,7 @@ export default defineConfig({
   reporter: [
     ["./src/reporters/sweet-cafe-reporter.ts"],
     ["json", { outputFile: "./reports/test-results.json" }],
+    ["html", { outputFolder: "./reports/playwright-report", open: "never" }],
     ["list"],
   ],
 
