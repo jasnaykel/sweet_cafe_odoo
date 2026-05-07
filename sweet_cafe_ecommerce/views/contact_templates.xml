@@ -317,16 +317,41 @@
                 </div><!-- /container -->
             </section><!-- /sw-contact-main -->
 
-            <!-- ─── Sección del mapa — Card contenida ────────────────── -->
+            <!-- ─── Sección del mapa — Premium ──────────────────────── -->
             <section class="sw-contact-map-section" aria-label="Ubicación en el mapa">
+
+                <!-- Fondo decorativo de sección -->
+                <div class="sw-map-section-bg" aria-hidden="true"/>
+
                 <div class="container">
+
+                    <!-- Encabezado de sección -->
+                    <div class="sw-map-section-head text-center">
+                        <div class="sw-contact-eyebrow sw-map-eyebrow">
+                            <i class="fa fa-map-marker me-2" aria-hidden="true"/>
+                            NUESTRA UBICACIÓN
+                        </div>
+                        <h2 class="sw-map-section-title">Ven a visitarnos</h2>
+                        <p class="sw-map-section-sub">
+                            Estaremos encantados de recibirte y mostrarte<br
+                                class="d-none d-md-inline"/> todo lo que preparamos con amor.
+                        </p>
+                    </div>
+
+                    <!-- Card del mapa -->
                     <div class="sw-map-card">
 
                         <!-- Cabecera del card -->
                         <div class="sw-map-card-header">
-                            <div class="sw-map-pin-badge">
-                                <i class="fa fa-map-marker" aria-hidden="true"/>
+
+                            <!-- Pin con ripple -->
+                            <div class="sw-map-pin-wrap" aria-hidden="true">
+                                <div class="sw-map-pin-ripple"/>
+                                <div class="sw-map-pin-badge">
+                                    <i class="fa fa-map-marker" aria-hidden="true"/>
+                                </div>
                             </div>
+
                             <div class="sw-map-card-info">
                                 <h4 class="sw-map-card-title">Encuéntranos</h4>
                                 <p class="sw-map-card-addr">
@@ -339,6 +364,7 @@
                                     <t t-else="">La Habana, Cuba</t>
                                 </p>
                             </div>
+
                             <a href="https://www.openstreetmap.org/?mlat=23.134&amp;mlon=-82.359#map=13/23.134/-82.359"
                                target="_blank"
                                rel="noopener noreferrer"
@@ -346,19 +372,48 @@
                                 <i class="fa fa-external-link me-1" aria-hidden="true"/>
                                 Abrir en Maps
                             </a>
-                        </div>
 
-                        <!-- El mapa contenido -->
+                        </div><!-- /sw-map-card-header -->
+
+                        <!-- El mapa -->
                         <div class="sw-map-frame-wrapper">
                             <iframe
                                 src="https://www.openstreetmap.org/export/embed.html?bbox=-82.4500%2C23.0800%2C-82.3000%2C23.2000&amp;layer=mapnik&amp;marker=23.1340%2C-82.3590"
                                 width="100%"
-                                height="280"
+                                height="300"
                                 style="border:0; display:block;"
                                 allowfullscreen=""
                                 loading="lazy"
                                 title="Ubicación Sweet Café — La Habana, Cuba"/>
                         </div>
+
+                        <!-- Footer strip: horario + teléfono -->
+                        <div class="sw-map-card-footer">
+                            <div class="sw-map-chip">
+                                <i class="fa fa-clock-o" aria-hidden="true"/>
+                                <span>Lun – Sáb  8:00 – 20:00</span>
+                            </div>
+                            <div class="sw-map-chip-divider" aria-hidden="true"/>
+                            <div class="sw-map-chip">
+                                <i class="fa fa-phone" aria-hidden="true"/>
+                                <span>
+                                    <t t-if="res_company.phone">
+                                        <t t-out="res_company.phone"/>
+                                    </t>
+                                    <t t-else="">+53 7 830-XXXX</t>
+                                </span>
+                            </div>
+                            <div class="sw-map-chip-divider" aria-hidden="true"/>
+                            <div class="sw-map-chip">
+                                <i class="fa fa-envelope-o" aria-hidden="true"/>
+                                <span>
+                                    <t t-if="res_company.email">
+                                        <t t-out="res_company.email"/>
+                                    </t>
+                                    <t t-else="">pedidos@sweetcafe.cu</t>
+                                </span>
+                            </div>
+                        </div><!-- /sw-map-card-footer -->
 
                     </div><!-- /sw-map-card -->
                 </div><!-- /container -->
