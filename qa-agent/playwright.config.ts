@@ -34,6 +34,7 @@ export default defineConfig({
   reporter: [
     ["./src/reporters/sweet-cafe-reporter.ts"],
     ["json", { outputFile: "./reports/test-results.json" }],
+    ["html", { outputFolder: "./reports/playwright-report", open: "never" }],
     ["list"],
   ],
 
@@ -60,6 +61,7 @@ export default defineConfig({
     {
       name: "sweet-cafe",
       testMatch: [
+        // ── Módulos Sweet Café originales ──
         "**/sweet_cafe/employees.spec.ts",
         "**/sweet_cafe/products.spec.ts",
         "**/sweet_cafe/inventory.spec.ts",
@@ -72,6 +74,20 @@ export default defineConfig({
         "**/sweet_cafe/negative-validation.spec.ts",
         "**/sweet_cafe/expert-workflows.spec.ts",
         "**/sweet_cafe/expert-access-control.spec.ts",
+        // ── RRHH Cubano ──
+        "**/sweet_cafe/recruitment.spec.ts",
+        "**/sweet_cafe/contracts.spec.ts",
+        "**/sweet_cafe/payroll-movements.spec.ts",
+        "**/sweet_cafe/absences.spec.ts",
+        "**/sweet_cafe/attendances.spec.ts",
+        // ── Tributación ──
+        "**/sweet_cafe/onat.spec.ts",
+        // ── Operaciones ──
+        "**/sweet_cafe/contacts.spec.ts",
+        "**/sweet_cafe/purchases.spec.ts",
+        "**/sweet_cafe/sales.spec.ts",
+        "**/sweet_cafe/accounting.spec.ts",
+        // ── Auth ──
         "**/auth/odoo-login.spec.ts",
       ],
       use: {

@@ -12,6 +12,7 @@
         <field name="categ_id" ref="product_category_cakes"/>
         <field name="is_pastry" eval="True"/>
         <field name="sweet_product_type">cake</field>
+        <field name="list_price">12.50</field>
         <field name="baking_time">1.5</field>
         <field name="baking_temp">180</field>
         <field name="requires_refrigeration" eval="True"/>
@@ -31,6 +32,7 @@
         <field name="categ_id" ref="product_category_tartaletas"/>
         <field name="is_pastry" eval="True"/>
         <field name="sweet_product_type">tartaleta</field>
+        <field name="list_price">3.50</field>
         <field name="baking_time">0.75</field>
         <field name="baking_temp">165</field>
         <field name="requires_refrigeration" eval="True"/>
@@ -48,6 +50,7 @@
         <field name="categ_id" ref="product_category_tartaletas"/>
         <field name="is_pastry" eval="True"/>
         <field name="sweet_product_type">tartaleta</field>
+        <field name="list_price">3.50</field>
         <field name="baking_time">0.75</field>
         <field name="baking_temp">165</field>
         <field name="requires_refrigeration" eval="True"/>
@@ -65,6 +68,7 @@
         <field name="categ_id" ref="product_category_cakes"/>
         <field name="is_pastry" eval="True"/>
         <field name="sweet_product_type">cake</field>
+        <field name="list_price">8.00</field>
         <field name="baking_time">1.0</field>
         <field name="baking_temp">175</field>
         <field name="requires_refrigeration" eval="True"/>
@@ -72,7 +76,7 @@
         <field name="sale_ok" eval="True"/>
         <field name="purchase_ok" eval="False"/>
         <field name="tracking">none</field>
-        <field name="description_sale">Mini cake individual de esponja de vainilla con betÃºn de mantequilla.</field>
+        <field name="description_sale">Mini cake individual de esponja de vainilla con betún de mantequilla.</field>
     </record>
 
     <!-- Galleta Miel -->
@@ -82,6 +86,7 @@
         <field name="categ_id" ref="product_category_galletas"/>
         <field name="is_pastry" eval="True"/>
         <field name="sweet_product_type">galleta</field>
+        <field name="list_price">1.50</field>
         <field name="baking_time">0.5</field>
         <field name="baking_temp">170</field>
         <field name="requires_refrigeration" eval="False"/>
@@ -89,7 +94,7 @@
         <field name="sale_ok" eval="True"/>
         <field name="purchase_ok" eval="False"/>
         <field name="tracking">none</field>
-        <field name="description_sale">Galletas crujientes artesanales con miel de caÃ±a y canela molida.</field>
+        <field name="description_sale">Galletas crujientes artesanales con miel de caña y canela molida.</field>
     </record>
 
     <!-- Insumo: Harina -->

@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!--
+        Activar categorias en sidebar izquierdo (comportamiento nativo de Odoo).
+        Por defecto en Odoo 19 esta desactivado (active=False) y usa el filmstrip superior.
+        Con esto el bloque .products_categories aparece en #products_grid_before.
+    -->
+    <record id="website_sale.products_categories" model="ir.ui.view">
+        <field name="active">False</field>
+    </record>
+
+    <!-- Desactivar filmstrip de categorias en la barra superior (para no duplicar) -->
+    <record id="website_sale.products_categories_top" model="ir.ui.view">
+        <field name="active">False</field>
+    </record>
+
+    <!--
+        Desactivar accordion en categorias: con el collapsible activo, las categorias
+        sin hijos se renderizan igual que los filtros de atributos (accordion con flecha),
+        haciendo imposible distinguirlos. Con esto las categorias se muestran como
+        lista plana de enlaces, identico al mockup.
+    -->
+    <record id="website_sale.products_categories_list_collapsible" model="ir.ui.view">
+        <field name="active">False</field>
+    </record>
+
+    <!-- Titulo "Categories" -> "Categorias" en sidebar -->
+    <template id="sweet_categories_title" inherit_id="website_sale.products_categories_list" name="Sweet Categories Title">
+        <xpath expr="//h6[@t-attf-class]" position="replace">
+            <h6 t-attf-class="o_categories_collapse_title {{_titleClasses}}"><b>Categor&#237;as</b></h6>
+        </xpath>
+    </template>
+
     <!-- Product Page Enhancement -->
     <template id="product_pastry_info" inherit_id="website_sale.product" name="Product Pastry Specs">
         <xpath expr="//div[@id='product_details']" position="inside">
@@ -102,230 +133,75 @@
     </template>
 
     <!-- ═══════════════════════════════════════════════════════════════
-         SHOP PAGE PREMIUM — Diseño completo con Hero, filtros y grid
-         Hereda: website_sale.products (página /shop)
-         Soporta modo oscuro y claro via CSS vars del theme
+         SHOP PAGE — Hero injection
+         ESTRATEGIA CORRECTA: NO reemplazamos #wrap.
+         Solo inyectamos el hero ANTES de #o_wsale_container para que
+         Odoo maneje 100% su flujo nativo:
+           • Sidebar con categorías y atributos (y offcanvas móvil)
+           • Grid de productos con bins/products_item
+           • Paginación nativa
+           • Carrito JS (a-submit, json-rpc)
+           • Breadcrumbs, búsqueda, sort — todo nativo
+         El estilo visual se aplica vía shop.scss sobre las clases nativas.
     ═══════════════════════════════════════════════════════════════ -->
-    <template id="sweet_shop_page" inherit_id="website_sale.products" name="Sweet Caf&#233; Shop Premium">
-
-        <!-- Reemplazar el wrap principal manteniendo clases de Odoo para JS del carrito -->
-        <xpath expr="//div[@id='wrap']" position="replace">
-            <div id="wrap" class="js_sale o_wsale_products_page">
-            <div class="container position-relative" style="z-index:1;">
-
-                <!-- ── Hero Premium ── -->
-                <div class="sw-shop-hero-premium">
-                    <div class="sw-shop-hero-bg">
-                        <div class="sw-particle" style="width:8px;height:8px;top:20%;left:10%;animation-delay:0s;"/>
-                        <div class="sw-particle" style="width:12px;height:12px;top:60%;left:20%;animation-delay:1s;"/>
-                        <div class="sw-particle" style="width:6px;height:6px;top:30%;left:35%;animation-delay:2s;"/>
-                        <div class="sw-particle" style="width:10px;height:10px;top:70%;left:15%;animation-delay:3s;"/>
-                        <div class="sw-particle" style="width:8px;height:8px;top:40%;left:25%;animation-delay:4s;"/>
-                        <div class="sw-particle" style="width:14px;height:14px;top:15%;left:40%;animation-delay:1.5s;"/>
-                        <div class="sw-particle" style="width:6px;height:6px;top:80%;left:30%;animation-delay:2.5s;"/>
-                        <div class="sw-hero-ring" style="width:300px;height:300px;top:50%;left:62%;transform:translate(-50%,-50%);"/>
-                        <div class="sw-hero-ring" style="width:420px;height:420px;top:50%;left:62%;transform:translate(-50%,-50%);animation-delay:1s;"/>
-                        <div class="sw-hero-ring" style="width:540px;height:540px;top:50%;left:62%;transform:translate(-50%,-50%);animation-delay:2s;"/>
+    <template id="sweet_shop_page" inherit_id="website_sale.products" name="Sweet Café Shop Hero">
+        <xpath expr="//div[@id='o_wsale_container']" position="before">
+            <div class="sw-shop-hero-premium container mb-4">
+                <div class="sw-shop-hero-bg">
+                    <div class="sw-particle" style="width:8px;height:8px;top:20%;left:10%;animation-delay:0s;"/>
+                    <div class="sw-particle" style="width:12px;height:12px;top:60%;left:20%;animation-delay:1s;"/>
+                    <div class="sw-particle" style="width:6px;height:6px;top:30%;left:35%;animation-delay:2s;"/>
+                    <div class="sw-particle" style="width:10px;height:10px;top:70%;left:15%;animation-delay:3s;"/>
+                    <div class="sw-particle" style="width:8px;height:8px;top:40%;left:25%;animation-delay:4s;"/>
+                    <div class="sw-particle" style="width:14px;height:14px;top:15%;left:40%;animation-delay:1.5s;"/>
+                    <div class="sw-particle" style="width:6px;height:6px;top:80%;left:30%;animation-delay:2.5s;"/>
+                    <div class="sw-hero-ring" style="width:300px;height:300px;top:50%;left:62%;transform:translate(-50%,-50%);"/>
+                    <div class="sw-hero-ring" style="width:420px;height:420px;top:50%;left:62%;transform:translate(-50%,-50%);animation-delay:1s;"/>
+                    <div class="sw-hero-ring" style="width:540px;height:540px;top:50%;left:62%;transform:translate(-50%,-50%);animation-delay:2s;"/>
+                </div>
+                <div class="sw-hero-float-product">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&amp;h=500&amp;fit=crop"
+                         alt="Tarta Premium Sweet Caf&#233;" loading="lazy"/>
+                </div>
+                <div class="sw-shop-hero-content">
+                    <div class="sw-badge mb-3"
+                         style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;font-size:0.8rem;font-weight:600;letter-spacing:1px;">
+                        ✦ Sabor Aut&#233;ntico Cubano
                     </div>
-                    <!-- Imagen flotante solo en pantallas grandes -->
-                    <div class="sw-hero-float-product">
-                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&amp;h=500&amp;fit=crop"
-                             alt="Tarta Premium Swet Caf&#233;" loading="lazy"/>
-                    </div>
-                    <div class="sw-shop-hero-content">
-                        <div class="sw-badge mb-3"
-                             style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:50px;font-size:0.8rem;font-weight:600;letter-spacing:1px;">
-                            ✦ Sabor Aut&#233;ntico Cubano
+                    <h1 class="sw-shop-hero-title">Nuestra <span>Tienda</span></h1>
+                    <p class="sw-shop-hero-subtitle">
+                        Descubre nuestros pasteles artesanales, postres y delicias preparadas
+                        con amor y los mejores ingredientes.
+                    </p>
+                    <div class="sw-shop-hero-stats">
+                        <div class="sw-shop-hero-stat">
+                            <div class="sw-shop-hero-stat-number"
+                                 t-esc="product_count if product_count else '&#8734;'"/>
+                            <div class="sw-shop-hero-stat-label">Productos</div>
                         </div>
-                        <h1 class="sw-shop-hero-title">Nuestra <span>Tienda</span></h1>
-                        <p class="sw-shop-hero-subtitle">
-                            Descubre nuestros pasteles artesanales, postres y delicias preparadas
-                            con amor y los mejores ingredientes.
-                        </p>
-                        <div class="sw-shop-hero-stats">
-                            <div class="sw-shop-hero-stat">
-                                <div class="sw-shop-hero-stat-number"
-                                     t-esc="product_count if product_count else '&#8734;'"/>
-                                <div class="sw-shop-hero-stat-label">Productos</div>
-                            </div>
-                            <div class="sw-shop-hero-stat">
-                                <div class="sw-shop-hero-stat-number">24h</div>
-                                <div class="sw-shop-hero-stat-label">Entrega</div>
-                            </div>
-                            <div class="sw-shop-hero-stat">
-                                <div class="sw-shop-hero-stat-number">100%</div>
-                                <div class="sw-shop-hero-stat-label">Artesanal</div>
-                            </div>
+                        <div class="sw-shop-hero-stat">
+                            <div class="sw-shop-hero-stat-number">24h</div>
+                            <div class="sw-shop-hero-stat-label">Entrega</div>
+                        </div>
+                        <div class="sw-shop-hero-stat">
+                            <div class="sw-shop-hero-stat-number">100%</div>
+                            <div class="sw-shop-hero-stat-label">Artesanal</div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- ── Barra de búsqueda + ordenamiento ── -->
-                <div class="row g-3 align-items-center mb-4">
-                    <div class="col-lg-5 col-md-7">
-                        <form action="/shop" method="get" class="d-flex">
-                            <div class="input-group">
-                                <span class="input-group-text"
-                                      style="background:var(--bg-surface);border:1px solid var(--border-medium);border-right:none;border-radius:12px 0 0 12px;color:var(--text-muted);">
-                                    <i class="fa fa-search"/>
-                                </span>
-                                <input type="search" name="search" class="form-control sw-input"
-                                       style="border-left:none;border-right:none;border-radius:0;"
-                                       placeholder="Buscar pasteles, postres..."
-                                       t-att-value="search"/>
-                                <button type="submit" class="sw-btn-primary"
-                                        style="border-radius:0 12px 12px 0;white-space:nowrap;">
-                                    Buscar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-lg-4 col-md-5 ms-auto text-md-end">
-                        <select class="sw-sort-select" id="sw-sort-select"
-                                onchange="window.location.href=this.value;">
-                            <option t-att-value="'/shop?order=website_sequence+asc' + ('&amp;search=' + search if search else '')"
-                                    t-att-selected="'selected' if (order == 'website_sequence asc' or not order) else None">
-                                Ordenar por: Destacado
-                            </option>
-                            <option t-att-value="'/shop?order=list_price+asc' + ('&amp;search=' + search if search else '')"
-                                    t-att-selected="'selected' if order == 'list_price asc' else None">
-                                Precio: Menor a Mayor
-                            </option>
-                            <option t-att-value="'/shop?order=list_price+desc' + ('&amp;search=' + search if search else '')"
-                                    t-att-selected="'selected' if order == 'list_price desc' else None">
-                                Precio: Mayor a Menor
-                            </option>
-                            <option t-att-value="'/shop?order=name+asc' + ('&amp;search=' + search if search else '')"
-                                    t-att-selected="'selected' if order == 'name asc' else None">
-                                Nombre A-Z
-                            </option>
-                            <option t-att-value="'/shop?order=publish_date+desc' + ('&amp;search=' + search if search else '')"
-                                    t-att-selected="'selected' if order == 'publish_date desc' else None">
-                                Más Recientes
-                            </option>
-                        </select>
-                    </div>
+            <!-- ─── Barra de búsqueda + orden — ancho completo, sobre el sidebar ─── -->
+            <div class="sw-shop-topbar container mb-3">
+                <div class="sw-shop-topbar-inner d-flex align-items-center gap-3 flex-wrap">
+                    <t t-if="is_view_active('website_sale.search')">
+                        <t t-call="website_sale.search"/>
+                    </t>
+                    <t t-if="is_view_active('website_sale.sort')">
+                        <t t-call="website_sale.sort"/>
+                    </t>
                 </div>
-
-                <!-- ── Contenido principal: sidebar + grid ── -->
-                <div class="row g-4">
-
-                    <!-- ── Sidebar de filtros (solo desktop) ── -->
-                    <div class="col-lg-3 d-none d-lg-block" id="products_grid_before">
-
-                        <!-- Categorías nativas de Odoo -->
-                        <t t-if="categories">
-                            <div class="sw-filter-panel mb-3">
-                                <t t-set="is_sidebar_collapsible" t-value="False"/>
-                                <t t-call="website_sale.products_categories_list"/>
-                            </div>
-                        </t>
-
-                        <!-- Filtros por atributos (Size, Color, etc.) — Odoo los inyecta aquí -->
-                        <div class="products_attributes_filters sw-filter-panel mb-3"/>
-
-                        <!-- Rango de precio (slider custom) -->
-                        <div class="sw-filter-panel">
-                            <h6>Rango de Precio</h6>
-                            <input type="range" class="form-range mb-2"
-                                   min="0" max="4000" value="4000"
-                                   id="sw-price-range"
-                                   oninput="document.getElementById('sw-price-max').textContent='$ '+parseFloat(this.value).toFixed(2)"/>
-                            <div class="sw-filter-price-labels">
-                                <span>$ 0.00</span>
-                                <span id="sw-price-max">$ 4000.00</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ── Grid de Productos ── -->
-                    <div class="col-lg-9">
-                        <div class="row g-4" id="products_grid">
-                            <t t-foreach="products" t-as="product">
-                                <div class="col-md-4 col-sm-6">
-                                    <div class="sw-product-card">
-                                        <div class="sw-product-img-wrap">
-                                            <a t-attf-href="/shop/product/{{ product.id }}" tabindex="-1">
-                                                <img t-attf-src="/web/image/product.template/{{ product.id }}/image_512"
-                                                     t-att-alt="product.name"
-                                                     loading="lazy"/>
-                                            </a>
-                                            <!-- Badge dinámica -->
-                                            <t t-if="product.website_ribbon_id">
-                                                <span class="sw-product-badge"
-                                                      t-att-style="'background:' + (product.website_ribbon_id.html_color or 'linear-gradient(135deg,#d4a574,#e8c9a0)') + ';'"
-                                                      t-field="product.website_ribbon_id.name"/>
-                                            </t>
-                                            <t t-elif="product.is_published and product.create_date and (fields.Datetime.now() - product.create_date).days &lt; 30">
-                                                <span class="sw-product-badge sw-badge-new">Nuevo</span>
-                                            </t>
-                                        </div>
-                                        <div class="p-3">
-                                            <a t-attf-href="/shop/product/{{ product.id }}"
-                                               class="sw-product-title d-block mb-1"
-                                               t-field="product.name"/>
-                                            <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;"
-                                               t-field="product.description_sale"/>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <span class="sw-product-price">
-                                                    <t t-esc="'$ %.2f' % product.list_price"/>
-                                                </span>
-                                                <!-- Odoo 19: carrito via a-submit (JSON-RPC), NO form POST -->
-                                                <form>
-                                                    <input type="hidden" name="product_id"
-                                                           t-att-value="product.product_variant_id.id"/>
-                                                    <input type="hidden" name="product_template_id"
-                                                           t-att-value="product.id"/>
-                                                    <input type="hidden" name="product_type"
-                                                           t-att-value="product.type"/>
-                                                    <button type="button"
-                                                            class="a-submit sw-btn-primary"
-                                                            style="padding:0.4rem 1rem;font-size:0.85rem;"
-                                                            t-att-title="'Agregar al carrito: ' + product.name">
-                                                        <i class="fa fa-cart-plus"/>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </t>
-
-                            <!-- Estado vacío si no hay productos -->
-                            <t t-if="not products">
-                                <div class="col-12 text-center py-5">
-                                    <i class="fa fa-search fa-3x mb-3" style="color:var(--text-muted);"/>
-                                    <h5 style="color:var(--text-secondary);">No se encontraron productos</h5>
-                                    <p style="color:var(--text-muted);">Intenta con otros t&#233;rminos de b&#250;squeda.</p>
-                                    <a href="/shop" class="sw-btn-primary mt-2">Ver todos</a>
-                                </div>
-                            </t>
-                        </div>
-
-                        <!-- ── Paginaci&#243;n ── -->
-                        <t t-if="pager">
-                            <div class="d-flex justify-content-center gap-2 mt-5 flex-wrap">
-                                <t t-if="pager.get('page_previous')">
-                                    <a t-att-href="pager['page_previous']['url']" class="sw-page-link">
-                                        <i class="fa fa-chevron-left"/>
-                                    </a>
-                                </t>
-                                <t t-foreach="pager.get('pages', [])" t-as="p">
-                                    <a t-att-href="p['url']"
-                                       t-att-class="'sw-page-link' + (' sw-page-active' if p['num'] == pager['page']['num'] else '')"
-                                       t-esc="p['num']"/>
-                                </t>
-                                <t t-if="pager.get('page_next')">
-                                    <a t-att-href="pager['page_next']['url']" class="sw-page-link">
-                                        <i class="fa fa-chevron-right"/>
-                                    </a>
-                                </t>
-                            </div>
-                        </t>
-                    </div>
-                </div>
-            </div><!-- /.container -->
-            </div><!-- /#wrap -->
+            </div>
         </xpath>
     </template>
 </odoo>
