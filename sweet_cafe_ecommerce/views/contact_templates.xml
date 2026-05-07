@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Sweet Café — Página de Contáctenos Premium
+    Hereda website.contactus y reemplaza el diseño manteniendo
+    toda la funcionalidad del formulario de Odoo 19.
+    Soporta modo claro y oscuro via data-bs-theme="dark".
+-->
+<odoo>
+<data>
+
+<template id="sweet_cafe_contactus"
+          name="Sweet Café — Contáctenos Premium"
+          inherit_id="website.contactus"
+          priority="20">
+
+    <!-- Reemplazar el contenido del wrap manteniendo el layout base de Odoo -->
+    <xpath expr="//div[@id='wrap']" position="replace">
+        <div id="wrap" class="sw-contact-page">
+
+            <!-- ─── Orbes de fondo aurora ─────────────────────────────── -->
+            <div class="sw-aurora" aria-hidden="true">
+                <div class="sw-aurora__orb sw-aurora__orb--1"/>
+                <div class="sw-aurora__orb sw-aurora__orb--2"/>
+                <div class="sw-aurora__orb sw-aurora__orb--3"/>
+            </div>
+
+            <!-- ─── Hero Section ──────────────────────────────────────── -->
+            <section class="sw-contact-hero">
+                <div class="container text-center">
+                    <div class="sw-contact-eyebrow">
+                        <i class="fa fa-comment-o me-2" aria-hidden="true"/>
+                        ESTAMOS PARA TI
+                    </div>
+                    <h1 class="sw-contact-title">Contáctenos</h1>
+                    <p class="sw-contact-subtitle">
+                        ¿Tienes una idea dulce en mente? Escríbenos y te responderemos<br
+                            class="d-none d-md-inline"/>
+                        con la misma dedicación que ponemos en cada pastel.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ─── Contenido principal: Formulario + Información ─────── -->
+            <section class="sw-contact-main">
+                <div class="container">
+                    <div class="row g-4 align-items-start">
+
+                        <!-- ── Columna izquierda: Formulario ─────────── -->
+                        <div class="col-lg-7">
+                            <div class="sw-contact-form-card">
+
+                                <!-- Cabecera oscura del card -->
+                                <div class="sw-form-card-header">
+                                    <h3 class="sw-form-card-title">Envíanos un mensaje</h3>
+                                    <p class="sw-form-card-subtitle">
+                                        Completa el formulario y te responderemos
+                                        en menos de 24 horas.
+                                    </p>
+                                </div>
+
+                                <!-- Cuerpo del formulario -->
+                                <div class="sw-form-card-body">
+                                    <!-- s_website_form requerido para que Odoo procese el envío -->
+                                    <div class="s_website_form">
+                                        <form id="contactus_form"
+                                              action="/website/form/"
+                                              method="post"
+                                              enctype="multipart/form-data"
+                                              class="o_mark_required"
+                                              data-mark="*"
+                                              data-model_name="mail.mail"
+                                              data-success-mode="redirect"
+                                              data-success-page="/contactus-thank-you"
+                                              data-pre-fill="true">
+
+                                            <div class="s_website_form_rows row g-3 s_col_no_bgcolor">
+
+                                                <!-- Nombre -->
+                                                <div class="col-sm-6 s_website_form_field s_website_form_custom s_website_form_required"
+                                                     data-type="char" data-name="Field">
+                                                    <label class="sw-form-label" for="sc_nombre">
+                                                        Nombre
+                                                        <span class="sw-form-mark">*</span>
+                                                    </label>
+                                                    <input id="sc_nombre"
+                                                           type="text"
+                                                           class="form-control sw-form-input s_website_form_input"
+                                                           name="name"
+                                                           required=""
+                                                           data-fill-with="name"
+                                                           placeholder="Tu nombre completo"/>
+                                                </div>
+
+                                                <!-- Teléfono -->
+                                                <div class="col-sm-6 s_website_form_field s_website_form_custom"
+                                                     data-type="char" data-name="Field">
+                                                    <label class="sw-form-label" for="sc_telefono">
+                                                        Teléfono
+                                                    </label>
+                                                    <input id="sc_telefono"
+                                                           type="tel"
+                                                           class="form-control sw-form-input s_website_form_input"
+                                                           name="phone"
+                                                           data-fill-with="phone"
+                                                           placeholder="+1 555-555-5555"/>
+                                                </div>
+
+                                                <!-- Correo electrónico -->
+                                                <div class="col-sm-6 s_website_form_field s_website_form_required s_website_form_model_required"
+                                                     data-type="email" data-name="Field">
+                                                    <label class="sw-form-label" for="sc_email">
+                                                        Correo electrónico
+                                                        <span class="sw-form-mark">*</span>
+                                                    </label>
+                                                    <input id="sc_email"
+                                                           type="email"
+                                                           class="form-control sw-form-input s_website_form_input"
+                                                           name="email_from"
+                                                           required=""
+                                                           data-fill-with="email"
+                                                           placeholder="admin@example.com"/>
+                                                </div>
+
+                                                <!-- Empresa -->
+                                                <div class="col-sm-6 s_website_form_field s_website_form_custom"
+                                                     data-type="char" data-name="Field">
+                                                    <label class="sw-form-label" for="sc_empresa">
+                                                        Empresa
+                                                    </label>
+                                                    <input id="sc_empresa"
+                                                           type="text"
+                                                           class="form-control sw-form-input s_website_form_input"
+                                                           name="company"
+                                                           data-fill-with="commercial_company_name"
+                                                           placeholder="YourCompany"/>
+                                                </div>
+
+                                                <!-- Asunto -->
+                                                <div class="col-12 s_website_form_field s_website_form_required s_website_form_model_required"
+                                                     data-type="char" data-name="Field">
+                                                    <label class="sw-form-label" for="sc_asunto">
+                                                        Asunto
+                                                        <span class="sw-form-mark">*</span>
+                                                    </label>
+                                                    <input id="sc_asunto"
+                                                           type="text"
+                                                           class="form-control sw-form-input s_website_form_input"
+                                                           name="subject"
+                                                           required=""
+                                                           placeholder="¿Sobre qué quieres hablar?"/>
+                                                </div>
+
+                                                <!-- Mensaje -->
+                                                <div class="col-12 s_website_form_field s_website_form_custom s_website_form_required"
+                                                     data-type="text" data-name="Field">
+                                                    <label class="sw-form-label" for="sc_mensaje">
+                                                        Mensaje
+                                                        <span class="sw-form-mark">*</span>
+                                                    </label>
+                                                    <textarea id="sc_mensaje"
+                                                              class="form-control sw-form-input s_website_form_input"
+                                                              name="description"
+                                                              required=""
+                                                              rows="5"
+                                                              placeholder="Cuéntanos los detalles de tu consulta, pedido especial o sugerencia..."/>
+                                                </div>
+
+                                                <!-- email_to oculto (requerido por Odoo) -->
+                                                <div class="col-12 s_website_form_field s_website_form_dnone">
+                                                    <input type="hidden"
+                                                           class="form-control s_website_form_input"
+                                                           name="email_to"/>
+                                                </div>
+
+                                                <!-- Botón enviar -->
+                                                <div class="col-12 s_website_form_submit s_website_form_no_submit_label"
+                                                     data-name="Submit Button">
+                                                    <a href="#"
+                                                       role="button"
+                                                       class="btn sw-btn-contact-send s_website_form_send">
+                                                        Enviar mensaje
+                                                        <i class="fa fa-paper-plane ms-2" aria-hidden="true"/>
+                                                    </a>
+                                                    <span id="s_website_form_result"/>
+                                                </div>
+
+                                            </div><!-- /s_website_form_rows -->
+                                        </form>
+                                    </div><!-- /s_website_form -->
+                                </div><!-- /sw-form-card-body -->
+
+                            </div><!-- /sw-contact-form-card -->
+                        </div><!-- /col-lg-7 -->
+
+                        <!-- ── Columna derecha: Información de contacto ── -->
+                        <div class="col-lg-5">
+                            <div class="sw-contact-info-stack">
+
+                                <!-- Visitanos -->
+                                <div class="sw-info-card">
+                                    <div class="sw-info-icon sw-info-icon--location">
+                                        <i class="fa fa-map-marker" aria-hidden="true"/>
+                                    </div>
+                                    <div class="sw-info-content">
+                                        <h5 class="sw-info-title">Visítanos</h5>
+                                        <p class="sw-info-text">
+                                            <t t-if="res_company.partner_id.street">
+                                                <t t-out="res_company.partner_id.street"/>
+                                            </t>
+                                            <t t-else="">3575 Fake Buena Vista Avenue</t>
+                                        </p>
+                                        <p class="sw-info-sub">
+                                            <t t-if="res_company.partner_id.city">
+                                                <t t-out="res_company.partner_id.city"/>
+                                                <t t-if="res_company.partner_id.country_id">
+                                                    , <t t-out="res_company.partner_id.country_id.name"/>
+                                                </t>
+                                            </t>
+                                            <t t-else="">La Habana, Cuba</t>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Llámanos -->
+                                <div class="sw-info-card">
+                                    <div class="sw-info-icon sw-info-icon--phone">
+                                        <i class="fa fa-phone" aria-hidden="true"/>
+                                    </div>
+                                    <div class="sw-info-content">
+                                        <h5 class="sw-info-title">Llámanos</h5>
+                                        <p class="sw-info-text">
+                                            <t t-if="res_company.phone">
+                                                <t t-out="res_company.phone"/>
+                                            </t>
+                                            <t t-else="">+53 7 830-XXXX</t>
+                                        </p>
+                                        <p class="sw-info-sub">Lun - Sáb  8:00 - 20:00</p>
+                                    </div>
+                                </div>
+
+                                <!-- Escríbenos -->
+                                <div class="sw-info-card">
+                                    <div class="sw-info-icon sw-info-icon--email">
+                                        <i class="fa fa-envelope" aria-hidden="true"/>
+                                    </div>
+                                    <div class="sw-info-content">
+                                        <h5 class="sw-info-title">Escríbenos</h5>
+                                        <p class="sw-info-text">
+                                            <t t-if="res_company.email">
+                                                <t t-out="res_company.email"/>
+                                            </t>
+                                            <t t-else="">pedidos@sweetcafe.cu</t>
+                                        </p>
+                                        <p class="sw-info-sub">info@sweetcafe.cu</p>
+                                    </div>
+                                </div>
+
+                                <!-- ¿Pedido especial? CTA Card -->
+                                <div class="sw-special-order-card">
+                                    <div class="sw-special-order-icon">
+                                        <i class="fa fa-birthday-cake" aria-hidden="true"/>
+                                    </div>
+                                    <div class="sw-special-order-body">
+                                        <h5 class="sw-special-order-title">¿Pedido especial?</h5>
+                                        <p class="sw-special-order-sub">Reserva con anticipación</p>
+                                    </div>
+                                    <a href="/reservar" class="btn sw-btn-reservar-contact d-block text-center">
+                                        Hacer una reserva
+                                    </a>
+                                </div>
+
+                            </div><!-- /sw-contact-info-stack -->
+                        </div><!-- /col-lg-5 -->
+
+                    </div><!-- /row -->
+                </div><!-- /container -->
+            </section><!-- /sw-contact-main -->
+
+            <!-- ─── Sección del mapa ───────────────────────────────────── -->
+            <section class="sw-contact-map-section" aria-label="Ubicación en el mapa">
+                <div class="sw-map-wrapper">
+                    <iframe
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=-82.4500%2C23.0800%2C-82.3000%2C23.2000&amp;layer=mapnik&amp;marker=23.1340%2C-82.3590"
+                        width="100%"
+                        height="420"
+                        style="border:0; display:block;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        title="Ubicación Sweet Café — La Habana, Cuba"/>
+                    <div class="sw-map-overlay-link">
+                        <a href="https://www.openstreetmap.org/?mlat=23.134&amp;mlon=-82.359#map=13/23.134/-82.359"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="sw-map-ext-link">
+                            <i class="fa fa-external-link me-1" aria-hidden="true"/>
+                            Abrir en Maps
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </div><!-- /wrap -->
+    </xpath>
+
+</template>
+
+</data>
+</odoo>
