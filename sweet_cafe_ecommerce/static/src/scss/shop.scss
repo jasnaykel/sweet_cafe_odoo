@@ -1144,3 +1144,584 @@
     }
   }
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SHOP CARD — Hover "Ver detalles" overlay
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.sw-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(30, 12, 6, 0.72) 0%,
+    rgba(30, 12, 6, 0.15) 55%,
+    transparent 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sw-card-overlay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: $sw-brown;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.45rem 1.1rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  transform: translateY(6px);
+  transition:
+    transform 0.3s ease,
+    background 0.2s ease;
+  pointer-events: none;
+}
+
+// Activate overlay on card hover
+.o_wsale_product_grid_wrapper:hover .sw-card-overlay,
+form.oe_product_cart:hover .sw-card-overlay {
+  opacity: 1;
+}
+
+.o_wsale_product_grid_wrapper:hover .sw-card-overlay-btn,
+form.oe_product_cart:hover .sw-card-overlay-btn {
+  transform: translateY(0);
+}
+
+// Scroll-reveal on product cards (CSS-only, uses @starting-style if supported)
+@keyframes sw-card-appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.o_wsale_product_grid_wrapper {
+  animation: sw-card-appear 0.5s ease both;
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 0.07}s;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PRODUCT DETAIL PAGE — Premium redesign
+// Scoped under .sw-pdp (class added via template to section#product_detail)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── Page ambient ─────────────────────────────────────────────────────────────
+.o_wsale_product_page {
+  background:
+    radial-gradient(
+      ellipse 55% 40% at 80% 5%,
+      rgba(212, 165, 116, 0.07) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 40% 30% at 5% 85%,
+      rgba(232, 160, 191, 0.05) 0%,
+      transparent 60%
+    ),
+    var(--bg-page);
+
+  // Animate page entry
+  > .sw-pdp {
+    animation: sw-fade-up 0.5s ease both;
+  }
+}
+
+// ─── Breadcrumb ───────────────────────────────────────────────────────────────
+.sw-pdp .o_wsale_breadcrumb {
+  .breadcrumb-item {
+    font-size: 0.85rem;
+
+    a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      &:hover {
+        color: var(--accent-gold);
+      }
+    }
+
+    &.active span {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    & + .breadcrumb-item::before {
+      opacity: 0.45;
+    }
+  }
+}
+
+// ─── Image column ─────────────────────────────────────────────────────────────
+.sw-pdp .o_wsale_product_images {
+  animation: sw-fade-up 0.55s ease both;
+
+  // Main image wrapper
+  .o_product_page_main_image_card,
+  .o_wsale_product_images_main,
+  .carousel,
+  figure.oe_product {
+    border-radius: $sw-radius-lg !important;
+    overflow: hidden !important;
+    box-shadow: var(--sw-shadow-xl) !important;
+    border: 1px solid var(--border-subtle) !important;
+    background: var(--bg-surface) !important;
+    transition:
+      box-shadow var(--transition-base),
+      border-color var(--transition-base) !important;
+
+    img {
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+      display: block !important;
+      width: 100% !important;
+      object-fit: cover !important;
+    }
+
+    &:hover img {
+      transform: scale(1.04) !important;
+    }
+  }
+
+  // Thumbnails
+  .o_product_page_extra_images,
+  .o_wsale_product_images_thumbnails {
+    display: flex !important;
+    gap: 0.5rem !important;
+    flex-wrap: wrap !important;
+    margin-top: 0.75rem !important;
+
+    .o_product_page_extra_image,
+    .o_wsale_product_images_thumbnail,
+    a,
+    figure {
+      border-radius: 10px !important;
+      border: 2px solid transparent !important;
+      overflow: hidden !important;
+      opacity: 0.65 !important;
+      cursor: pointer !important;
+      flex: 0 0 auto !important;
+      width: 72px !important;
+      height: 72px !important;
+      transition: all 0.22s ease !important;
+
+      img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+
+      &:hover,
+      &.active,
+      &.o_active {
+        border-color: var(--accent-gold) !important;
+        opacity: 1 !important;
+        box-shadow: 0 4px 14px rgba($sw-gold, 0.35) !important;
+      }
+    }
+  }
+}
+
+// ─── Product info column ──────────────────────────────────────────────────────
+.sw-pdp #product_details {
+  animation: sw-fade-up 0.55s 0.1s ease both;
+}
+
+// ─── Category ribbon (above title) ───────────────────────────────────────────
+.sw-pdp .o_wsale_product_details_content_section_title {
+  // Add rating/category chip via a ::before approach — real chip added by template
+}
+
+// ─── Product title ────────────────────────────────────────────────────────────
+.sw-pdp .o_wsale_product_details_content_section_title {
+  h1,
+  .o_field_char,
+  [itemprop="name"] {
+    font-family: "Playfair Display", Georgia, serif !important;
+    font-size: clamp(1.75rem, 3.5vw, 2.6rem) !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 0.5rem !important;
+    transition: color var(--transition-base) !important;
+  }
+
+  // Short description / ecommerce description
+  .o_field_html,
+  [itemprop="description"] {
+    color: var(--text-secondary) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.72 !important;
+    transition: color var(--transition-base) !important;
+  }
+}
+
+// ─── Price section ────────────────────────────────────────────────────────────
+.sw-pdp .o_wsale_product_details_content_section_price {
+  // Main price
+  .oe_price,
+  span[itemprop="price"],
+  .o_wsale_product_price_main {
+    font-family: "Playfair Display", Georgia, serif !important;
+    font-size: 2.1rem !important;
+    font-weight: 700 !important;
+    color: var(--accent-gold) !important;
+    transition: color var(--transition-base) !important;
+  }
+
+  // Striked price
+  .o_striked_price,
+  del {
+    font-size: 1.05rem !important;
+    color: var(--text-muted) !important;
+    text-decoration: line-through !important;
+    margin-left: 0.35rem !important;
+    opacity: 0.8 !important;
+    transition: color var(--transition-base) !important;
+  }
+
+  // Discount badge
+  .badge,
+  .o_wsale_product_badge_discount {
+    background: linear-gradient(
+      135deg,
+      $sw-rose 0%,
+      lighten($sw-rose, 12%) 100%
+    ) !important;
+    color: $sw-brown !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    font-size: 0.78rem !important;
+    padding: 3px 11px !important;
+    border: none !important;
+    box-shadow: 0 3px 10px rgba($sw-rose, 0.35) !important;
+    vertical-align: middle !important;
+    margin-left: 0.5rem !important;
+  }
+}
+
+// ─── Variants / attribute pills ───────────────────────────────────────────────
+.sw-pdp .o_wsale_product_details_content_section_attributes {
+  // Section label
+  label,
+  .attribute_name,
+  .o_wsale_product_attribute_label {
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 0.55rem !important;
+    display: block !important;
+    transition: color var(--transition-base) !important;
+  }
+
+  // Variant pill buttons
+  .js_variant_change,
+  .o_variant_pills_item,
+  .o_colorlist_item_color,
+  .btn-outline-secondary {
+    border: 1.5px solid var(--border-medium) !important;
+    border-radius: 9999px !important;
+    padding: 0.42rem 1.1rem !important;
+    font-size: 0.87rem !important;
+    font-weight: 500 !important;
+    color: var(--text-secondary) !important;
+    background: var(--bg-surface) !important;
+    cursor: pointer !important;
+    transition: all 0.22s ease !important;
+    text-decoration: none !important;
+
+    &:hover {
+      border-color: var(--accent-gold) !important;
+      color: var(--accent-gold) !important;
+      background: var(--bg-elevated) !important;
+    }
+
+    &.active,
+    &[aria-pressed="true"],
+    &.btn-primary {
+      background: linear-gradient(
+        135deg,
+        $sw-brown 0%,
+        $sw-brown-light 100%
+      ) !important;
+      border-color: $sw-brown !important;
+      color: #fff !important;
+      box-shadow: 0 4px 14px rgba($sw-brown, 0.3) !important;
+    }
+  }
+}
+
+// ─── CTA: quantity + add to cart ─────────────────────────────────────────────
+.sw-pdp .o_wsale_product_details_content_section_cta {
+  // Quantity stepper
+  .css_quantity,
+  .o_website_sale_quantity,
+  .o_wsale_product_quantity_field {
+    border: 1.5px solid var(--border-medium) !important;
+    border-radius: 9999px !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    transition: border-color var(--transition-fast) !important;
+
+    &:focus-within {
+      border-color: var(--accent-gold) !important;
+    }
+
+    .js_add_cart_json,
+    .o_website_sale_quantity_btn,
+    button {
+      background: var(--bg-elevated) !important;
+      border: none !important;
+      color: var(--text-primary) !important;
+      font-size: 1.15rem !important;
+      font-weight: 300 !important;
+      width: 42px !important;
+      height: 42px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      transition: background var(--transition-fast) !important;
+      flex-shrink: 0 !important;
+
+      &:hover {
+        background: rgba($sw-gold, 0.12) !important;
+      }
+    }
+
+    input {
+      border: none !important;
+      background: transparent !important;
+      color: var(--text-primary) !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+      text-align: center !important;
+      width: 52px !important;
+      padding: 0 !important;
+    }
+  }
+
+  // ADD TO CART button — the premium CTA
+  #add_to_cart,
+  a#add_to_cart,
+  button.o_wsale_product_btn_primary,
+  a.o_wsale_product_btn_primary,
+  .btn.o_wsale_product_btn_primary {
+    background: linear-gradient(
+      135deg,
+      $sw-brown 0%,
+      $sw-brown-light 100%
+    ) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    padding: 0.9rem 2.2rem !important;
+    font-size: 0.97rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.025em !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    box-shadow: 0 6px 20px rgba($sw-brown, 0.28) !important;
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.22s ease !important;
+
+    &:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 12px 34px rgba($sw-brown, 0.42) !important;
+      color: #fff !important;
+    }
+
+    &:active {
+      transform: translateY(0) !important;
+    }
+
+    [data-bs-theme="dark"] & {
+      background: linear-gradient(
+        135deg,
+        $sw-gold 0%,
+        $sw-gold-light 100%
+      ) !important;
+      color: $sw-brown !important;
+      box-shadow: 0 6px 20px rgba($sw-gold, 0.3) !important;
+    }
+  }
+}
+
+// ─── Trust strip (injected via template) ─────────────────────────────────────
+.sw-pdp-trust-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem 1.25rem;
+  flex-wrap: wrap;
+  padding: 1.25rem 0 0.5rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid var(--border-subtle);
+  animation: sw-fade-up 0.55s 0.28s ease both;
+  transition: border-color var(--transition-base);
+
+  @media (max-width: 575.98px) {
+    gap: 0.75rem;
+  }
+}
+
+.sw-pdp-trust-sep {
+  width: 1px;
+  height: 36px;
+  background: var(--border-medium);
+  flex-shrink: 0;
+  align-self: center;
+  transition: background-color var(--transition-base);
+
+  @media (max-width: 575.98px) {
+    display: none;
+  }
+}
+
+.sw-pdp-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex: 1 1 auto;
+  min-width: 110px;
+  max-width: 160px;
+
+  i {
+    font-size: 1.25rem;
+    color: var(--accent-gold);
+    flex-shrink: 0;
+    width: 26px;
+    text-align: center;
+    transition: color var(--transition-base);
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  strong {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.25;
+    transition: color var(--transition-base);
+  }
+
+  span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.2;
+    transition: color var(--transition-base);
+  }
+}
+
+// ─── Accordion tabs (descripción, ingredientes, reseñas) ──────────────────────
+.sw-pdp .o_wsale_product_details_content_section_accordion {
+  .accordion-item {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: $sw-radius-sm !important;
+    overflow: hidden !important;
+    margin-bottom: 0.5rem !important;
+    transition:
+      background-color var(--transition-base),
+      border-color var(--transition-base) !important;
+  }
+
+  .accordion-button {
+    background: var(--bg-elevated) !important;
+    color: var(--text-primary) !important;
+    font-family: "Playfair Display", Georgia, serif !important;
+    font-weight: 600 !important;
+    font-size: 0.97rem !important;
+    box-shadow: none !important;
+    border-radius: $sw-radius-sm !important;
+    transition:
+      background-color var(--transition-base),
+      color var(--transition-base) !important;
+
+    &:not(.collapsed) {
+      color: var(--accent-gold) !important;
+      background: var(--bg-surface) !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+    }
+  }
+
+  .accordion-body {
+    background: var(--bg-surface) !important;
+    color: var(--text-secondary) !important;
+    font-size: 0.92rem !important;
+    line-height: 1.78 !important;
+    padding: 1.25rem !important;
+    transition:
+      background-color var(--transition-base),
+      color var(--transition-base) !important;
+  }
+}
+
+// ─── Related products section ──────────────────────────────────────────────────
+.sw-pdp + .oe_structure,
+.o_wsale_product_page .oe_website_sale_grid {
+  padding-top: 3rem;
+}
+
+// ─── Dark mode overrides ───────────────────────────────────────────────────────
+[data-bs-theme="dark"] {
+  .sw-pdp {
+    .o_wsale_product_images {
+      .o_product_page_main_image_card,
+      .o_wsale_product_images_main,
+      .carousel,
+      figure.oe_product {
+        border-color: var(--border-subtle) !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55) !important;
+      }
+    }
+
+    .o_wsale_product_details_content_section_price {
+      .badge,
+      .o_wsale_product_badge_discount {
+        background: linear-gradient(
+          135deg,
+          #6b4c8a 0%,
+          #8a6aac 100%
+        ) !important;
+        color: #f0e6ff !important;
+        box-shadow: 0 3px 10px rgba(107, 76, 138, 0.4) !important;
+      }
+    }
+  }
+
+  // Shop card overlay in dark mode
+  .sw-card-overlay-btn {
+    background: rgba(26, 24, 35, 0.88);
+    color: $sw-gold-light;
+  }
+}

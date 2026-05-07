@@ -204,4 +204,69 @@
             </div>
         </xpath>
     </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PRODUCT DETAIL PAGE — Premium redesign
+         Añade clase sw-pdp al section principal para scopear estilos.
+    ═══════════════════════════════════════════════════════════════ -->
+    <template id="sw_pdp_scope_class" inherit_id="website_sale.product"
+              name="Sweet Café PDP Premium Scope">
+        <xpath expr="//section[@id='product_detail']" position="attributes">
+            <attribute name="class" add="sw-pdp" separator=" "/>
+        </xpath>
+    </template>
+
+    <!-- Trust strip injected after the CTA (add to cart) section -->
+    <template id="sw_pdp_trust_badges" inherit_id="website_sale.product"
+              name="Sweet Café PDP Trust Badges">
+        <xpath expr="//div[hasclass('o_wsale_product_details_content_section_cta')]"
+               position="after">
+            <div class="sw-pdp-trust-strip">
+                <div class="sw-pdp-trust-item">
+                    <i class="fa fa-leaf" aria-hidden="true"/>
+                    <div>
+                        <strong>100% Naturales</strong>
+                        <span>Ingredientes frescos</span>
+                    </div>
+                </div>
+                <div class="sw-pdp-trust-sep" aria-hidden="true"/>
+                <div class="sw-pdp-trust-item">
+                    <i class="fa fa-clock-o" aria-hidden="true"/>
+                    <div>
+                        <strong>Entrega 24h</strong>
+                        <span>En La Habana</span>
+                    </div>
+                </div>
+                <div class="sw-pdp-trust-sep" aria-hidden="true"/>
+                <div class="sw-pdp-trust-item">
+                    <i class="fa fa-shield" aria-hidden="true"/>
+                    <div>
+                        <strong>Garantía de Frescura</strong>
+                        <span>O te lo repetimos</span>
+                    </div>
+                </div>
+                <div class="sw-pdp-trust-sep" aria-hidden="true"/>
+                <div class="sw-pdp-trust-item">
+                    <i class="fa fa-heart" aria-hidden="true"/>
+                    <div>
+                        <strong>Hecho con Amor</strong>
+                        <span>Artesanal cubano</span>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Overlay "Ver detalles" en hover sobre la imagen del producto en la tienda -->
+    <template id="sw_shop_card_overlay" inherit_id="website_sale.products_item"
+              name="Sweet Café Shop Card Overlay">
+        <xpath expr="//a[hasclass('oe_product_image_link')]" position="inside">
+            <div class="sw-card-overlay" aria-hidden="true">
+                <span class="sw-card-overlay-btn">
+                    <i class="fa fa-eye me-1"/>Ver detalles
+                </span>
+            </div>
+        </xpath>
+    </template>
+
 </odoo>
