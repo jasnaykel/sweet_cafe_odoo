@@ -260,7 +260,7 @@
     <!-- Overlay "Ver detalles" en hover sobre la imagen del producto en la tienda -->
     <template id="sw_shop_card_overlay" inherit_id="website_sale.products_item"
               name="Sweet Café Shop Card Overlay">
-        <xpath expr="//a[hasclass('oe_product_image_link')]" position="inside">
+        <xpath expr="//span[hasclass('oe_product_image_img_wrapper_primary')]" position="after">
             <div class="sw-card-overlay" aria-hidden="true">
                 <span class="sw-card-overlay-btn">
                     <i class="fa fa-eye me-1"/>Ver detalles
