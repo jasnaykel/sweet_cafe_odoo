@@ -1968,74 +1968,69 @@ form.oe_product_cart:hover .sw-card-overlay-btn {
     color: $sw-gold-light;
   }
 
-  // ── Product detail page — fondo oscuro ────────────────────────────
-  // [data-bs-theme="dark"] está en <html>. #wrap es descendiente.
-  // "&#wrap" (sin espacio) = mismo elemento → NUNCA coincide.
-  // "#wrap" (sin &) dentro de este bloque = descendant selector ✓
+  // ── Product detail page — fondo oscuro ─────────────────────────────
+  // Colores explícitos (sin var() para evitar variables indefinidas que
+  // se resuelven como transparent y muestran blanco de padres).
+  // #1a1823 = superficie oscura elevada  |  #0f0d14 = fondo de página
 
+  // Página completa del producto
   #wrap #product_detail,
   #wrap section#product_detail,
-  #wrap .o_wsale_product_page,
-  #wrap .oe_website_sale,
-  #wrap #product_detail_main {
-    background: var(--bg-page) !important;
+  #wrap .js_sale.o_wsale_product_page {
+    background-color: #0f0d14 !important;
   }
 
-  // Contenedor de imagen: fondo oscuro en cualquier wrapper nativo
-  #wrap .o_wsale_product_images,
-  #wrap .o_product_photo_container,
-  #wrap .o_carousel_product,
-  #wrap .o_wsale_product_images_main,
-  #wrap figure.oe_product {
-    background: var(--bg-elevated) !important;
+  // Columna de imagen (Odoo 19: .o_wsale_product_images)
+  #wrap .o_wsale_product_images {
+    background-color: #1a1823 !important;
   }
 
-  // Tarjeta de imagen principal
-  #wrap .o_product_page_main_image_card {
-    background: var(--bg-elevated, #1a1823) !important;
-    border-color: var(--border-subtle, rgba(255, 255, 255, 0.1)) !important;
+  // Carousel y todos sus hijos dentro de la columna de imagen
+  #wrap .o_wsale_product_images #o-carousel-product,
+  #wrap .o_wsale_product_images .o_carousel_product_outer,
+  #wrap .o_wsale_product_images .carousel-inner,
+  #wrap .o_wsale_product_images .carousel-item,
+  #wrap .o_wsale_product_images .o_product_detail_img_wrapper {
+    background-color: #1a1823 !important;
   }
 
-  // Contenedores de imagen y figura Odoo — fondo oscuro explícito
-  #wrap .o_wsale_product_images,
-  #wrap .o_carousel_product,
-  #wrap .o_wsale_product_images_main,
-  #wrap figure.oe_product,
-  #wrap .o_product_photo_container {
-    background: var(--bg-elevated, #1a1823) !important;
+  // Columna de detalles (Odoo 19: #product_details con s — background: $body-bg nativo)
+  #wrap #product_details {
+    background-color: #0f0d14 !important;
   }
 
-  // Imagen de producto con placeholder SVG gris: usar CSS filter para oscurecer solo si
-  // está dentro del contenedor principal del producto (no afecta thumbs ni shop grid)
-  #wrap
-    .o_wsale_product_images_main
-    img.o_product_image_main:not([src*=".svg"]) {
-    background: var(--bg-elevated, #1a1823) !important;
-  }
-  // Para el placeholder nativo de Odoo (SVG con fondo gris claro) usar brightness reducida
-  #wrap .o_wsale_product_images_main img[src*="placeholder"],
-  #wrap .o_wsale_product_images_main img[src*="no_image"],
-  #wrap .o_product_page_main_image_card img[src*="placeholder"] {
-    filter: brightness(0.45) !important;
-  }
-
-  // Columnas del layout: transparent para no tapar el fondo de página
-  #wrap #product_detail .row > div,
-  #wrap #product_detail .container > .row > div {
-    background: transparent !important;
+  // Cualquier columna directa de la fila principal — transparent para no
+  // crear capas dobles que tapen el fondo ya establecido en padres
+  #wrap #product_detail_main > .col {
+    background-color: transparent !important;
   }
 
   // Bloque técnico de pastelería — override inline style #FDF5E6
   #wrap .sc-technical-specs {
-    background: var(--bg-elevated) !important;
-    border-left-color: var(--accent-gold, #{$sw-gold}) !important;
-    color: var(--text-primary) !important;
+    background: #1a1823 !important;
+    border-left-color: $sw-gold !important;
+    color: #f5e6d3 !important;
 
     .text-muted {
-      color: var(--text-muted) !important;
+      color: #a89080 !important;
     }
     h5 {
-      color: var(--accent-gold, #{$sw-gold}) !important;
+      color: $sw-gold-light !important;
     }
+  }
+
+  // Thumbnail filmstrip dentro de la imagen (Odoo usa background: $body-bg = white)
+  #wrap .o_wsale_product_images li > div,
+  #wrap .o_wsale_product_images .o_wsale_filmstrip_image {
+    background-color: #2a2535 !important;
+  }
+
+  // Date/time native pickers — usar color-scheme: dark para que el
+  // browser muestre el widget en modo oscuro (sin color-scheme: inherit
+  // que puede bloquear el selector nativo en algunos browsers)
+  input[type="date"].sc-date-input,
+  input[type="time"].sc-date-input {
+    color-scheme: dark;
+    color: #f5e6d3;
   }
 }

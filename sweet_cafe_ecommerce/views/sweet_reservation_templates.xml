@@ -73,14 +73,12 @@
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label fw-semibold">Fecha de entrega *</label>
-                                            <input type="date" name="delivery_date" class="form-control"
-                                                   t-att-min="min_date" required="required"
-                                                   style="color-scheme:inherit;"/>
+                                            <input type="date" name="delivery_date" class="form-control sc-date-input"
+                                                   t-att-min="min_date" required="required"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label fw-semibold">Hora aproximada</label>
-                                            <input type="time" name="delivery_time" class="form-control"
-                                                   style="color-scheme:inherit;"/>
+                                            <input type="time" name="delivery_time" class="form-control sc-date-input"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label fw-semibold">Indicaciones especiales</label>
