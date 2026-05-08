@@ -93,55 +93,56 @@
                             <div class="col-lg-7">
                                 <div class="card shadow-sm border-0">
                                     <div class="card-header" style="background:#8B4513; color:white;">
-                                        <h5 class="mb-0"><i class="fa fa-birthday-cake me-2"/>Productos *</h5>
+                                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                                            <span><i class="fa fa-birthday-cake me-2"/>Productos *</span>
+                                            <span id="sc-count" class="badge bg-white text-dark" style="display:none;">0 seleccionados</span>
+                                        </h5>
                                     </div>
                                     <div class="card-body p-0">
-                                        <div class="sc-product-grid p-3" style="max-height:420px; overflow-y:auto;">
+                                        <div class="sc-product-grid p-3" style="max-height:480px; overflow-y:auto;">
+                                            <p class="text-muted small mb-2 px-1">Haz clic en un producto para seleccionarlo. Puedes ajustar cantidad y sabor en cada tarjeta.</p>
                                             <div class="row row-cols-2 row-cols-md-3 g-3">
                                                 <t t-foreach="products" t-as="p">
                                                     <div class="col">
-                                                        <div class="card h-100 sc-product-card" style="cursor:pointer; border:2px solid #eee; transition:border .2s;"
-                                                             t-att-data-id="p.id"
-                                                             t-att-data-name="p.name"
-                                                             t-att-data-price="p.list_price">
-                                                            <img t-att-src="'/web/image/product.template/%d/image_256' % p.id"
-                                                                 class="card-img-top" style="height:100px; object-fit:cover;"
-                                                                 t-att-alt="p.name"/>
-                                                            <div class="card-body p-2 text-center">
-                                                                <p class="mb-0 small fw-semibold"><t t-out="p.name"/></p>
-                                                                <p class="mb-0 small text-muted"><t t-out="p.list_price"/> CUP</p>
+                                                        <!--
+                                                            La <label> envuelve toda la tarjeta.
+                                                            El click en la tarjeta (excepto en los inputs internos)
+                                                            togglea el checkbox de forma nativa sin JS frágil.
+                                                            Los inputs qty/flavor están pre-renderizados en el DOM
+                                                            para que el navegador los incluya siempre en el submit.
+                                                        -->
+                                                        <label class="d-block h-100 sc-product-card position-relative m-0" style="cursor:pointer;">
+                                                            <!-- Checkbox real — siempre en el DOM, JS solo lo lee -->
+                                                            <input type="checkbox" class="sc-check"
+                                                                   name="product_ids" t-att-value="p.id"
+                                                                   style="position:absolute;opacity:0;width:0;height:0;"/>
+                                                            <!-- Indicador visual de selección -->
+                                                            <div class="sc-badge position-absolute top-0 end-0 m-1 d-none"
+                                                                 style="background:#8B4513;color:white;border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;font-size:12px;z-index:2;">&#10003;</div>
+                                                            <div class="card h-100 border-2 sc-inner-card" style="border-color:#dee2e6;transition:border-color .2s;">
+                                                                <img t-att-src="'/web/image/product.template/%d/image_256' % p.id"
+                                                                     class="card-img-top" style="height:90px;object-fit:cover;"
+                                                                     t-att-alt="p.name" loading="lazy"/>
+                                                                <div class="card-body p-2 text-center">
+                                                                    <p class="mb-1 small fw-semibold lh-sm"><t t-out="p.name"/></p>
+                                                                    <p class="mb-0 x-small text-muted" style="font-size:0.75rem;"><t t-out="p.list_price"/> CUP</p>
+                                                                    <!-- Qty + sabor: ocultos hasta que se seleccione -->
+                                                                    <div class="sc-extras d-none mt-2">
+                                                                        <input type="number" t-att-name="'qty_' + str(p.id)"
+                                                                               value="1" min="1"
+                                                                               class="form-control form-control-sm mb-1"
+                                                                               placeholder="Cantidad"/>
+                                                                        <input type="text" t-att-name="'flavor_' + str(p.id)"
+                                                                               class="form-control form-control-sm"
+                                                                               placeholder="Sabor / variante..."/>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </label>
                                                     </div>
                                                 </t>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <!-- Selected products table -->
-                                <div class="card shadow-sm border-0 mt-3">
-                                    <div class="card-header bg-light">
-                                        <h6 class="mb-0">Productos seleccionados</h6>
-                                    </div>
-                                    <div class="card-body p-0">
-                                        <table class="table table-sm mb-0" id="sc-selected-products">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Producto</th>
-                                                    <th style="width:80px;">Cant.</th>
-                                                    <th>Sabor / Variante</th>
-                                                    <th style="width:40px;"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="sc-selected-tbody">
-                                                <tr id="sc-empty-row">
-                                                    <td colspan="4" class="text-center text-muted py-3">
-                                                        Haz clic en un producto para agregarlo
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -157,46 +158,36 @@
                 </div>
             </div>
 
-            <!-- JS for product selection -->
+            <!-- JS: solo actualiza estado visual. El navegador envía los checkboxes nativamente. -->
             <script type="text/javascript">
                 (function () {
-                    var selected = {};
-                    document.querySelectorAll('.sc-product-card').forEach(function (card) {
-                        card.addEventListener('click', function () {
-                            var id = card.dataset.id;
-                            var name = card.dataset.name;
-                            var price = parseFloat(card.dataset.price);
-                            if (selected[id]) {
-                                selected[id].qty += 1;
-                                document.getElementById('sc-qty-' + id).value = selected[id].qty;
-                            } else {
-                                selected[id] = { id: id, name: name, price: price, qty: 1 };
-                                renderRow(id, name);
-                            }
-                            card.style.border = '2px solid #8B4513';
-                            document.getElementById('sc-empty-row') &amp;&amp; (document.getElementById('sc-empty-row').style.display = 'none');
-                        });
-                    });
-
-                    function renderRow(id, name) {
-                        var tbody = document.getElementById('sc-selected-tbody');
-                        var tr = document.createElement('tr');
-                        tr.id = 'sc-row-' + id;
-                        tr.innerHTML = '<td>' + name +
-                            '<input type="hidden" name="product_ids" value="' + id + '"/></td>' +
-                            '<td><input type="number" id="sc-qty-' + id + '" name="quantities" value="1" min="1" class="form-control form-control-sm"/></td>' +
-                            '<td><input type="text" name="flavors" placeholder="Sabor..." class="form-control form-control-sm"/></td>' +
-                            '<td><button type="button" class="btn btn-sm btn-outline-danger" onclick="removeRow(\'' + id + '\')">✕</button></td>';
-                        tbody.appendChild(tr);
+                    function updateCount() {
+                        var n = document.querySelectorAll('.sc-check:checked').length;
+                        var badge = document.getElementById('sc-count');
+                        if (badge) {
+                            badge.textContent = n + (n === 1 ? ' seleccionado' : ' seleccionados');
+                            badge.style.display = n > 0 ? 'inline-block' : 'none';
+                        }
                     }
 
-                    window.removeRow = function (id) {
-                        var row = document.getElementById('sc-row-' + id);
-                        if (row) row.remove();
-                        delete selected[id];
-                        var card = document.querySelector('[data-id="' + id + '"]');
-                        if (card) card.style.border = '2px solid #eee';
-                    };
+                    document.querySelectorAll('.sc-check').forEach(function (check) {
+                        check.addEventListener('change', function () {
+                            var lbl = check.closest('.sc-product-card');
+                            var badge = lbl &amp;&amp; lbl.querySelector('.sc-badge');
+                            var extras = lbl &amp;&amp; lbl.querySelector('.sc-extras');
+                            var card = lbl &amp;&amp; lbl.querySelector('.sc-inner-card');
+                            if (check.checked) {
+                                if (card) card.style.borderColor = '#8B4513';
+                                if (badge) badge.classList.remove('d-none');
+                                if (extras) extras.classList.remove('d-none');
+                            } else {
+                                if (card) card.style.borderColor = '#dee2e6';
+                                if (badge) badge.classList.add('d-none');
+                                if (extras) extras.classList.add('d-none');
+                            }
+                            updateCount();
+                        });
+                    });
                 })();
             </script>
         </t>

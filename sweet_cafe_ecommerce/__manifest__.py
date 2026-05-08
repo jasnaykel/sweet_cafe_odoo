@@ -16,6 +16,7 @@ Incluye:
         'website',
         'website_sale',
         'sweet_cafe_management',
+        'website_hr_recruitment',  # Bolsa de empleo pública en /jobs
     ],
     'data': [
         'data/ecommerce_categories.xml',

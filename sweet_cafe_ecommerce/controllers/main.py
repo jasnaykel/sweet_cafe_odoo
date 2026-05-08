@@ -41,8 +41,6 @@ class SweetCafeController(http.Controller):
         delivery_time = post.get('delivery_time', '').strip()
         customer_notes = post.get('customer_notes', '').strip()
         product_ids = request.httprequest.form.getlist('product_ids')
-        quantities = request.httprequest.form.getlist('quantities')
-        flavors = request.httprequest.form.getlist('flavors')
 
         # Basic validation
         if not name or not email or not branch_id or not delivery_date or not product_ids:
@@ -67,15 +65,17 @@ class SweetCafeController(http.Controller):
             })
 
         # Build order lines — validate min_advance_days per product
+        # qty and flavor are keyed by product ID (qty_[id], flavor_[id])
+        # This is more reliable than positional indexing with dynamic inputs.
         lines = []
-        for i, pid in enumerate(product_ids):
+        for pid in product_ids:
             try:
                 pid = int(pid)
-                qty = float(quantities[i]) if i < len(quantities) else 1.0
+                qty = float(post.get('qty_%s' % pid, 1) or 1)
                 if qty <= 0:
-                    continue
-                flavor = flavors[i] if i < len(flavors) else ''
-            except (ValueError, IndexError):
+                    qty = 1.0
+                flavor = post.get('flavor_%s' % pid, '').strip()
+            except (ValueError, TypeError):
                 continue
             product = request.env['product.template'].sudo().browse(pid)
             if not product.exists():
