@@ -1968,31 +1968,41 @@ form.oe_product_cart:hover .sw-card-overlay-btn {
     color: $sw-gold-light;
   }
 
-  // ── Product detail page — containers sin fondo claro en dark ─────
-  // Estas reglas cubren casos donde sw-pdp podría no aplicarse o donde
-  // Odoo 19 cambia nombres de clase entre versiones.
-  .o_wsale_product_page,
-  #product_detail,
-  #product_detail_main {
+  // ── Product detail page — fondo blanco nuclear override ────────────
+  // Odoo aplica background:#fff en #product_detail y en #wrap con alta
+  // especificidad. Usamos body[data-bs-theme] + id para ganar la cascada.
+
+  &#wrap #product_detail,
+  &#wrap section#product_detail,
+  &#wrap .o_wsale_product_page,
+  &#wrap .oe_website_sale,
+  &#wrap #product_detail_main {
+    background: var(--bg-page) !important;
+  }
+
+  // Contenedor de imagen: ambas columnas deben tener fondo oscuro
+  &#wrap .o_wsale_product_images,
+  &#wrap .o_product_photo_container,
+  &#wrap .o_carousel_product,
+  &#wrap .o_wsale_product_images_main,
+  &#wrap figure.oe_product {
+    background: var(--bg-elevated) !important;
+  }
+
+  // Wrapper de imagen principal (tarjeta con border-radius)
+  &#wrap .o_product_page_main_image_card {
+    background: var(--bg-elevated) !important;
+    border-color: var(--border-subtle) !important;
+  }
+
+  // Columnas row dentro de product_detail — fondo transparent
+  &#wrap #product_detail .row > div,
+  &#wrap #product_detail .container > .row > div {
     background: transparent !important;
   }
 
-  // Columna de imagen: forzar fondo oscuro en cualquier wrapper nativo
-  .o_wsale_product_images,
-  .o_product_photo_container,
-  .o_carousel_product {
-    background: var(--bg-elevated) !important;
-  }
-
-  // Imagen placeholder (sin foto subida): bg coherente con dark
-  .o_wsale_product_images img,
-  .o_product_page_main_image_card img,
-  figure.oe_product img {
-    background: var(--bg-elevated) !important;
-  }
-
-  // Bloque técnico de pastelería — override del inline style #FDF5E6
-  .sc-technical-specs {
+  // Bloque técnico de pastelería — override inline style #FDF5E6
+  &#wrap .sc-technical-specs {
     background: var(--bg-elevated) !important;
     border-left-color: var(--accent-gold, #{$sw-gold}) !important;
     color: var(--text-primary) !important;

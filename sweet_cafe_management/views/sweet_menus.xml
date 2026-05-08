@@ -41,6 +41,25 @@
         groups="sweet_cafe_management.sweet_group_cajero"
     />
 
+    <!-- Reservas bajo Ventas -->
+    <menuitem
+        id="sweet_menu_reservations"
+        name="Reservas"
+        parent="sweet_menu_ventas"
+        sequence="20"
+        action="sweet_cafe_management.action_sweet_reservations"
+        groups="sweet_cafe_management.sweet_group_cajero"
+    />
+
+    <menuitem
+        id="sweet_menu_reservations_calendar"
+        name="Calendario de Reservas"
+        parent="sweet_menu_ventas"
+        sequence="21"
+        action="sweet_cafe_management.action_sweet_reservations_calendar"
+        groups="sweet_cafe_management.sweet_group_cajero"
+    />
+
     <!-- Inventario -->
     <menuitem
         id="sweet_menu_inventario"
