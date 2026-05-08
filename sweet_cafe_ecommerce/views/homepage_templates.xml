@@ -236,9 +236,9 @@
                     <p class="sw-best-subtitle">Los favoritos de nuestros clientes, siempre disponibles.</p>
                 </div>
 
-                <!-- Server-side best-sellers carousel -->
-                <t t-set="bs_groups" t-value="request.env['sale.report'].sudo().read_group([('state','in',('sale','done'))], ['product_tmpl_id','product_uom_qty:sum'], ['product_tmpl_id'], orderby='product_uom_qty desc', limit=12)"/>
-                <t t-set="bs_tmpl_ids" t-value="[g['product_tmpl_id'][0] for g in bs_groups if g.get('product_tmpl_id')]"/>
+                <!-- Server-side best-sellers carousel — uses _read_group (Odoo 19 API) -->
+                <t t-set="bs_groups" t-value="request.env['sale.report'].sudo()._read_group([('state','in',('sale','done'))], groupby=['product_tmpl_id'], aggregates=['product_uom_qty:sum'], order='product_uom_qty:sum desc', limit=12)"/>
+                <t t-set="bs_tmpl_ids" t-value="[g[0].id for g in bs_groups if g[0]]"/>
                 <t t-set="best_products" t-value="request.env['product.template'].sudo().browse(bs_tmpl_ids).filtered(lambda p: p.active and p.sale_ok) if bs_tmpl_ids else request.env['product.template'].sudo().search([('sale_ok','=',True),('active','=',True)], limit=12)"/>
                 <t t-set="best_chunks" t-value="[best_products[i:i+4] for i in range(0, len(best_products), 4)]"/>
 

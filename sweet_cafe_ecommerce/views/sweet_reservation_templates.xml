@@ -74,11 +74,13 @@
                                         <div class="mb-3">
                                             <label class="form-label fw-semibold">Fecha de entrega *</label>
                                             <input type="date" name="delivery_date" class="form-control"
-                                                   t-att-min="min_date" required="required"/>
+                                                   t-att-min="min_date" required="required"
+                                                   style="color-scheme:inherit;"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label fw-semibold">Hora aproximada</label>
-                                            <input type="text" name="delivery_time" class="form-control" placeholder="Ej: 10:00 – 11:00"/>
+                                            <input type="time" name="delivery_time" class="form-control"
+                                                   style="color-scheme:inherit;"/>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label fw-semibold">Indicaciones especiales</label>
@@ -99,7 +101,19 @@
                                         </h5>
                                     </div>
                                     <div class="card-body p-0">
-                                        <div class="sc-product-grid p-3" style="max-height:480px; overflow-y:auto;">
+                                        <!-- ── Buscador de productos ── -->
+                                        <div class="px-3 pt-3 pb-2">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-text" style="background:#8B4513;border-color:#8B4513;">
+                                                    <i class="fa fa-search text-white"/>
+                                                </span>
+                                                <input type="text" id="sc-product-search"
+                                                       class="form-control"
+                                                       placeholder="Buscar producto..."
+                                                       autocomplete="off"/>
+                                            </div>
+                                        </div>
+                                        <div class="sc-product-grid px-3 pb-3" style="max-height:480px; overflow-y:auto;">
                                             <p class="text-muted small mb-2 px-1">Haz clic en un producto para seleccionarlo. Puedes ajustar cantidad y sabor en cada tarjeta.</p>
                                             <div class="row row-cols-2 row-cols-md-3 g-3">
                                                 <t t-foreach="products" t-as="p">
@@ -158,9 +172,10 @@
                 </div>
             </div>
 
-            <!-- JS: solo actualiza estado visual. El navegador envía los checkboxes nativamente. -->
+            <!-- JS: toguea estado visual de tarjetas. El submit lo maneja el browser nativamente. -->
             <script type="text/javascript">
                 (function () {
+                    // ── Contador de seleccionados ──────────────────────
                     function updateCount() {
                         var n = document.querySelectorAll('.sc-check:checked').length;
                         var badge = document.getElementById('sc-count');
@@ -170,6 +185,7 @@
                         }
                     }
 
+                    // ── Toggle visual al marcar/desmarcar ─────────────
                     document.querySelectorAll('.sc-check').forEach(function (check) {
                         check.addEventListener('change', function () {
                             var lbl = check.closest('.sc-product-card');
@@ -188,6 +204,25 @@
                             updateCount();
                         });
                     });
+
+                    // ── Buscador en tiempo real ────────────────────────
+                    var searchInput = document.getElementById('sc-product-search');
+                    if (searchInput) {
+                        searchInput.addEventListener('input', function () {
+                            var q = this.value.trim().toLowerCase();
+                            document.querySelectorAll('.sc-product-card').forEach(function (lbl) {
+                                var name = (lbl.querySelector('.card-body p.fw-semibold') || {}).textContent || '';
+                                var col = lbl.closest('.col');
+                                if (col) {
+                                    col.style.display = (!q || name.toLowerCase().indexOf(q) !== -1) ? '' : 'none';
+                                }
+                            });
+                        });
+                        // Limpiar búsqueda con Escape
+                        searchInput.addEventListener('keydown', function (e) {
+                            if (e.key === 'Escape') { this.value = ''; this.dispatchEvent(new Event('input')); }
+                        });
+                    }
                 })();
             </script>
         </t>

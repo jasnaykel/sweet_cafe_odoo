@@ -1992,8 +1992,31 @@ form.oe_product_cart:hover .sw-card-overlay-btn {
 
   // Tarjeta de imagen principal
   #wrap .o_product_page_main_image_card {
-    background: var(--bg-elevated) !important;
-    border-color: var(--border-subtle) !important;
+    background: var(--bg-elevated, #1a1823) !important;
+    border-color: var(--border-subtle, rgba(255, 255, 255, 0.1)) !important;
+  }
+
+  // Contenedores de imagen y figura Odoo — fondo oscuro explícito
+  #wrap .o_wsale_product_images,
+  #wrap .o_carousel_product,
+  #wrap .o_wsale_product_images_main,
+  #wrap figure.oe_product,
+  #wrap .o_product_photo_container {
+    background: var(--bg-elevated, #1a1823) !important;
+  }
+
+  // Imagen de producto con placeholder SVG gris: usar CSS filter para oscurecer solo si
+  // está dentro del contenedor principal del producto (no afecta thumbs ni shop grid)
+  #wrap
+    .o_wsale_product_images_main
+    img.o_product_image_main:not([src*=".svg"]) {
+    background: var(--bg-elevated, #1a1823) !important;
+  }
+  // Para el placeholder nativo de Odoo (SVG con fondo gris claro) usar brightness reducida
+  #wrap .o_wsale_product_images_main img[src*="placeholder"],
+  #wrap .o_wsale_product_images_main img[src*="no_image"],
+  #wrap .o_product_page_main_image_card img[src*="placeholder"] {
+    filter: brightness(0.45) !important;
   }
 
   // Columnas del layout: transparent para no tapar el fondo de página
