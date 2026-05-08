@@ -1968,41 +1968,42 @@ form.oe_product_cart:hover .sw-card-overlay-btn {
     color: $sw-gold-light;
   }
 
-  // ── Product detail page — fondo blanco nuclear override ────────────
-  // Odoo aplica background:#fff en #product_detail y en #wrap con alta
-  // especificidad. Usamos body[data-bs-theme] + id para ganar la cascada.
+  // ── Product detail page — fondo oscuro ────────────────────────────
+  // [data-bs-theme="dark"] está en <html>. #wrap es descendiente.
+  // "&#wrap" (sin espacio) = mismo elemento → NUNCA coincide.
+  // "#wrap" (sin &) dentro de este bloque = descendant selector ✓
 
-  &#wrap #product_detail,
-  &#wrap section#product_detail,
-  &#wrap .o_wsale_product_page,
-  &#wrap .oe_website_sale,
-  &#wrap #product_detail_main {
+  #wrap #product_detail,
+  #wrap section#product_detail,
+  #wrap .o_wsale_product_page,
+  #wrap .oe_website_sale,
+  #wrap #product_detail_main {
     background: var(--bg-page) !important;
   }
 
-  // Contenedor de imagen: ambas columnas deben tener fondo oscuro
-  &#wrap .o_wsale_product_images,
-  &#wrap .o_product_photo_container,
-  &#wrap .o_carousel_product,
-  &#wrap .o_wsale_product_images_main,
-  &#wrap figure.oe_product {
+  // Contenedor de imagen: fondo oscuro en cualquier wrapper nativo
+  #wrap .o_wsale_product_images,
+  #wrap .o_product_photo_container,
+  #wrap .o_carousel_product,
+  #wrap .o_wsale_product_images_main,
+  #wrap figure.oe_product {
     background: var(--bg-elevated) !important;
   }
 
-  // Wrapper de imagen principal (tarjeta con border-radius)
-  &#wrap .o_product_page_main_image_card {
+  // Tarjeta de imagen principal
+  #wrap .o_product_page_main_image_card {
     background: var(--bg-elevated) !important;
     border-color: var(--border-subtle) !important;
   }
 
-  // Columnas row dentro de product_detail — fondo transparent
-  &#wrap #product_detail .row > div,
-  &#wrap #product_detail .container > .row > div {
+  // Columnas del layout: transparent para no tapar el fondo de página
+  #wrap #product_detail .row > div,
+  #wrap #product_detail .container > .row > div {
     background: transparent !important;
   }
 
   // Bloque técnico de pastelería — override inline style #FDF5E6
-  &#wrap .sc-technical-specs {
+  #wrap .sc-technical-specs {
     background: var(--bg-elevated) !important;
     border-left-color: var(--accent-gold, #{$sw-gold}) !important;
     color: var(--text-primary) !important;
