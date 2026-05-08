@@ -10,6 +10,7 @@ from . import (
     product_document,
     quotation_document,
     pos_config,
+    pos_session,
     res_company,
     sweet_reservation,
     sweet_tax_bracket,

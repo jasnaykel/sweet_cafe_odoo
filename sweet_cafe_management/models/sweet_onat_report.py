@@ -85,7 +85,12 @@ class SweetOnatReport(models.Model):
     )
     total_purchases = fields.Monetary(
         string='Compras / Gastos Deducibles',
-        help='Gastos deducibles reconocidos en el período',
+        help='Gastos deducibles reconocidos en el período (facturas de compra + mermas aprobadas)',
+    )
+    total_scrap_losses = fields.Monetary(
+        string='Pérdidas por Merma (incluidas en Gastos)',
+        help='Valoración de las mermas aprobadas en el período. Ya incluidas en Gastos Deducibles.',
+        readonly=True,
     )
 
     # ── Tax calculations ──────────────────────────
@@ -248,13 +253,30 @@ class SweetOnatReport(models.Model):
             ])
             wage_total = sum(contracts.mapped('wage'))
 
+        # Scrap losses: approved sweet.scrap records in the period are deductible expenses.
+        # Valuation = qty_done × product.standard_price (cost price at time of approval).
+        scrap_loss = 0.0
+        scraps = self.env['sweet.scrap'].search([
+            ('state', '=', 'approved'),
+            ('date', '>=', from_date),
+            ('date', '<=', to_date),
+            ('company_id', '=', self.company_id.id),
+        ])
+        for scrap in scraps:
+            cost = scrap.product_id.standard_price if scrap.product_id else 0.0
+            scrap_loss += (scrap.qty or 0.0) * cost
+
         self.write({
             'gross_income': gross,
-            'total_purchases': total_pur,
+            'total_purchases': total_pur + scrap_loss,
+            'total_scrap_losses': scrap_loss,
             'total_wages': wage_total,
             'state': 'computed',
         })
-        self.message_post(body=_('Bases calculadas automáticamente desde contabilidad.'))
+        self.message_post(body=_(
+            'Bases calculadas automáticamente desde contabilidad. '
+            'Pérdidas por merma incluidas: %(scrap).2f CUP'
+        ) % {'scrap': scrap_loss})
 
     def action_submit(self):
         for rec in self:

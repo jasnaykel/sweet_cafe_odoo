@@ -21,6 +21,14 @@
                     <t t-if="error == 'sin_productos'">
                         <div class="alert alert-danger">Debes seleccionar al menos un producto.</div>
                     </t>
+                    <t t-if="error == 'fecha_invalida'">
+                        <div class="alert alert-danger">La fecha de entrega debe ser posterior a hoy.</div>
+                    </t>
+                    <t t-if="error == 'anticipo_insuficiente'">
+                        <div class="alert alert-warning">
+                            <strong>Anticipo insuficiente:</strong> uno de los productos seleccionados requiere más días de anticipación para ser preparado. Por favor elige una fecha más alejada.
+                        </div>
+                    </t>
 
                     <form action="/reservar/enviar" method="post" class="needs-validation" novalidate="novalidate">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>

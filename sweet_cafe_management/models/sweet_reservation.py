@@ -101,8 +101,46 @@ class SweetReservation(models.Model):
 
     def action_confirm(self):
         for rec in self:
+            if rec.state != 'draft':
+                continue
+            # Create the sale order automatically on confirmation
+            if not rec.sale_order_id:
+                order_lines = []
+                for line in rec.line_ids:
+                    # SweetReservationLine.product_id is product.template;
+                    # sale.order.line expects product.product (variant).
+                    product_variant = line.product_id.product_variant_id
+                    if not product_variant:
+                        continue
+                    order_lines.append((0, 0, {
+                        'product_id': product_variant.id,
+                        'product_uom_qty': line.qty,
+                        'price_unit': line.unit_price,
+                        'name': line.notes or line.product_id.name,
+                    }))
+                order_vals = {
+                    'partner_id': rec.partner_id.id,
+                    'company_id': rec.company_id.id,
+                    'note': rec.customer_notes or '',
+                    'order_line': order_lines,
+                }
+                if rec.branch_id and rec.branch_id.warehouse_id:
+                    order_vals['warehouse_id'] = rec.branch_id.warehouse_id.id
+                if rec.delivery_date:
+                    import datetime as _dt
+                    order_vals['commitment_date'] = _dt.datetime.combine(
+                        rec.delivery_date, _dt.time(0, 0, 0)
+                    )
+                order = self.env['sale.order'].create(order_vals)
+                order.action_confirm()
+                rec.sale_order_id = order
+                rec.message_post(
+                    body=_('Reserva confirmada. Orden de venta <b>%s</b> creada automáticamente.')
+                    % order.name
+                )
+            else:
+                rec.message_post(body=_('Reserva confirmada.'))
             rec.state = 'confirmed'
-            rec.message_post(body=_('Reserva confirmada.'))
 
     def action_ready(self):
         for rec in self:

@@ -48,6 +48,14 @@ class SweetCafeController(http.Controller):
         if not name or not email or not branch_id or not delivery_date or not product_ids:
             return request.redirect('/reservar?error=campos_requeridos')
 
+        # Validate delivery_date is a real future date
+        try:
+            requested_date = date.fromisoformat(delivery_date)
+        except (ValueError, TypeError):
+            return request.redirect('/reservar?error=fecha_invalida')
+        if requested_date <= date.today():
+            return request.redirect('/reservar?error=fecha_invalida')
+
         # Find or create partner
         partner = Partner.search([('email', '=', email)], limit=1)
         if not partner:
@@ -58,18 +66,30 @@ class SweetCafeController(http.Controller):
                 'customer_rank': 1,
             })
 
-        # Build order lines
+        # Build order lines — validate min_advance_days per product
         lines = []
         for i, pid in enumerate(product_ids):
             try:
                 pid = int(pid)
                 qty = float(quantities[i]) if i < len(quantities) else 1.0
+                if qty <= 0:
+                    continue
                 flavor = flavors[i] if i < len(flavors) else ''
             except (ValueError, IndexError):
                 continue
             product = request.env['product.template'].sudo().browse(pid)
             if not product.exists():
                 continue
+            # Respect min_advance_days: the delivery date must be at least
+            # product.min_advance_days days in the future from today.
+            min_advance = product.min_advance_days or 0
+            if min_advance > 0:
+                min_allowed = date.today() + timedelta(days=min_advance)
+                if requested_date < min_allowed:
+                    return request.redirect(
+                        '/reservar?error=anticipo_insuficiente&product=%s&days=%d'
+                        % (product.name, min_advance)
+                    )
             lines.append((0, 0, {
                 'product_id': pid,
                 'qty': qty,

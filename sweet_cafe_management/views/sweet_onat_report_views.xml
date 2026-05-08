@@ -56,6 +56,7 @@
                                        readonly="state == 'submitted'"/>
                                 <field name="total_purchases" widget="monetary"
                                        readonly="state == 'submitted'"/>
+                                <field name="total_scrap_losses" widget="monetary" readonly="1"/>
                                 <field name="net_income" widget="monetary" readonly="1"
                                        class="fw-bold text-success"/>
                                 <field name="total_wages" widget="monetary"

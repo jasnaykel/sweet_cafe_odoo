@@ -144,6 +144,15 @@ class SweetScrap(models.Model):
         for scrap in self:
             scrap.product_uom_id = scrap.product_id.uom_id
 
+    @api.onchange('branch_id')
+    def _onchange_branch_id(self):
+        """Pre-fill the stock location from the branch's warehouse when branch changes."""
+        for scrap in self:
+            if scrap.branch_id and scrap.branch_id.warehouse_id:
+                warehouse = scrap.branch_id.warehouse_id
+                if warehouse.lot_stock_id:
+                    scrap.location_id = warehouse.lot_stock_id
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:

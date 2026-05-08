@@ -14,7 +14,11 @@ class SweetBranch(models.Model):
     _order = 'sequence, name'
 
     name = fields.Char(string='Nombre de Sucursal', required=True, tracking=True)
-    active = fields.Boolean(default=True)
+    active = fields.Boolean(
+        string='Activo',
+        default=True,
+        tracking=True,
+    )
     code = fields.Char(
         string='Código Corto',
         required=True,
@@ -25,11 +29,6 @@ class SweetBranch(models.Model):
     sequence = fields.Integer(
         string='Secuencia',
         default=10,
-    )
-    active = fields.Boolean(
-        string='Activo',
-        default=True,
-        tracking=True,
     )
     address = fields.Char(
         string='Dirección',
