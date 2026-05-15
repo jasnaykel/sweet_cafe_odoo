@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ══════════════════════════════════════════════
+             Opciones de Sabor
+        ══════════════════════════════════════════════ -->
+        <record id="option_flavor_chocolate" model="product.design.option">
+            <field name="name">Chocolate</field>
+            <field name="category">flavor</field>
+            <field name="color">#5c3d2e</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="option_flavor_vanilla" model="product.design.option">
+            <field name="name">Vainilla</field>
+            <field name="category">flavor</field>
+            <field name="color">#f5e6d3</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="option_flavor_strawberry" model="product.design.option">
+            <field name="name">Fresa</field>
+            <field name="category">flavor</field>
+            <field name="color">#e8a0bf</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="option_flavor_lemon" model="product.design.option">
+            <field name="name">Limón</field>
+            <field name="category">flavor</field>
+            <field name="color">#f0e68c</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="option_flavor_red_velvet" model="product.design.option">
+            <field name="name">Red Velvet</field>
+            <field name="category">flavor</field>
+            <field name="color">#c0392b</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="option_flavor_coconut" model="product.design.option">
+            <field name="name">Coco</field>
+            <field name="category">flavor</field>
+            <field name="color">#fefefe</field>
+            <field name="sequence">6</field>
+        </record>
+        <record id="option_flavor_coffee" model="product.design.option">
+            <field name="name">Café</field>
+            <field name="category">flavor</field>
+            <field name="color">#8b5e3c</field>
+            <field name="sequence">7</field>
+        </record>
+        <record id="option_flavor_rum" model="product.design.option">
+            <field name="name">Ron</field>
+            <field name="category">flavor</field>
+            <field name="color">#a67b52</field>
+            <field name="sequence">8</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════
+             Opciones de Relleno
+        ══════════════════════════════════════════════ -->
+        <record id="option_filling_cream" model="product.design.option">
+            <field name="name">Crema Pastelera</field>
+            <field name="category">filling</field>
+            <field name="color">#f5e6d3</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="option_filling_dulce_leche" model="product.design.option">
+            <field name="name">Dulce de Leche</field>
+            <field name="category">filling</field>
+            <field name="color">#c8956c</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="option_filling_guava" model="product.design.option">
+            <field name="name">Guayaba</field>
+            <field name="category">filling</field>
+            <field name="color">#e85050</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="option_filling_chocolate_mousse" model="product.design.option">
+            <field name="name">Mousse de Chocolate</field>
+            <field name="category">filling</field>
+            <field name="color">#3d2317</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="option_filling_fruit" model="product.design.option">
+            <field name="name">Frutas Mixtas</field>
+            <field name="category">filling</field>
+            <field name="color">#e88a5a</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="option_filling_condensed_milk" model="product.design.option">
+            <field name="name">Leche Condensada</field>
+            <field name="category">filling</field>
+            <field name="color">#fff5e0</field>
+            <field name="sequence">6</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════
+             Opciones de Cobertura
+        ══════════════════════════════════════════════ -->
+        <record id="option_frosting_buttercream" model="product.design.option">
+            <field name="name">Buttercream</field>
+            <field name="category">frosting</field>
+            <field name="color">#fffdd0</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="option_frosting_fondant" model="product.design.option">
+            <field name="name">Fondant</field>
+            <field name="category">frosting</field>
+            <field name="color">#ffffff</field>
+            <field name="sequence">2</field>
+            <field name="extra_price">150</field>
+        </record>
+        <record id="option_frosting_ganache" model="product.design.option">
+            <field name="name">Ganache de Chocolate</field>
+            <field name="category">frosting</field>
+            <field name="color">#2c1810</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="option_frosting_merengue" model="product.design.option">
+            <field name="name">Merengue</field>
+            <field name="category">frosting</field>
+            <field name="color">#fff8f0</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="option_frosting_naked" model="product.design.option">
+            <field name="name">Naked (sin cobertura)</field>
+            <field name="category">frosting</field>
+            <field name="color">#d4a574</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════
+             Opciones de Decoración
+        ══════════════════════════════════════════════ -->
+        <record id="option_deco_flowers" model="product.design.option">
+            <field name="name">Flores Naturales</field>
+            <field name="category">decoration</field>
+            <field name="color">#e8a0bf</field>
+            <field name="sequence">1</field>
+            <field name="extra_price">200</field>
+        </record>
+        <record id="option_deco_sugar_flowers" model="product.design.option">
+            <field name="name">Flores de Azúcar</field>
+            <field name="category">decoration</field>
+            <field name="color">#f0b8d4</field>
+            <field name="sequence">2</field>
+            <field name="extra_price">300</field>
+        </record>
+        <record id="option_deco_sprinkles" model="product.design.option">
+            <field name="name">Chispas de Colores</field>
+            <field name="category">decoration</field>
+            <field name="color">#ff6b6b</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="option_deco_gold_leaf" model="product.design.option">
+            <field name="name">Lámina de Oro</field>
+            <field name="category">decoration</field>
+            <field name="color">#ffd700</field>
+            <field name="sequence">4</field>
+            <field name="extra_price">500</field>
+        </record>
+        <record id="option_deco_drip" model="product.design.option">
+            <field name="name">Efecto Drip</field>
+            <field name="category">decoration</field>
+            <field name="color">#5c3d2e</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="option_deco_macarons" model="product.design.option">
+            <field name="name">Macarons</field>
+            <field name="category">decoration</field>
+            <field name="color">#b5e8c3</field>
+            <field name="sequence">6</field>
+            <field name="extra_price">250</field>
+        </record>
+        <record id="option_deco_meringue_kisses" model="product.design.option">
+            <field name="name">Besos de Merengue</field>
+            <field name="category">decoration</field>
+            <field name="color">#fff0f5</field>
+            <field name="sequence">7</field>
+        </record>
+        <record id="option_deco_ribbon" model="product.design.option">
+            <field name="name">Cinta / Lazo</field>
+            <field name="category">decoration</field>
+            <field name="color">#d4a574</field>
+            <field name="sequence">8</field>
+        </record>
+
+        <!-- ══════════════════════════════════════════════
+             Opciones de Topping
+        ══════════════════════════════════════════════ -->
+        <record id="option_top_strawberries" model="product.design.option">
+            <field name="name">Fresas Frescas</field>
+            <field name="category">topping</field>
+            <field name="color">#e74c3c</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="option_top_berries" model="product.design.option">
+            <field name="name">Frutos del Bosque</field>
+            <field name="category">topping</field>
+            <field name="color">#8e44ad</field>
+            <field name="sequence">2</field>
+            <field name="extra_price">150</field>
+        </record>
+        <record id="option_top_chocolate_shavings" model="product.design.option">
+            <field name="name">Virutas de Chocolate</field>
+            <field name="category">topping</field>
+            <field name="color">#3d2317</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="option_top_caramel" model="product.design.option">
+            <field name="name">Caramelo</field>
+            <field name="category">topping</field>
+            <field name="color">#c8956c</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="option_top_nuts" model="product.design.option">
+            <field name="name">Nueces / Almendras</field>
+            <field name="category">topping</field>
+            <field name="color">#a0785a</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="option_top_coconut_flakes" model="product.design.option">
+            <field name="name">Coco Rallado</field>
+            <field name="category">topping</field>
+            <field name="color">#f5f5f0</field>
+            <field name="sequence">6</field>
+        </record>
+
+    </data>
+</odoo>

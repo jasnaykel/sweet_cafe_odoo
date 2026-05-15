@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════
+         product.design — Formulario backend
+    ══════════════════════════════════════════════ -->
+    <record id="product_design_view_form" model="ir.ui.view">
+        <field name="name">product.design.form</field>
+        <field name="model">product.design</field>
+        <field name="arch" type="xml">
+            <form string="Diseño de Producto">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,ai_generated,edited,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Producto">
+                            <field name="product_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group string="Estructura">
+                            <field name="cake_layers"/>
+                            <field name="cake_shape"/>
+                            <field name="cake_size"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Sabores">
+                            <field name="flavor_id"/>
+                            <field name="filling_id"/>
+                            <field name="frosting_id"/>
+                        </group>
+                        <group string="Colores">
+                            <field name="primary_color" widget="color"/>
+                            <field name="secondary_color" widget="color"/>
+                            <field name="accent_color" widget="color"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Decoración">
+                            <field name="decoration_ids" widget="many2many_tags"/>
+                            <field name="topping_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Mensaje">
+                            <field name="custom_message"/>
+                            <field name="message_font"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Imágenes" name="images">
+                            <group>
+                                <group>
+                                    <field name="ai_generated_image" widget="image"/>
+                                </group>
+                                <group>
+                                    <field name="final_design_image" widget="image"/>
+                                </group>
+                            </group>
+                            <field name="ai_prompt_used" readonly="1"/>
+                        </page>
+                        <page string="Editor JSON" name="editor">
+                            <field name="editor_state_json"/>
+                        </page>
+                        <page string="Notas" name="notes">
+                            <field name="extra_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         product.design — Lista
+    ══════════════════════════════════════════════ -->
+    <record id="product_design_view_list" model="ir.ui.view">
+        <field name="name">product.design.list</field>
+        <field name="model">product.design</field>
+        <field name="arch" type="xml">
+            <list string="Diseños de Productos">
+                <field name="display_name"/>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <field name="cake_layers"/>
+                <field name="cake_shape"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'ai_generated'"
+                       decoration-success="state in ('edited', 'confirmed')"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         product.design.option — Formulario
+    ══════════════════════════════════════════════ -->
+    <record id="product_design_option_view_form" model="ir.ui.view">
+        <field name="name">product.design.option.form</field>
+        <field name="model">product.design.option</field>
+        <field name="arch" type="xml">
+            <form string="Opción de Diseño">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Nombre de la opción"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="category"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="color" widget="color"/>
+                            <field name="extra_price"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Descripción opcional..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         product.design.option — Lista
+    ══════════════════════════════════════════════ -->
+    <record id="product_design_option_view_list" model="ir.ui.view">
+        <field name="name">product.design.option.list</field>
+        <field name="model">product.design.option</field>
+        <field name="arch" type="xml">
+            <list string="Opciones de Diseño" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="color" widget="color"/>
+                <field name="extra_price"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         Acciones y Menús
+    ══════════════════════════════════════════════ -->
+    <record id="action_product_design" model="ir.actions.act_window">
+        <field name="name">Diseños de Productos</field>
+        <field name="res_model">product.design</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_product_design_option" model="ir.actions.act_window">
+        <field name="name">Opciones del Configurador</field>
+        <field name="res_model">product.design.option</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menú bajo Sweet Café -->
+    <menuitem id="menu_configurator_root"
+              name="Configurador"
+              parent="sweet_cafe_management.sweet_menu_root"
+              sequence="45"/>
+
+    <menuitem id="menu_product_design"
+              name="Diseños de Clientes"
+              action="action_product_design"
+              parent="menu_configurator_root"
+              sequence="10"/>
+
+    <menuitem id="menu_product_design_option"
+              name="Opciones (Sabores, Decoraciones...)"
+              action="action_product_design_option"
+              parent="menu_configurator_root"
+              sequence="20"/>
+
+    <!-- ══════════════════════════════════════════════
+         Extend reservation line form to show design
+    ══════════════════════════════════════════════ -->
+    <record id="sweet_reservation_line_design_view" model="ir.ui.view">
+        <field name="name">sweet.reservation.line.design.inherit</field>
+        <field name="model">sweet.reservation</field>
+        <field name="inherit_id" ref="sweet_cafe_management.sweet_reservation_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/list/field[@name='notes']" position="after">
+                <field name="design_id" optional="show"
+                       options="{'no_create': True}"/>
+                <field name="design_image" widget="image" width="60px" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         Settings: AI provider configuration
+    ══════════════════════════════════════════════ -->
+    <record id="res_config_settings_configurator_view" model="ir.ui.view">
+        <field name="name">res.config.settings.configurator</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='general_settings']" position="inside">
+                <block title="Configurador de Productos — IA" name="configurator_ai_settings">
+                    <setting string="Proveedor de IA para imágenes"
+                             help="Selecciona el servicio de IA para generar imágenes de productos.">
+                        <field name="configurator_ai_provider"/>
+                    </setting>
+                    <setting string="API Key"
+                             help="Clave de acceso del proveedor de IA seleccionado.">
+                        <field name="configurator_ai_api_key" password="True"/>
+                    </setting>
+                    <setting string="Modelo de IA"
+                             help="Identificador del modelo (varía según el proveedor).">
+                        <field name="configurator_ai_model"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

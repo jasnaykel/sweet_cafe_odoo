@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         Configurador Visual de Productos — Página pública
+    ══════════════════════════════════════════════════════════════ -->
+    <template id="configurator_page" name="Sweet Café — Configurador de Producto">
+        <t t-call="website.layout">
+            <div id="wrap" class="sc-configurator-page py-4">
+                <div class="container-fluid px-lg-5">
+
+                    <!-- Encabezado -->
+                    <div class="text-center mb-4">
+                        <h1 class="sc-cfg-title">
+                            <i class="fa fa-magic me-2"/>Personaliza tu
+                            <span class="sc-cfg-product-name"><t t-out="product.name"/></span>
+                        </h1>
+                        <p class="lead text-muted">Diseña tu pastel perfecto paso a paso y visualízalo en tiempo real.</p>
+                    </div>
+
+                    <!-- Datos ocultos para JS -->
+                    <input type="hidden" id="cfg-product-id" t-att-value="product.id"/>
+                    <input type="hidden" id="cfg-design-id" t-att-value="design.id if design else ''"/>
+                    <input type="hidden" id="cfg-product-image"
+                           t-att-value="'/web/image/product.template/%d/image_512' % product.id"/>
+
+                    <div class="row g-4">
+
+                        <!-- ════════════════════════════════════════
+                             LEFT: Panel de Configuración (Pasos)
+                        ════════════════════════════════════════ -->
+                        <div class="col-lg-4">
+                            <div class="sc-cfg-panel">
+
+                                <!-- Paso 1: Estructura -->
+                                <div class="sc-cfg-step" data-step="1">
+                                    <div class="sc-cfg-step-header" data-bs-toggle="collapse" data-bs-target="#step1-body">
+                                        <span class="sc-cfg-step-number">1</span>
+                                        <span class="sc-cfg-step-title">Estructura del Pastel</span>
+                                        <i class="fa fa-chevron-down ms-auto"/>
+                                    </div>
+                                    <div id="step1-body" class="collapse show sc-cfg-step-body">
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Número de Pisos</label>
+                                            <div class="sc-cfg-btn-group" id="cfg-layers">
+                                                <button type="button" class="sc-cfg-btn active" data-value="1">1</button>
+                                                <button type="button" class="sc-cfg-btn" data-value="2">2</button>
+                                                <button type="button" class="sc-cfg-btn" data-value="3">3</button>
+                                                <button type="button" class="sc-cfg-btn" data-value="4">4</button>
+                                                <button type="button" class="sc-cfg-btn" data-value="5">5</button>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Forma</label>
+                                            <div class="sc-cfg-btn-group" id="cfg-shape">
+                                                <button type="button" class="sc-cfg-btn active" data-value="round">
+                                                    <i class="fa fa-circle me-1"/>Redondo
+                                                </button>
+                                                <button type="button" class="sc-cfg-btn" data-value="square">
+                                                    <i class="fa fa-square me-1"/>Cuadrado
+                                                </button>
+                                                <button type="button" class="sc-cfg-btn" data-value="heart">
+                                                    <i class="fa fa-heart me-1"/>Corazón
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Tamaño</label>
+                                            <select class="form-select sc-cfg-select" id="cfg-size">
+                                                <option value="small">Pequeño (15 cm)</option>
+                                                <option value="medium" selected="selected">Mediano (20 cm)</option>
+                                                <option value="large">Grande (25 cm)</option>
+                                                <option value="xl">Extra grande (30 cm)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Paso 2: Sabores -->
+                                <div class="sc-cfg-step" data-step="2">
+                                    <div class="sc-cfg-step-header" data-bs-toggle="collapse" data-bs-target="#step2-body">
+                                        <span class="sc-cfg-step-number">2</span>
+                                        <span class="sc-cfg-step-title">Sabor y Relleno</span>
+                                        <i class="fa fa-chevron-down ms-auto"/>
+                                    </div>
+                                    <div id="step2-body" class="collapse sc-cfg-step-body">
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Sabor Principal</label>
+                                            <div class="sc-cfg-option-grid" id="cfg-flavor">
+                                                <t t-foreach="flavors" t-as="opt">
+                                                    <button type="button" class="sc-cfg-option-btn"
+                                                            t-att-data-value="opt.id"
+                                                            t-att-data-color="opt.color or '#d4a574'"
+                                                            t-att-title="opt.name">
+                                                        <t t-if="opt.image">
+                                                            <img t-att-src="'/web/image/product.design.option/%d/image' % opt.id"
+                                                                 class="sc-cfg-option-img" t-att-alt="opt.name"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span class="sc-cfg-option-swatch"
+                                                                  t-att-style="'background:%s;' % (opt.color or '#d4a574')"/>
+                                                        </t>
+                                                        <span class="sc-cfg-option-name"><t t-out="opt.name"/></span>
+                                                        <t t-if="opt.extra_price > 0">
+                                                            <span class="sc-cfg-option-price">+<t t-out="opt.extra_price"/> CUP</span>
+                                                        </t>
+                                                    </button>
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Relleno</label>
+                                            <div class="sc-cfg-option-grid" id="cfg-filling">
+                                                <t t-foreach="fillings" t-as="opt">
+                                                    <button type="button" class="sc-cfg-option-btn"
+                                                            t-att-data-value="opt.id"
+                                                            t-att-data-color="opt.color or '#e8c9a0'"
+                                                            t-att-title="opt.name">
+                                                        <span class="sc-cfg-option-swatch"
+                                                              t-att-style="'background:%s;' % (opt.color or '#e8c9a0')"/>
+                                                        <span class="sc-cfg-option-name"><t t-out="opt.name"/></span>
+                                                    </button>
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Cobertura</label>
+                                            <div class="sc-cfg-option-grid" id="cfg-frosting">
+                                                <t t-foreach="frostings" t-as="opt">
+                                                    <button type="button" class="sc-cfg-option-btn"
+                                                            t-att-data-value="opt.id"
+                                                            t-att-data-color="opt.color or '#f5e6d3'"
+                                                            t-att-title="opt.name">
+                                                        <span class="sc-cfg-option-swatch"
+                                                              t-att-style="'background:%s;' % (opt.color or '#f5e6d3')"/>
+                                                        <span class="sc-cfg-option-name"><t t-out="opt.name"/></span>
+                                                    </button>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Paso 3: Decoración -->
+                                <div class="sc-cfg-step" data-step="3">
+                                    <div class="sc-cfg-step-header" data-bs-toggle="collapse" data-bs-target="#step3-body">
+                                        <span class="sc-cfg-step-number">3</span>
+                                        <span class="sc-cfg-step-title">Decoración y Toppings</span>
+                                        <i class="fa fa-chevron-down ms-auto"/>
+                                    </div>
+                                    <div id="step3-body" class="collapse sc-cfg-step-body">
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Decoraciones <small class="text-muted">(selección múltiple)</small></label>
+                                            <div class="sc-cfg-option-grid sc-cfg-multi" id="cfg-decorations">
+                                                <t t-foreach="decorations" t-as="opt">
+                                                    <button type="button" class="sc-cfg-option-btn"
+                                                            t-att-data-value="opt.id"
+                                                            t-att-title="opt.name">
+                                                        <t t-if="opt.image">
+                                                            <img t-att-src="'/web/image/product.design.option/%d/image' % opt.id"
+                                                                 class="sc-cfg-option-img" t-att-alt="opt.name"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span class="sc-cfg-option-swatch"
+                                                                  t-att-style="'background:%s;' % (opt.color or '#e8a0bf')"/>
+                                                        </t>
+                                                        <span class="sc-cfg-option-name"><t t-out="opt.name"/></span>
+                                                    </button>
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Toppings <small class="text-muted">(selección múltiple)</small></label>
+                                            <div class="sc-cfg-option-grid sc-cfg-multi" id="cfg-toppings">
+                                                <t t-foreach="toppings" t-as="opt">
+                                                    <button type="button" class="sc-cfg-option-btn"
+                                                            t-att-data-value="opt.id"
+                                                            t-att-title="opt.name">
+                                                        <span class="sc-cfg-option-swatch"
+                                                              t-att-style="'background:%s;' % (opt.color or '#d4a574')"/>
+                                                        <span class="sc-cfg-option-name"><t t-out="opt.name"/></span>
+                                                    </button>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Paso 4: Colores y Mensaje -->
+                                <div class="sc-cfg-step" data-step="4">
+                                    <div class="sc-cfg-step-header" data-bs-toggle="collapse" data-bs-target="#step4-body">
+                                        <span class="sc-cfg-step-number">4</span>
+                                        <span class="sc-cfg-step-title">Colores y Mensaje</span>
+                                        <i class="fa fa-chevron-down ms-auto"/>
+                                    </div>
+                                    <div id="step4-body" class="collapse sc-cfg-step-body">
+                                        <div class="row g-2 mb-3">
+                                            <div class="col-4">
+                                                <label class="sc-cfg-label">Principal</label>
+                                                <input type="color" id="cfg-color-primary" class="form-control form-control-color w-100" value="#F5E6D3"/>
+                                            </div>
+                                            <div class="col-4">
+                                                <label class="sc-cfg-label">Secundario</label>
+                                                <input type="color" id="cfg-color-secondary" class="form-control form-control-color w-100" value="#D4A574"/>
+                                            </div>
+                                            <div class="col-4">
+                                                <label class="sc-cfg-label">Acento</label>
+                                                <input type="color" id="cfg-color-accent" class="form-control form-control-color w-100" value="#E8A0BF"/>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Mensaje Personalizado</label>
+                                            <input type="text" id="cfg-message" class="form-control"
+                                                   placeholder="Ej: Feliz Cumpleaños María" maxlength="80"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Tipografía</label>
+                                            <select class="form-select sc-cfg-select" id="cfg-font">
+                                                <option value="cursive">Cursiva Elegante</option>
+                                                <option value="bold">Negrita Clásica</option>
+                                                <option value="handwritten">Manuscrita</option>
+                                                <option value="modern">Moderna</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="sc-cfg-label">Notas Adicionales</label>
+                                            <textarea id="cfg-notes" class="form-control" rows="2"
+                                                      placeholder="Instrucciones especiales para el pastelero..."/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Botón Generar con IA -->
+                                <div class="sc-cfg-actions mt-3">
+                                    <button type="button" id="btn-generate-ai" class="btn sc-btn-ai w-100 mb-2">
+                                        <i class="fa fa-magic me-2"/>Generar Vista Previa con IA
+                                    </button>
+                                    <div id="cfg-ai-loading" class="text-center d-none py-3">
+                                        <div class="spinner-border" style="color: var(--accent-gold);" role="status">
+                                            <span class="visually-hidden">Generando...</span>
+                                        </div>
+                                        <p class="mt-2 text-muted small">Creando tu diseño con inteligencia artificial...</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- ════════════════════════════════════════
+                             CENTER: Canvas / Editor Interactivo
+                        ════════════════════════════════════════ -->
+                        <div class="col-lg-5">
+                            <div class="sc-cfg-canvas-wrapper">
+                                <div class="sc-cfg-canvas-header">
+                                    <span class="fw-semibold"><i class="fa fa-pencil-square-o me-2"/>Editor Interactivo</span>
+                                    <div class="sc-cfg-canvas-tools">
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-select" title="Seleccionar">
+                                            <i class="fa fa-mouse-pointer"/>
+                                        </button>
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-text" title="Añadir texto">
+                                            <i class="fa fa-font"/>
+                                        </button>
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-draw" title="Dibujar">
+                                            <i class="fa fa-paint-brush"/>
+                                        </button>
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-delete" title="Eliminar selección">
+                                            <i class="fa fa-trash"/>
+                                        </button>
+                                        <span class="sc-cfg-tool-sep"/>
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-undo" title="Deshacer">
+                                            <i class="fa fa-undo"/>
+                                        </button>
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-redo" title="Rehacer">
+                                            <i class="fa fa-repeat"/>
+                                        </button>
+                                        <span class="sc-cfg-tool-sep"/>
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-zoom-in" title="Zoom +">
+                                            <i class="fa fa-search-plus"/>
+                                        </button>
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-zoom-out" title="Zoom -">
+                                            <i class="fa fa-search-minus"/>
+                                        </button>
+                                        <button type="button" class="sc-cfg-tool-btn" id="tool-zoom-reset" title="Restablecer zoom">
+                                            <i class="fa fa-expand"/>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="sc-cfg-canvas-container">
+                                    <canvas id="design-canvas" width="600" height="600"/>
+                                    <!-- Placeholder cuando no hay imagen -->
+                                    <div id="canvas-placeholder" class="sc-cfg-canvas-placeholder">
+                                        <i class="fa fa-birthday-cake"/>
+                                        <p>Configura tu pastel y presiona<br/>"Generar Vista Previa con IA"<br/>para comenzar a editar.</p>
+                                    </div>
+                                </div>
+                                <!-- Controles de objeto seleccionado -->
+                                <div id="object-controls" class="sc-cfg-object-controls d-none">
+                                    <div class="row g-2 align-items-center">
+                                        <div class="col-auto">
+                                            <label class="small fw-semibold">Color:</label>
+                                            <input type="color" id="obj-color" class="form-control form-control-sm form-control-color"/>
+                                        </div>
+                                        <div class="col-auto">
+                                            <label class="small fw-semibold">Tamaño:</label>
+                                            <input type="range" id="obj-scale" class="form-range" min="10" max="300" value="100" style="width:100px;"/>
+                                        </div>
+                                        <div class="col-auto">
+                                            <label class="small fw-semibold">Rotación:</label>
+                                            <input type="range" id="obj-rotation" class="form-range" min="0" max="360" value="0" style="width:100px;"/>
+                                        </div>
+                                        <div class="col-auto">
+                                            <label class="small fw-semibold">Opacidad:</label>
+                                            <input type="range" id="obj-opacity" class="form-range" min="0" max="100" value="100" style="width:80px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ════════════════════════════════════════
+                             RIGHT: Adornos + Acciones
+                        ════════════════════════════════════════ -->
+                        <div class="col-lg-3">
+                            <!-- Biblioteca de adornos -->
+                            <div class="sc-cfg-panel mb-3">
+                                <h6 class="sc-cfg-panel-title"><i class="fa fa-star me-2"/>Adornos Decorativos</h6>
+                                <p class="text-muted small">Arrastra o haz clic para añadir al canvas.</p>
+                                <div class="sc-cfg-adornos-grid" id="adornos-grid">
+                                    <!-- Adornos SVG embebidos como texto -->
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="star" title="Estrella">⭐</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="heart" title="Corazón">❤️</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="flower" title="Flor">🌸</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="ribbon" title="Lazo">🎀</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="candle" title="Vela">🕯️</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="balloon" title="Globo">🎈</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="confetti" title="Confeti">🎊</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="cherry" title="Cereza">🍒</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="strawberry" title="Fresa">🍓</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="chocolate" title="Chocolate">🍫</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="sprinkles" title="Chispas">✨</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="leaf" title="Hoja">🍃</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="crown" title="Corona">👑</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="butterfly" title="Mariposa">🦋</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="music" title="Nota musical">🎵</button>
+                                    <button type="button" class="sc-cfg-adorno-btn" data-adorno="gift" title="Regalo">🎁</button>
+                                </div>
+                            </div>
+
+                            <!-- Dibujar forma geométrica -->
+                            <div class="sc-cfg-panel mb-3">
+                                <h6 class="sc-cfg-panel-title"><i class="fa fa-shapes me-2"/>Formas</h6>
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button type="button" class="sc-cfg-shape-btn" data-shape="circle" title="Círculo">
+                                        <i class="fa fa-circle"/>
+                                    </button>
+                                    <button type="button" class="sc-cfg-shape-btn" data-shape="rect" title="Rectángulo">
+                                        <i class="fa fa-square"/>
+                                    </button>
+                                    <button type="button" class="sc-cfg-shape-btn" data-shape="triangle" title="Triángulo">
+                                        <i class="fa fa-caret-up" style="font-size:1.4em;"/>
+                                    </button>
+                                    <button type="button" class="sc-cfg-shape-btn" data-shape="line" title="Línea">
+                                        <i class="fa fa-minus"/>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Resumen y acciones finales -->
+                            <div class="sc-cfg-panel">
+                                <h6 class="sc-cfg-panel-title"><i class="fa fa-check-circle me-2"/>Finalizar Diseño</h6>
+                                <div class="sc-cfg-summary mb-3" id="cfg-summary">
+                                    <div class="sc-cfg-summary-row">
+                                        <span>Producto:</span>
+                                        <strong><t t-out="product.name"/></strong>
+                                    </div>
+                                    <div class="sc-cfg-summary-row">
+                                        <span>Precio base:</span>
+                                        <strong><t t-out="product.list_price"/> CUP</strong>
+                                    </div>
+                                    <div class="sc-cfg-summary-row" id="cfg-extras-price" style="display:none;">
+                                        <span>Extras:</span>
+                                        <strong id="cfg-extras-value">+0 CUP</strong>
+                                    </div>
+                                </div>
+
+                                <button type="button" id="btn-save-design" class="btn sc-btn-save w-100 mb-2" disabled="disabled">
+                                    <i class="fa fa-save me-2"/>Guardar Diseño
+                                </button>
+                                <button type="button" id="btn-download-design" class="btn sc-btn-download w-100 mb-2" disabled="disabled">
+                                    <i class="fa fa-download me-2"/>Descargar PNG
+                                </button>
+                                <a id="btn-add-to-reservation" class="btn sc-btn-reserve w-100 d-none"
+                                   href="/reservar">
+                                    <i class="fa fa-calendar-check-o me-2"/>Añadir a Reserva
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </t>
+    </template>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         Link al configurador en la página de reservación
+         (hereda sweet_cafe_ecommerce.reservation_form)
+    ══════════════════════════════════════════════════════════════ -->
+    <template id="reservation_form_configurator_link"
+              inherit_id="sweet_cafe_ecommerce.reservation_form"
+              name="Configurador — Botón en tarjeta de producto">
+        <!-- Añadir campos ocultos para pasar el design_id al submit -->
+        <xpath expr="//input[@name='csrf_token']" position="after">
+            <t t-if="design">
+                <input type="hidden" name="design_id" t-att-value="design.id"/>
+                <input type="hidden" name="design_product_id" t-att-value="design.product_id.id"/>
+            </t>
+        </xpath>
+
+        <!-- Banner de diseño vinculado -->
+        <xpath expr="//form[@action='/reservar/enviar']" position="before">
+            <t t-if="design">
+                <div class="alert alert-success d-flex align-items-center gap-3 mb-3">
+                    <t t-if="design.final_design_image">
+                        <img t-att-src="'data:image/png;base64,' + design.final_design_image.decode('utf-8')"
+                             style="width:80px;height:80px;object-fit:cover;border-radius:12px;border:2px solid #8B4513;"
+                             alt="Diseño personalizado"/>
+                    </t>
+                    <div>
+                        <strong><i class="fa fa-magic me-1"/>Diseño personalizado vinculado</strong>
+                        <p class="mb-0 small text-muted">
+                            Tu diseño de <t t-out="design.product_id.name"/> se incluirá automáticamente en esta reserva.
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+
+        <!-- Botón "Personalizar" en cada tarjeta de producto custom_order -->
+        <xpath expr="//div[hasclass('sc-extras')]" position="before">
+            <t t-if="p.custom_order">
+                <a t-att-href="'/configurador/%d' % p.id"
+                   class="btn btn-sm sc-btn-customize mt-2 w-100 d-block"
+                   target="_blank"
+                   onclick="event.stopPropagation();">
+                    <i class="fa fa-magic me-1"/>Personalizar
+                </a>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

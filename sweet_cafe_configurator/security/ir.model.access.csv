@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_design_public,product.design.public,model_product_design,,1,1,1,0
+access_product_design_option_public,product.design.option.public,model_product_design_option,,1,0,0,0
+access_product_design_manager,product.design.manager,model_product_design,base.group_user,1,1,1,1
+access_product_design_option_manager,product.design.option.manager,model_product_design_option,base.group_user,1,1,1,1

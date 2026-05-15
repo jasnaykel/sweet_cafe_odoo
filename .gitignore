@@ -4,6 +4,7 @@
 # Excepto los módulos de Sweet Café
 !/sweet_cafe_management/
 !/sweet_cafe_ecommerce/
+!/sweet_cafe_configurator/
 
 # Módulos RRHH Cuba
 !/l10n_cu_address/
