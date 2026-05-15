@@ -2,16 +2,8 @@
 <odoo>
     <!-- ═══════════════════════════════════════════════
          Sweet Café — Main Menu Structure
+         (sweet_menu_root is defined in data/sweet_menu_root.xml)
     ═══════════════════════════════════════════════ -->
-
-    <!-- Top-level app menu -->
-    <menuitem
-        id="sweet_menu_root"
-        name="Sweet Café"
-        sequence="80"
-        web_icon="sweet_cafe_management,static/description/icon.png"
-        groups="sweet_cafe_management.sweet_group_cajero"
-    />
 
     <!-- Ventas / POS sub-menu -->
     <menuitem

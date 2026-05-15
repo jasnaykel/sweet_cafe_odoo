@@ -51,9 +51,8 @@
         'data/sweet_reservation_sequence.xml',
         'data/sweet_tax_brackets.xml',
 
-        # Wizard views
-        'wizard/scrap_approve_wizard_views.xml',
-        'wizard/sweet_onat_wizard_views.xml',
+        # Root menu (must load before any view/wizard that references it)
+        'data/sweet_menu_root.xml',
 
         # Views
         'views/res_company_views.xml',
@@ -70,6 +69,10 @@
         'views/sweet_declaracion_anual_views.xml',
         'views/sweet_onat_report_views.xml',
         'views/sweet_menus.xml',
+
+        # Wizard views (after menus, so parent menu IDs exist)
+        'wizard/scrap_approve_wizard_views.xml',
+        'wizard/sweet_onat_wizard_views.xml',
 
         # Reports
         'report/report_merma.xml',
