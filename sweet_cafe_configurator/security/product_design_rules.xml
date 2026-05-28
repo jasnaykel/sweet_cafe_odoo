@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ═══════════════════════════════════════════════════════════
+             REGLAS DE SEGURIDAD: product.design
+             ═══════════════════════════════════════════════════════════
+             Previene acceso IDOR: un usuario solo puede leer/editar/borrar
+             los diseños que le pertenecen (partner_id == usuario actual).
+             Los diseños sin partner_id (anónimos) son solo de lectura global.
+             Los administradores del grupo Sweet Café pueden ver todos.
+        -->
+
+        <!-- Regla 1: Usuario registrado — solo VE sus propios diseños -->
+        <record model="ir.rule" id="product_design_personal_read">
+            <field name="name">Diseño: solo leer los propios (usuario)</field>
+            <field name="model_id" ref="sweet_cafe_configurator.model_product_design"/>
+            <field name="groups" eval="[(4, ref('base.group_portal')), (4, ref('base.group_user'))]"/>
+            <field name="domain_force">
+                ['|', ('partner_id', '=', False),
+                      ('partner_id', '=', user.partner_id.id)]
+            </field>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <!-- Regla 2: Usuario registrado — solo ESCRIBE/BORRA sus propios diseños -->
+        <record model="ir.rule" id="product_design_personal_write">
+            <field name="name">Diseño: solo editar/borrar los propios (usuario)</field>
+            <field name="model_id" ref="sweet_cafe_configurator.model_product_design"/>
+            <field name="groups" eval="[(4, ref('base.group_portal')), (4, ref('base.group_user'))]"/>
+            <field name="domain_force">
+                [('partner_id', '=', user.partner_id.id)]
+            </field>
+            <field name="perm_read">0</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+        <!-- Regla 3: Gerente/Admin Sweet Café — acceso total a todos los diseños -->
+        <record model="ir.rule" id="product_design_manager_all">
+            <field name="name">Diseño: acceso total para gestores</field>
+            <field name="model_id" ref="sweet_cafe_configurator.model_product_design"/>
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
+    </data>
+</odoo>

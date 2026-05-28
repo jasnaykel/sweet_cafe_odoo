@@ -62,17 +62,28 @@ class ProductConfiguratorController(http.Controller):
         if not product.exists():
             return {'error': _('Producto no encontrado.')}
 
-        # Crear o actualizar el diseño
+        # Crear o actualizar el diseño — con validación de propiedad (anti-IDOR)
         Design = request.env['product.design'].sudo()
         design_id = params.get('design_id')
         vals = self._params_to_design_vals(params, product_id)
 
+        current_partner = request.env.user.partner_id if request.env.user else None
+
         if design_id:
             design = Design.browse(int(design_id))
-            if design.exists():
-                design.write(vals)
-            else:
+            if not design.exists():
                 design = Design.create(vals)
+            elif design.partner_id and current_partner and design.partner_id != current_partner:
+                # Diseño pertenece a otro usuario — denegar modificación
+                _logger.warning(
+                    'IDOR attempt blocked: user %s tried to modify design %s owned by partner %s',
+                    request.env.user.login if request.env.user else 'anonymous',
+                    design_id,
+                    design.partner_id.name,
+                )
+                return {'error': _('Acceso denegado: este diseño no te pertenece.')}
+            else:
+                design.write(vals)
         else:
             design = Design.create(vals)
 

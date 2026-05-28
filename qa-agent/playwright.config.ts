@@ -16,6 +16,10 @@
 
 import { defineConfig, devices } from "@playwright/test";
 import { config } from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 config();
 
@@ -30,17 +34,27 @@ export default defineConfig({
 
   globalSetup: "./tests/setup/global-setup.ts",
 
-  // Reportes: custom HTML + list en consola + JSON para CI
+  // Reportes: custom HTML acumulativo + HTML nativo Playwright + JSON para CI + consola
   reporter: [
     ["./src/reporters/sweet-cafe-reporter.ts"],
-    ["json", { outputFile: "./reports/test-results.json" }],
-    ["html", { outputFolder: "./reports/playwright-report", open: "never" }],
+    [
+      "json",
+      { outputFile: path.resolve(__dirname, "reports/test-results.json") },
+    ],
+    [
+      "html",
+      {
+        outputFolder: path.resolve(__dirname, "playwright-report"),
+        open: "never",
+        attachmentsBaseURL: "../test-results/",
+      },
+    ],
     ["list"],
   ],
 
   use: {
     baseURL: process.env.ODOO_URL || "http://localhost:8069",
-    trace: "on-first-retry",
+    trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
     headless: process.env.HEADLESS !== "false",
@@ -53,7 +67,7 @@ export default defineConfig({
   // Timeouts óptimos: 120s por test, 15s para expect
   timeout: 120000,
   expect: { timeout: 15000 },
-  outputDir: "./test-results",
+  outputDir: path.resolve(__dirname, "test-results"),
 
   projects: [
     // ─── Proyecto principal: todos los módulos, backend + frontend ───
@@ -80,6 +94,8 @@ export default defineConfig({
         "**/sweet_cafe/payroll-movements.spec.ts",
         "**/sweet_cafe/absences.spec.ts",
         "**/sweet_cafe/attendances.spec.ts",
+        // ── Seguridad ──
+        "**/sweet_cafe/configurator-security.spec.ts",
         // ── Tributación ──
         "**/sweet_cafe/onat.spec.ts",
         // ── Operaciones ──

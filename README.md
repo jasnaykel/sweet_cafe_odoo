@@ -2,6 +2,28 @@
 
 Sistema modular desarrollado sobre **Odoo 19** para la gestión integral de una cadena de pastelerías/dulcerías cubanas, con **cumplimiento fiscal completo** conforme a la Ley 113 del Sistema Tributario, el Decreto 308/2012 y las resoluciones vigentes del MFP/ONAT.
 
+## 🛠️ Estándares de Ingeniería
+
+Este proyecto sigue los estándares de **Ingeniería de Software de Clase Mundial** integrando:
+
+- **Spec-Driven Development (SDD)**: Especificación ➔ Plan ➔ Código ➔ Test.
+- **Grill with Docs (Matt Pocock)**: Uso de [`CONTEXT.md`](CONTEXT.md) y [`docs/adr/`](docs/adr/).
+- **Surgical Precision (Karpathy)**: Cambios mínimos y verificables.
+- **Base Code Truth**: Consulta obligatoria de `odoo-19.0/` ante errores de código base.
+- **Antigravity Skills**: `@brainstorming`, `@test-driven-development`, `@systematic-debugging`.
+
+Para más detalles: [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | [Análisis Técnico Completo](ANALISIS_PROYECTO_2026.md)
+
+### Estado de Seguridad (2026-05-28)
+
+| Componente                         | Estado                     |
+| :--------------------------------- | :------------------------- |
+| IDOR en configurador de diseños    | ✅ Corregido               |
+| Validación de depósito en reservas | ✅ Corregido               |
+| Record Rules para `product.design` | ✅ Implementado            |
+| Tests de seguridad Playwright      | ✅ Implementado            |
+| Tests unitarios Python             | ⚠️ Pendiente (ver backlog) |
+
 ---
 
 ## Módulos del Proyecto

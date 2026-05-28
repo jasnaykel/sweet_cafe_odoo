@@ -103,6 +103,16 @@ class SweetReservation(models.Model):
         for rec in self:
             if rec.state != 'draft':
                 continue
+            # ── Validación de integridad antes de confirmar ──────────────
+            if not rec.line_ids:
+                raise ValidationError(_('No se puede confirmar una reserva sin productos.'))
+            if rec.deposit_amount > 0 and not rec.deposit_paid:
+                raise ValidationError(
+                    _('La seña/anticipo de %(amount)s %(currency)s debe estar cobrada antes de confirmar.',
+                      amount=rec.deposit_amount,
+                      currency=rec.currency_id.name)
+                )
+            # ─────────────────────────────────────────────────────────────
             # Create the sale order automatically on confirmation
             if not rec.sale_order_id:
                 order_lines = []

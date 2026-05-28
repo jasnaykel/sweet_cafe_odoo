@@ -22,6 +22,7 @@ configurador visual paso a paso:
     ],
     'data': [
         'security/ir.model.access.csv',
+        'security/product_design_rules.xml',
         'data/configurator_data.xml',
         'views/product_design_views.xml',
         'views/configurator_templates.xml',

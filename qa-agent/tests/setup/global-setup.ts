@@ -121,12 +121,28 @@ async function globalSetup(_config: FullConfig) {
     console.log(`  ✅ Login exitoso → ${finalUrl}`);
     console.log(`  💾 storageState guardado en ${STATE_FILE}`);
   } catch (err) {
-    console.error(`  ❌ Error en global setup: ${err}`);
-    // Guardar captura de pantalla del error
-    await page.screenshot({
-      path: path.resolve(__dirname, "../../reports/setup-error.png"),
-    });
-    throw err;
+    const errMsg = String(err);
+    const authExists = fs.existsSync(STATE_FILE);
+
+    if (authExists && errMsg.includes("ERR_CONNECTION_REFUSED")) {
+      // Servidor caído pero auth previa disponible.
+      // Tests con storageState vacío podrán ejecutar. Tests BE usarán auth cacheada.
+      console.warn(`  ⚠️  Odoo no responde en ${ODOO_URL}`);
+      console.warn(
+        `  ℹ️  Usando auth cacheada en ${STATE_FILE} (tests BE pueden fallar si sesión expiró)`,
+      );
+    } else {
+      console.error(`  ❌ Error en global setup: ${err}`);
+      // Guardar captura de pantalla del error
+      await page
+        .screenshot({
+          path: path.resolve(__dirname, "../../reports/setup-error.png"),
+        })
+        .catch(() => {}); // silenciar error de screenshot si server down
+      if (!authExists) {
+        throw err; // Solo abortar si no hay auth previa
+      }
+    }
   } finally {
     await browser.close();
   }

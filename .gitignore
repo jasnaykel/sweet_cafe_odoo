@@ -19,8 +19,21 @@
 # Y el propio .gitignore
 !/.gitignore
 
-# README del proyecto
+# Archivos raíz de documentación e ingeniería
 !/README.md
+!/CONTEXT.md
+!/ARCHITECTURE.md
+!/ANALISIS_PROYECTO_2026.md
+
+# Estándares del agente y skills locales
+!/.github/
+!/.github/copilot-instructions.md
+!/.github/skills/
+!/.github/skills/**
+
+# Documentación técnica (specs y ADRs)
+!/docs/
+!/docs/**
 
 # QA Agent (Playwright tests)
 !/qa-agent/
