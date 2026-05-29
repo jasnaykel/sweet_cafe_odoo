@@ -15,7 +15,7 @@ El agente SIEMPRE consulta estos repos antes de generar skills o instalar herram
 
 | Repo | Propósito | URL |
 |---|---|---|
-| **antigravity-awesome-skills** | 1,465+ skills universales: brainstorming, TDD, security, debugging, etc. | https://github.com/jasnaykel/antigravity-awesome-skills |
+| **antigravity-awesome-skills** | 1,480+ skills universales: brainstorming, TDD, security, debugging, etc. | https://github.com/jasnaykel/antigravity-awesome-skills |
 | **codegraph** | Knowledge graph local — fewer tokens, fewer tool calls | https://github.com/colbymchenry/codegraph |
 | **gentle-ai** | SDD workflows, Engram memory, multi-agent orchestration | https://github.com/Gentleman-Programming/gentle-ai |
 | **mattpocock/skills** | Engineering skills reales: grill-with-docs, tdd, diagnose, to-prd | https://github.com/mattpocock/skills |
@@ -23,6 +23,8 @@ El agente SIEMPRE consulta estos repos antes de generar skills o instalar herram
 | **andrej-karpathy-skills** | Minimal surgical changes, simplicity-first coding philosophy | https://github.com/multica-ai/andrej-karpathy-skills |
 | **LambdaTest/agent-skills** | 46 skills de testing: E2E, unit, BDD, visual, cloud | https://github.com/LambdaTest/agent-skills |
 | **zebbern/claude-code-guide** | Security suite: ~60 skills de seguridad | https://github.com/zebbern/claude-code-guide |
+| **anthropics/skills** | Manipulación de documentos PDF/DOCX/XLSX — útil para reportes de nómina | https://github.com/anthropics/claude-code-skills |
+| **uxuiprinciples/agent-skills** | 168 principios UX/UI auditados — e-commerce y configuradores visuales | https://github.com/uxuiprinciples/agent-skills |
 
 ---
 
@@ -142,6 +144,9 @@ Obtener las últimas versiones desde antigravity-awesome-skills:
 | `@grill-with-docs` | Matt Pocock: `skills/engineering/grill-with-docs/SKILL.md` |
 | `@tdd` | Matt Pocock: `skills/engineering/tdd/SKILL.md` |
 | `@diagnose` | Matt Pocock: `skills/engineering/diagnose/SKILL.md` |
+| `@zoom-out` | Matt Pocock: `skills/engineering/zoom-out/SKILL.md` |
+| `@improve-codebase-architecture` | Matt Pocock: `skills/engineering/improve-codebase-architecture/SKILL.md` |
+| `@to-prd` | Matt Pocock: `skills/engineering/to-prd/SKILL.md` |
 | `@spec-driven-development` | spec-kit: adaptación del workflow SDD |
 | `@gentleman-programming` | Adaptar principios de Gentle-AI al stack detectado |
 

@@ -58,8 +58,12 @@ All skills live in `.github/skills/<name>/SKILL.md`. Invoke them by mentioning `
 | `@grill-with-docs` | Align with agent on complex tasks; reads `CONTEXT.md` + `ARCHITECTURE.md` first |
 | `@spec-driven-development` | Full SDD lifecycle: spec → plan → implement → test |
 | `@test-driven-development` | Red-green-refactor loop for Odoo 19 Python modules |
-| `@systematic-debugging` | Disciplined debugging — trace logs, consult `odoo-19.0/`, hypothesize |
+| `@diagnose` | Disciplined bug loop: reproduce → minimise → hypothesise → instrument → fix → regress |
+| `@systematic-debugging` | Trace logs, consult `odoo-19.0/`, hypothesize (use `@diagnose` for hard bugs) |
 | `@debug-consultant` | Deep Odoo base code consultation before any fix |
+| `@zoom-out` | Broader context: explain code in the context of the whole system |
+| `@improve-codebase-architecture` | Weekly health check — find coupling issues, dead code, naming drift |
+| `@to-prd` | Convert conversation into a PRD, save to `docs/specs/` |
 | `@security-auditor` | OWASP Top 10 review before merging controllers or models |
 | `@qa-validator` | Run/write Playwright tests in `qa-agent/` for UI validation |
 | `@odoo-module-scaffold` | Create a new Odoo 19 module with correct structure and mandatory files |
@@ -69,12 +73,13 @@ All skills live in `.github/skills/<name>/SKILL.md`. Invoke them by mentioning `
 
 ### Recommended workflow per task type
 
-- **New feature**: `@grill-with-docs` → `@brainstorming` → `@spec-driven-development` → `@test-driven-development`
-- **Bug fix**: `@systematic-debugging` → `@debug-consultant` → `@test-driven-development`
+- **New feature**: `@grill-with-docs` → `@brainstorming` → `@to-prd` → `@spec-driven-development` → `@test-driven-development`
+- **Bug fix**: `@diagnose` → `@debug-consultant` → `@test-driven-development`
 - **New module**: `@brainstorming` → `@odoo-module-scaffold` → `@test-driven-development`
-- **UI change**: `@brainstorming` → implement → `@qa-validator`
+- **UI change**: `@brainstorming` → `@zoom-out` → implement → `@qa-validator`
 - **Security review**: `@security-auditor` on all changed files before merge
-- **Architecture review**: `@gentleman-programming` on any model or controller change
+- **Architecture review**: `@gentleman-programming` + `@improve-codebase-architecture` on any model or controller change
+- **Weekly health check**: `@improve-codebase-architecture` on the full codebase
 - **New machine/workspace**: `@workspace-bootstrap` — installs all tools and indexes the project
 - **New project from scratch**: `@skill-sync` — inspects stack, generates skills, installs tools, syncs from upstream
 - **Update skills from upstream**: `@skill-sync` → "sincronizar skills con los repos upstream"
