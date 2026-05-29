@@ -1,6 +1,85 @@
 # @workspace-bootstrap
 
-**Self-setup skill.** Run this skill in ANY new workspace or laptop to replicate the complete jasnaykel AI engineering environment automatically.
+**Guía de máquina nueva.** Instala los prerequisitos globales (Node, Scoop, Codegraph, Gentle-AI) y luego delega al meta-orquestador `@skill-sync` para el resto.
+
+> Para setup completo de proyecto, usa `@skill-sync`. Este skill solo cubre la capa de OS/máquina.
+
+---
+
+## Cuándo usar cada skill
+
+| Situación | Skill a usar |
+|---|---|
+| Laptop nueva — nada instalado | **`@workspace-bootstrap`** primero, luego `@skill-sync` |
+| Proyecto nuevo en máquina ya configurada | **`@skill-sync`** directamente |
+| Actualizar skills desde upstream | **`@skill-sync`** directamente |
+| Verificar estado del ecosistema | **`@skill-sync`** directamente |
+
+---
+
+## Paso 1 — Instalar prerequisitos globales (solo una vez por máquina)
+
+### Node.js 22+
+```powershell
+node --version   # verificar
+# Si falta: https://nodejs.org/en/download
+```
+
+### Scoop (Windows — gestor de paquetes)
+```powershell
+Get-Command scoop -ErrorAction SilentlyContinue
+# Si falta:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+irm get.scoop.sh | iex
+$env:PATH += ";$env:USERPROFILE\scoop\shims"
+```
+
+### Codegraph
+```powershell
+codegraph --version
+# Si falta:
+$env:NODE_TLS_REJECT_UNAUTHORIZED="0"
+npm i -g @colbymchenry/codegraph
+```
+
+### Gentle-AI
+```powershell
+gentle-ai --version
+# Si falta (Windows):
+scoop bucket add gentleman https://github.com/Gentleman-Programming/scoop-bucket
+scoop install gentle-ai
+# Si falta (Mac/Linux):
+brew tap Gentleman-Programming/homebrew-tap && brew install gentle-ai
+```
+
+### Verificación final
+```powershell
+node --version       # 22+
+codegraph --version  # 0.9.7+
+gentle-ai --version  # 1.33+
+git --version        # cualquier versión
+```
+
+---
+
+## Paso 2 — Clonar el repo y configurar el proyecto
+
+```powershell
+git clone https://github.com/jasnaykel/sweet_cafe_odoo.git
+cd sweet_cafe_odoo
+git checkout feature/contac_review
+```
+
+## Paso 3 — Delegar a @skill-sync
+
+Una vez que los prerequisitos están instalados y el repo está clonado:
+
+```
+usa @skill-sync para configurar este workspace nuevo
+```
+
+`@skill-sync` se encarga de todo lo demás: instalar dependencias del proyecto, indexar Codegraph, generar skills adaptadas al stack, crear CONTEXT.md / ARCHITECTURE.md si faltan, y hacer el commit inicial.
+
 
 ---
 
