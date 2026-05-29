@@ -65,6 +65,7 @@ All skills live in `.github/skills/<name>/SKILL.md`. Invoke them by mentioning `
 | `@odoo-module-scaffold` | Create a new Odoo 19 module with correct structure and mandatory files |
 | `@gentleman-programming` | Clean architecture review — layer separation, SRP, delegation triggers |
 | `@workspace-bootstrap` | Setup a new machine or workspace with all tools, skills, and indexes |
+| `@skill-sync` | Auto-generate skills + install tools in any new workspace; sync skills from upstream repos |
 
 ### Recommended workflow per task type
 
@@ -75,6 +76,12 @@ All skills live in `.github/skills/<name>/SKILL.md`. Invoke them by mentioning `
 - **Security review**: `@security-auditor` on all changed files before merge
 - **Architecture review**: `@gentleman-programming` on any model or controller change
 - **New machine/workspace**: `@workspace-bootstrap` — installs all tools and indexes the project
+- **New project from scratch**: `@skill-sync` — inspects stack, generates skills, installs tools, syncs from upstream
+- **Update skills from upstream**: `@skill-sync` → "sincronizar skills con los repos upstream"
+
+## 10. Auto-invocation Rule
+
+**IMPORTANT**: When opening a workspace that has NO `.github/skills/` directory or NO `CONTEXT.md`, automatically invoke `@skill-sync` before doing anything else. This ensures every project starts with the correct skill set and tools.
 
 ## 9. Active Intelligence Tools
 
