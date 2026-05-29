@@ -47,3 +47,27 @@ Follow the lifecycle for EVERY change:
 - Use systematic `@brainstorming` for planning.
 - Apply `@test-driven-development` mindset.
 - Prioritize `@systematic-debugging` by analyzing logs and base code before guessing.
+
+## 8. Available Skills Reference
+
+All skills live in `.github/skills/<name>/SKILL.md`. Invoke them by mentioning `@<name>` in your request.
+
+| Skill | When to use |
+|---|---|
+| `@brainstorming` | Before any implementation — plan, map domain, evaluate approaches |
+| `@grill-with-docs` | Align with agent on complex tasks; reads `CONTEXT.md` + `ARCHITECTURE.md` first |
+| `@spec-driven-development` | Full SDD lifecycle: spec → plan → implement → test |
+| `@test-driven-development` | Red-green-refactor loop for Odoo 19 Python modules |
+| `@systematic-debugging` | Disciplined debugging — trace logs, consult `odoo-19.0/`, hypothesize |
+| `@debug-consultant` | Deep Odoo base code consultation before any fix |
+| `@security-auditor` | OWASP Top 10 review before merging controllers or models |
+| `@qa-validator` | Run/write Playwright tests in `qa-agent/` for UI validation |
+| `@odoo-module-scaffold` | Create a new Odoo 19 module with correct structure and mandatory files |
+
+### Recommended workflow per task type
+
+- **New feature**: `@grill-with-docs` → `@brainstorming` → `@spec-driven-development` → `@test-driven-development`
+- **Bug fix**: `@systematic-debugging` → `@debug-consultant` → `@test-driven-development`
+- **New module**: `@brainstorming` → `@odoo-module-scaffold` → `@test-driven-development`
+- **UI change**: `@brainstorming` → implement → `@qa-validator`
+- **Security review**: `@security-auditor` on all changed files before merge
