@@ -63,6 +63,8 @@ All skills live in `.github/skills/<name>/SKILL.md`. Invoke them by mentioning `
 | `@security-auditor` | OWASP Top 10 review before merging controllers or models |
 | `@qa-validator` | Run/write Playwright tests in `qa-agent/` for UI validation |
 | `@odoo-module-scaffold` | Create a new Odoo 19 module with correct structure and mandatory files |
+| `@gentleman-programming` | Clean architecture review — layer separation, SRP, delegation triggers |
+| `@workspace-bootstrap` | Setup a new machine or workspace with all tools, skills, and indexes |
 
 ### Recommended workflow per task type
 
@@ -71,3 +73,19 @@ All skills live in `.github/skills/<name>/SKILL.md`. Invoke them by mentioning `
 - **New module**: `@brainstorming` → `@odoo-module-scaffold` → `@test-driven-development`
 - **UI change**: `@brainstorming` → implement → `@qa-validator`
 - **Security review**: `@security-auditor` on all changed files before merge
+- **Architecture review**: `@gentleman-programming` on any model or controller change
+- **New machine/workspace**: `@workspace-bootstrap` — installs all tools and indexes the project
+
+## 9. Active Intelligence Tools
+
+These tools run alongside the skills and enhance the agent's code understanding:
+
+| Tool | Version | Purpose | Status |
+|---|---|---|---|
+| **Codegraph** | 0.9.7 | Pre-indexed knowledge graph — symbol search, call traces, impact analysis | ✅ Indexed (271 files) |
+| **Gentle-AI** | 1.33.2 | SDD workflows, Engram persistent memory, multi-agent orchestration | ✅ Installed |
+| **Playwright** | v1208 | Browser automation for QA end-to-end tests | ✅ Chromium ready |
+| **GitKraken MCP** | — | Git operations via natural language | ✅ Active |
+| **Pylance MCP** | — | Python type checking and refactoring | ✅ Active |
+
+> **Codegraph commands**: `codegraph status` · `codegraph query <symbol>` · `codegraph callers <method>` · `codegraph index` (re-index after big changes)
