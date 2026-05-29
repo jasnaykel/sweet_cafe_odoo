@@ -35,6 +35,11 @@
 !/docs/
 !/docs/**
 
+# Codegraph index (knowledge graph local)
+!/.codegraph/
+.codegraph/codegraph.db-shm
+.codegraph/codegraph.db-wal
+
 # QA Agent (Playwright tests)
 !/qa-agent/
 qa-agent/node_modules/
